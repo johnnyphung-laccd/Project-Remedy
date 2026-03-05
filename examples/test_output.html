@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>High School Graduation Update Form — Los Angeles Mission College</title>
+  <link rel="stylesheet" href="/assets/css/lamc-accessible.css">
+  <style>
+    /* Inline fallback styles for accessibility if external CSS fails to load */
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #1A1A2E;
+      background: #FFFFFF;
+      margin: 0;
+      padding: 0;
+    }
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      background: #004590;
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      z-index: 10000;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+    header {
+      background: #004590;
+      color: #FFFFFF;
+      padding: 1rem 2rem;
+    }
+    header a { color: #FFFFFF; text-decoration: underline; }
+    main {
+      max-width: 72ch;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    footer {
+      background: #F5F7FA;
+      border-top: 3px solid #004590;
+      padding: 1.5rem 2rem;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #5A6670;
+    }
+    footer a { color: #004590; }
+    a { color: #004590; text-decoration: underline; }
+    a:focus {
+      outline: 3px solid #FF611A;
+      outline-offset: 2px;
+    }
+    h1 { color: #004590; }
+    table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; }
+    th, td { border: 1px solid #718089; padding: 0.5rem 0.75rem; text-align: left; }
+    th { background: #004590; color: #FFFFFF; }
+    img { max-width: 100%; height: auto; }
+    .form-actions button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 2px solid #004590;
+      border-radius: 4px;
+      cursor: pointer;
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .form-actions button[type="button"] {
+      background: #004590;
+      color: #FFFFFF;
+    }
+    .form-actions button[type="button"]:hover {
+      background: #003470;
+    }
+    .form-actions button[type="button"]:focus {
+      outline: 3px solid #FF611A;
+      outline-offset: 2px;
+    }
+    .form-actions button[type="reset"] {
+      background: #FFFFFF;
+      color: #004590;
+      margin-left: 0.5rem;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      .skip-link { display: none !important; }
+      header { background: none !important; color: #000 !important; border-bottom: 2px solid #000; }
+      footer { border-top: 1px solid #000; }
+      a { color: #000 !important; }
+      body { font-size: 11pt; }
+      main { max-width: 100%; margin: 0; padding: 0; }
+      input[type="text"], input[type="number"], input[type="date"] {
+        border: none; border-bottom: 1px solid #000; background: none;
+        min-width: 200px; padding: 2px 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header role="banner">
+    <nav aria-label="Institution">
+      <strong>Los Angeles Mission College</strong>
+      &nbsp;|&nbsp;
+      <span>Los Angeles Community College District</span>
+    </nav>
+    <p>High School Graduation Update Form</p>
+  </header>
+
+  <main id="main-content" role="main">
+<h1>High School Graduation Update Form</h1>
+
+<p>Los Angeles Community College District serves students at nine colleges: City, East, Harbor, Mission, Pierce, Southwest, Trade-Technical, Valley, and West.</p>
+
+<form aria-labelledby="form-heading" onsubmit="window.print(); return false;">
+  <h2 id="form-heading" class="visually-hidden">High School Graduation Update Form Fields</h2>
+  
+  <p>Please complete the information below.</p>
+
+  <section aria-labelledby="student-info-heading">
+    <h2 id="student-info-heading">Student Information</h2>
+    
+    <div class="form-row">
+      <div class="form-field">
+        <label for="first-name">First Name <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+        <input type="text" id="first-name" name="first-name" autocomplete="given-name" required aria-required="true">
+      </div>
+      
+      <div class="form-field">
+        <label for="last-name">Last Name <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+        <input type="text" id="last-name" name="last-name" autocomplete="family-name" required aria-required="true">
+      </div>
+      
+      <div class="form-field">
+        <label for="middle-initial">Middle Initial</label>
+        <input type="text" id="middle-initial" name="middle-initial" maxlength="1" autocomplete="additional-name">
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-field">
+        <label for="student-id">Student ID Number <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+        <input type="text" id="student-id" name="student-id" required aria-required="true" pattern="[0-9A-Za-z]+" title="Enter your student ID number">
+      </div>
+      
+      <div class="form-field">
+        <label for="age">Age <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+        <input type="number" id="age" name="age" min="1" max="120" required aria-required="true">
+      </div>
+    </div>
+    
+    <div class="form-field">
+      <label for="home-address">Home Address <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+      <input type="text" id="home-address" name="home-address" autocomplete="street-address" required aria-required="true">
+    </div>
+    
+    <div class="form-field">
+      <label for="high-school-name">High School Name <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+      <input type="text" id="high-school-name" name="high-school-name" required aria-required="true">
+    </div>
+    
+    <fieldset>
+      <legend>Birth Date <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></legend>
+      <div class="date-fields" role="group" aria-label="Birth date entry">
+        <div class="form-field">
+          <label for="birth-month">Month (MM)</label>
+          <input type="text" id="birth-month" name="birth-month" maxlength="2" pattern="0?[1-9]|1[0-2]" placeholder="MM" autocomplete="bday-month" required aria-required="true">
+        </div>
+        <div class="form-field">
+          <label for="birth-day">Day (DD)</label>
+          <input type="text" id="birth-day" name="birth-day" maxlength="2" pattern="0?[1-9]|[12][0-9]|3[01]" placeholder="DD" autocomplete="bday-day" required aria-required="true">
+        </div>
+        <div class="form-field">
+          <label for="birth-year">Year (YYYY)</label>
+          <input type="text" id="birth-year" name="birth-year" maxlength="4" pattern="[0-9]{4}" placeholder="YYYY" autocomplete="bday-year" required aria-required="true">
+        </div>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Graduation Date <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></legend>
+      <p id="grad-date-hint">Enter the date as of the first day of the semester or year.</p>
+      <div class="date-fields" role="group" aria-label="Graduation date entry">
+        <div class="form-field">
+          <label for="grad-month">Month (MM)</label>
+          <input type="text" id="grad-month" name="grad-month" maxlength="2" pattern="0?[1-9]|1[0-2]" placeholder="MM" aria-describedby="grad-date-hint" required aria-required="true">
+        </div>
+        <div class="form-field">
+          <label for="grad-day">Day (DD)</label>
+          <input type="text" id="grad-day" name="grad-day" maxlength="2" pattern="0?[1-9]|[12][0-9]|3[01]" placeholder="DD" aria-describedby="grad-date-hint" required aria-required="true">
+        </div>
+        <div class="form-field">
+          <label for="grad-year">Year (YYYY)</label>
+          <input type="text" id="grad-year" name="grad-year" maxlength="4" pattern="[0-9]{4}" placeholder="YYYY" aria-describedby="grad-date-hint" required aria-required="true">
+        </div>
+      </div>
+    </fieldset>
+  </section>
+
+  <section aria-labelledby="goal-heading">
+    <h2 id="goal-heading">Financial Aid Eligible Goal</h2>
+    
+    <fieldset>
+      <legend id="goal-legend">Please select one financial aid eligible goal: <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></legend>
+      
+      <div class="radio-field">
+        <input type="radio" id="goal-diploma" name="financial-aid-goal" value="diploma" required aria-required="true">
+        <label for="goal-diploma">Earned a U.S. high school diploma</label>
+      </div>
+      
+      <div class="radio-field">
+        <input type="radio" id="goal-last-attended" name="financial-aid-goal" value="last-attended" aria-describedby="last-attended-desc">
+        <label for="goal-last-attended">Last attended high school in</label>
+        <div class="conditional-field" id="last-attended-desc">
+          <label for="last-attended-location" class="visually-hidden">Location of last high school attended</label>
+          <input type="text" id="last-attended-location" name="last-attended-location" placeholder="Enter city, state, or country">
+        </div>
+      </div>
+      
+      <div class="radio-field">
+        <input type="radio" id="goal-not-graduate" name="financial-aid-goal" value="not-graduate">
+        <label for="goal-not-graduate">Not a high school graduate</label>
+      </div>
+      
+      <div class="radio-field">
+        <input type="radio" id="goal-proficiency" name="financial-aid-goal" value="proficiency">
+        <label for="goal-proficiency">Passed the California high school proficiency exam</label>
+      </div>
+      
+      <div class="radio-field">
+        <input type="radio" id="goal-ged" name="financial-aid-goal" value="ged">
+        <label for="goal-ged">Passed GED</label>
+      </div>
+    </fieldset>
+  </section>
+
+  <section aria-labelledby="certification-heading">
+    <h2 id="certification-heading">Certification</h2>
+    
+    <p><strong>By signing below, I certify that the information provided above is correct to the best of my knowledge.</strong></p>
+    
+    <div class="form-row">
+      <div class="form-field">
+        <label for="student-signature">Student Signature <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+        <input type="text" id="student-signature" name="student-signature" required aria-required="true" placeholder="Type your full legal name as signature">
+      </div>
+      
+      <div class="form-field">
+        <label for="student-signature-date">Date <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+        <input type="date" id="student-signature-date" name="student-signature-date" required aria-required="true">
+      </div>
+    </div>
+  </section>
+
+  <div class="form-actions no-print">
+    <button type="button" onclick="window.print()">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 0.4em;">
+        <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+        <rect x="6" y="14" width="12" height="8"/>
+      </svg>
+      Print This Form
+    </button>
+    <button type="reset">Clear Form</button>
+  </div>
+  <p class="no-print" style="margin-top: 1rem; font-size: 0.9rem; color: #5A6670;">
+    <strong>Note:</strong> This form is intended to be printed, completed by hand, and submitted in person
+    to the Admissions &amp; Records office at Los Angeles Mission College.
+  </p>
+</form>
+
+<section aria-labelledby="office-heading" class="office-use-section">
+  <h2 id="office-heading">For Office Use Only</h2>
+  
+  <div class="form-row" aria-label="Administrative verification fields">
+    <div class="form-field">
+      <label for="verified-by">Verified By</label>
+      <input type="text" id="verified-by" name="verified-by" readonly aria-readonly="true" tabindex="-1">
+    </div>
+    
+    <div class="form-field">
+      <label for="office-date">Date</label>
+      <input type="date" id="office-date" name="office-date" readonly aria-readonly="true" tabindex="-1">
+    </div>
+  </div>
+</section>
+  </main>
+
+  <footer role="contentinfo">
+    <p>
+      <strong>Accessibility Statement:</strong>
+      Los Angeles Mission College is committed to making its web content
+      accessible to all users. This page was generated from a document
+      originally published in PDF format and has been converted
+      to accessible HTML in compliance with WCAG 2.1 Level AA.
+    </p>
+    <p>
+      <a href="https://lamission.edu/sites/lamc.edu/files/2022-08/High%20School%20Graduation%20Update%20Form.pdf">Download the original document (PDF)</a>
+      <span aria-hidden="true"> | </span>
+      <a href="https://www.lamission.edu/accessibility">Accessibility Information</a>
+      <span aria-hidden="true"> | </span>
+      <a href="mailto:accessibility@lamission.edu">Report an Accessibility Issue</a>
+    </p>
+    <p>
+      Los Angeles Mission College &bull;
+      13356 Eldridge Avenue, Sylmar, CA 91342 &bull;
+      (818) 364-7600
+    </p>
+  </footer>
+</body>
+</html>

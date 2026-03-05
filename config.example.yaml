@@ -1,0 +1,58 @@
+# =============================================================================
+# LAMC ADA Document Remediation Pipeline - Configuration
+# =============================================================================
+# Copy this file to config.yaml and adjust values as needed.
+# Environment variables (from .env) override values set here.
+
+crawl:
+  # Root URL to begin crawling from.
+  start_url: "https://www.lacitycollege.edu"
+
+  # Maximum link depth to follow from the start URL.
+  max_depth: 10
+
+  # Upper limit on total pages to visit during a crawl.
+  max_pages: 10000
+
+  # Minimum delay (seconds) between HTTP requests to the target site.
+  rate_limit: 2.0
+
+api:
+  # Base URL for the upstream AI / OCR service (set via ZAI_BASE_URL env var).
+  base_url: ""
+
+  # Maximum number of concurrent API calls.
+  max_concurrent_calls: 5
+
+  # Retry count for transient API failures.
+  max_retries: 3
+
+  # Exponential backoff base (seconds) between retries.
+  retry_backoff_base: 2.0
+
+processing:
+  # Maximum number of concurrent processing tasks.
+  max_concurrent_calls: 5
+
+  # Retry count for processing failures.
+  max_retries: 3
+
+  # Exponential backoff base (seconds) between retries.
+  retry_backoff_base: 2.0
+
+output:
+  # Directory for generated HTML and supporting assets.
+  output_dir: "./output"
+
+  # Directory for log files.
+  log_dir: "./logs"
+
+  # Path to the SQLite database that tracks pipeline state.
+  db_path: "./pipeline.db"
+
+validation:
+  # Maximum number of remediation cycles per document before flagging.
+  max_remediation_cycles: 3
+
+  # If true, any "serious" or "critical" violation causes the job to fail.
+  fail_on_serious: true

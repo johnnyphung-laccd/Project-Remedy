@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GPA Calculator — Los Angeles Mission College</title>
+  <link rel="stylesheet" href="/assets/css/lamc-accessible.css">
+  <style>
+    /* Inline fallback styles for accessibility if external CSS fails to load */
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #1A1A2E;
+      background: #FFFFFF;
+      margin: 0;
+      padding: 0;
+    }
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      background: #004590;
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      z-index: 10000;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+    header {
+      background: #004590;
+      color: #FFFFFF;
+      padding: 1rem 2rem;
+    }
+    header a { color: #FFFFFF; text-decoration: underline; }
+    main {
+      max-width: 72ch;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    footer {
+      background: #F5F7FA;
+      border-top: 3px solid #004590;
+      padding: 1.5rem 2rem;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #5A6670;
+    }
+    footer a { color: #004590; }
+    a { color: #004590; text-decoration: underline; }
+    a:focus {
+      outline: 3px solid #FF611A;
+      outline-offset: 2px;
+    }
+    h1 { color: #004590; }
+    table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; }
+    th, td { border: 1px solid #718089; padding: 0.5rem 0.75rem; text-align: left; }
+    th { background: #004590; color: #FFFFFF; }
+    img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header role="banner">
+    <nav aria-label="Institution">
+      <strong>Los Angeles Mission College</strong>
+      &nbsp;|&nbsp;
+      <span>Los Angeles Community College District</span>
+    </nav>
+    <p>GPA Calculator</p>
+  </header>
+
+  <main id="main-content" role="main">
+<article>
+  <h1>GPA Calculator</h1>
+  
+  <p class="no-print" style="margin-bottom: 1.5rem;">
+    <button type="button" onclick="window.print()" class="print-button" aria-label="Print this GPA calculator">Print This Page</button>
+  </p>
+  
+  <p>Use this calculator to determine your Grade Point Average (GPA). Enter your courses, select your grades, and input the unit values for each course. Your GPA will be calculated automatically.</p>
+
+  <form id="gpa-calculator" aria-label="GPA Calculator Form" onsubmit="window.print(); return false;">
+    
+    <section aria-labelledby="student-info-heading">
+      <h2 id="student-info-heading">Student Information</h2>
+      <div class="form-group">
+        <label for="student-name">Student Name</label>
+        <input type="text" id="student-name" name="student-name" autocomplete="name" placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label for="student-id">ID Number</label>
+        <input type="text" id="student-id" name="student-id" autocomplete="off" placeholder="Enter your student ID">
+      </div>
+    </section>
+
+    <section aria-labelledby="course-entry-heading">
+      <h2 id="course-entry-heading">Enter Your Courses</h2>
+      <p>For each course, enter the course name, select the grade received, and enter the number of units. Grade points are calculated automatically.</p>
+      
+      <div class="table-wrapper">
+        <table id="course-table" aria-describedby="course-table-desc">
+          <caption id="course-table-desc">Course Entry: Enter your courses, grades, and units to calculate your GPA</caption>
+          <thead>
+            <tr>
+              <th scope="col">Course</th>
+              <th scope="col">Grade</th>
+              <th scope="col">Units</th>
+              <th scope="col">Grade Points</th>
+            </tr>
+          </thead>
+          <tbody id="course-tbody">
+            <tr>
+              <td><input type="text" aria-label="Course name for row 1" data-row="1" class="course-input" placeholder="e.g., English 101"></td>
+              <td>
+                <select aria-label="Grade for course in row 1" data-row="1" class="grade-select" onchange="calculateRow(1)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 1" data-row="1" class="units-input" onchange="calculateRow(1)" placeholder="0"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="1" for="grade-1 units-1">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 2" data-row="2" class="course-input" placeholder="e.g., Math 101"></td>
+              <td>
+                <select aria-label="Grade for course in row 2" data-row="2" class="grade-select" onchange="calculateRow(2)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 2" data-row="2" class="units-input" onchange="calculateRow(2)" placeholder="0"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="2">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 3" data-row="3" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 3" data-row="3" class="grade-select" onchange="calculateRow(3)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 3" data-row="3" class="units-input" onchange="calculateRow(3)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="3">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 4" data-row="4" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 4" data-row="4" class="grade-select" onchange="calculateRow(4)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 4" data-row="4" class="units-input" onchange="calculateRow(4)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="4">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 5" data-row="5" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 5" data-row="5" class="grade-select" onchange="calculateRow(5)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 5" data-row="5" class="units-input" onchange="calculateRow(5)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="5">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 6" data-row="6" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 6" data-row="6" class="grade-select" onchange="calculateRow(6)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 6" data-row="6" class="units-input" onchange="calculateRow(6)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="6">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 7" data-row="7" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 7" data-row="7" class="grade-select" onchange="calculateRow(7)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 7" data-row="7" class="units-input" onchange="calculateRow(7)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="7">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 8" data-row="8" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 8" data-row="8" class="grade-select" onchange="calculateRow(8)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 8" data-row="8" class="units-input" onchange="calculateRow(8)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="8">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 9" data-row="9" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 9" data-row="9" class="grade-select" onchange="calculateRow(9)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 9" data-row="9" class="units-input" onchange="calculateRow(9)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="9">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 10" data-row="10" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 10" data-row="10" class="grade-select" onchange="calculateRow(10)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 10" data-row="10" class="units-input" onchange="calculateRow(10)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="10">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 11" data-row="11" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 11" data-row="11" class="grade-select" onchange="calculateRow(11)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 11" data-row="11" class="units-input" onchange="calculateRow(11)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="11">—</output></td>
+            </tr>
+            <tr>
+              <td><input type="text" aria-label="Course name for row 12" data-row="12" class="course-input"></td>
+              <td>
+                <select aria-label="Grade for course in row 12" data-row="12" class="grade-select" onchange="calculateRow(12)">
+                  <option value="">Select</option>
+                  <option value="4">A</option>
+                  <option value="3">B</option>
+                  <option value="2">C</option>
+                  <option value="1">D</option>
+                  <option value="0">F</option>
+                </select>
+              </td>
+              <td><input type="number" min="0" max="10" step="0.5" aria-label="Units for course in row 12" data-row="12" class="units-input" onchange="calculateRow(12)"></td>
+              <td><output aria-live="polite" class="grade-points-output" data-row="12">—</output></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <p class="no-print" style="margin-top: 1rem; font-size: 0.9rem; color: #666;"><em>Need more rows? Print multiple copies or use additional sheets.</em></p>
+    </section>
+
+    <section aria-labelledby="results-heading" aria-live="polite">
+      <h2 id="results-heading">Your GPA Results</h2>
+      
+      <dl class="results-grid">
+        <dt>Total Units Attempted</dt>
+        <dd><output id="total-units" aria-live="polite">0</output></dd>
+        
+        <dt>Total Grade Points</dt>
+        <dd><output id="total-grade-points" aria-live="polite">0</output></dd>
+        
+        <dt class="gpa-label">Cumulative GPA</dt>
+        <dd class="gpa-value"><output id="cumulative-gpa" aria-live="polite" role="status">0.00</output></dd>
+      </dl>
+      
+      <div class="no-print" style="margin-top: 1.5rem;">
+        <button type="button" onclick="clearForm()" aria-label="Clear all entries and reset calculator">Clear All Entries</button>
+      </div>
+    </section>
+  </form>
+
+  <section aria-labelledby="instructions-heading">
+    <h2 id="instructions-heading">How to Calculate Your GPA</h2>
+    
+    <h3>Figuring Out Your Grade Point Average</h3>
+    
+    <p><strong>Formula:</strong> Total Grade Points ÷ Units Attempted = Grade Point Average (GPA)</p>
+    
+    <h4>Grade Point Values</h4>
+    <ul class="grade-values-list">
+      <li><strong>A</strong> = 4 points</li>
+      <li><strong>B</strong> = 3 points</li>
+      <li><strong>C</strong> = 2 points</li>
+      <li><strong>D</strong> = 1 point</li>
+      <li><strong>F</strong> = 0 points</li>
+    </ul>
+    
+    <h3>Example Calculation</h3>
+    
+    <div class="table-wrapper">
+      <table aria-describedby="example-table-desc">
+        <caption id="example-table-desc">Example GPA Calculation showing how to compute grade points</caption>
+        <thead>
+          <tr>
+            <th scope="col">Classes</th>
+            <th scope="col">Units</th>
+            <th scope="col" aria-label="multiply">×</th>
+            <th scope="col">Grades</th>
+            <th scope="col">Point Value</th>
+            <th scope="col" aria-label="equals">=</th>
+            <th scope="col">Grade Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Business 120</td>
+            <td>4</td>
+            <td aria-label="multiplied by">×</td>
+            <td>A</td>
+            <td>4</td>
+            <td aria-label="equals">=</td>
+            <td>16</td>
+          </tr>
+          <tr>
+            <td>English 120</td>
+            <td>3</td>
+            <td aria-label="multiplied by">×</td>
+            <td>B</td>
+            <td>3</td>
+            <td aria-label="equals">=</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>History 114</td>
+            <td>3</td>
+            <td aria-label="multiplied by">×</td>
+            <td>C</td>
+            <td>2</td>
+            <td aria-label="equals">=</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>French 120</td>
+            <td>5</td>
+            <td aria-label="multiplied by">×</td>
+            <td>A</td>
+            <td>4</td>
+            <td aria-label="equals">=</td>
+            <td>20</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <p><strong>Totals:</strong> 15 units attempted, 51 total grade points</p>
+    
+    <p class="example-result"><strong>Result:</strong> 51 total grade points ÷ 15 units attempted = <strong>3.40 Grade Point Average</strong></p>
+  </section>
+</article>
+
+<style>
+  /* Form and Layout Styles */
+  .form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .form-group label {
+    flex: 1 1 150px;
+    min-width: 120px;
+    font-weight: 600;
+  }
+  
+  .form-group input {
+    flex: 2 1 250px;
+    min-width: 200px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid #666;
+    border-radius: 4px;
+    max-width: 100%;
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  select:focus {
+    outline: 3px solid #0056b8;
+    outline-offset: 2px;
+    border-color: #0056b8;
+  }
+  
+  /* Table Styles */
+  .table-wrapper {
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+  }
+  
+  th, td {
+    padding: 0.75rem 0.5rem;
+    text-align: left;
+    border: 1px solid #ccc;
+  }
+  
+  thead th {
+    background-color: #1a3c6e;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+  
+  /* Course Table Inputs */
+  .course-input {
+    width: 100%;
+    min-width: 120px;
+    box-sizing: border-box;
+  }
+  
+  .grade-select {
+    width: 100%;
+    min-width: 80px;
+    box-sizing: border-box;
+  }
+  
+  .units-input {
+    width: 100%;
+    min-width: 60px;
+    max-width: 80px;
+    box-sizing: border-box;
+  }
+  
+  .grade-points-output {
+    display: block;
+    padding: 0.5rem;
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+    background-color: #e8f4e8;
+    border-radius: 4px;
+  }
+  
+  /* Results Section */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background-color: #f0f4f8;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid #1a3c6e;
+  }
+  
+  .results-grid dt {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  
+  .results-grid dd {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    color: #1a3c6e;
+  }
+  
+  .gpa-label {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .gpa-value {
+    grid-column: 1 / -1;
+    font-size: 2.5rem;
+    color: #1a3c6e;
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  /* Grade Values List */
+  .grade-values-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 4px;
+  }
+  
+  .grade-values-list li {
+    margin: 0;
+    min-width: 100px;
+  }
+  
+  /* Example Result */
+  .example-result {
+    font-size: 1.1rem;
+    padding: 1rem;
+    background-color: #e8f4e8;
+    border-left: 4px solid #2e7d32;
+    border-radius: 4px;
+  }
+  
+  /* Buttons */
+  button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #1a3c6e;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  button:hover,
+  button:focus {
+    background-color: #0d2847;
+    outline: 3px solid #ffc107;
+    outline-offset: 2px;
+  }
+  
+  .print-button {
+    background-color: #2e7d32;
+  }
+  
+  .print-button:hover,
+  .print-button:focus {
+    background-color: #1b5e20;
+  }
+  
+  /* Print Styles */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+    
+    .grade-points-output {
+      background-color: transparent;
+      border: 1px solid #ccc;
+    }
+    
+    .results-grid {
+      border: 1px solid #000;
+    }
+    
+    button {
+      display: none;
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .form-group {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .form-group label,
+    .form-group input {
+      flex: none;
+      width: 100%;
+    }
+    
+    .grade-values-list {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .results-grid dd {
+      font-size: 1.25rem;
+    }
+    
+    .gpa-value {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  // Calculate grade points for a specific row
+  function calculateRow(rowNum) {
+    const gradeSelect = document.querySelector(`.grade-select[data-row="${rowNum}"]`);
+    const unitsInput = document.querySelector(`.units-input[data-row="${rowNum}"]`);
+    const gradePointsOutput = document.querySelector(`.grade-points-output[data-row="${rowNum}"]`);
+    
+    const gradeValue = parseFloat(gradeSelect.value) || 0;
+    const units = parseFloat(unitsInput.value) || 0;
+    
+    let gradePoints = 0;
+    
+    if (gradeSelect.value !== '' && units > 0) {
+      gradePoints = gradeValue * units;
+      gradePointsOutput.textContent = gradePoints.toFixed(1);
+    } else {
+      gradePointsOutput.textContent = '—';
+    }
+    
+    calculateTotals();
+  }
+  
+  // Calculate total units, grade points, and GPA
+  function calculateTotals() {
+    let totalUnits = 0;
+    let totalGradePoints = 0;
+    
+    const gradeSelects = document.querySelectorAll('.grade-select');
+    
+    gradeSelects.forEach(select => {
+      const rowNum = select.getAttribute('data-row');
+      const unitsInput = document.querySelector(`.units-input[data-row="${rowNum}"]`);
+      
+      const gradeValue = parseFloat(select.value);
+      const units = parseFloat(unitsInput.value) || 0;
+      
+      // Only count if both grade is selected AND units are entered
+      if (select.value !== '' && units > 0) {
+        totalUnits += units;
+        totalGradePoints += gradeValue * units;
+      }
+    });
+    
+    document.getElementById('total-units').textContent = totalUnits.toFixed(1);
+    document.getElementById('total-grade-points').textContent = totalGradePoints.toFixed(1);
+    
+    const gpa = totalUnits > 0 ? (totalGradePoints / totalUnits).toFixed(2) : '0.00';
+    document.getElementById('cumulative-gpa').textContent = gpa;
+  }
+  
+  // Clear all form entries
+  function clearForm() {
+    const form = document.getElementById('gpa-calculator');
+    
+    // Clear text inputs
+    form.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
+      input.value = '';
+    });
+    
+    // Reset selects
+    form.querySelectorAll('select').forEach(select => {
+      select.selectedIndex = 0;
+    });
+    
+    // Reset outputs
+    form.querySelectorAll('.grade-points-output').forEach(output => {
+      output.textContent = '—';
+    });
+    
+    // Reset totals
+    document.getElementById('total-units').textContent = '0';
+    document.getElementById('total-grade-points').textContent = '0';
+    document.getElementById('cumulative-gpa').textContent = '0.00';
+  }
+  
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    calculateTotals();
+  });
+</script>
+  </main>
+
+  <footer role="contentinfo">
+    <p>
+      <strong>Accessibility Statement:</strong>
+      Los Angeles Mission College is committed to making its web content
+      accessible to all users. This page was generated from a document
+      originally published in XLSX format and has been converted
+      to accessible HTML in compliance with WCAG 2.1 Level AA.
+    </p>
+    <p>
+      <a href="https://www.lamission.edu/sites/lamc.edu/files/2023-01/GPA%20Calculator2.xlsx">Download the original document (XLSX)</a>
+      <span aria-hidden="true"> | </span>
+      <a href="https://www.lamission.edu/accessibility">Accessibility Information</a>
+      <span aria-hidden="true"> | </span>
+      <a href="mailto:accessibility@lamission.edu">Report an Accessibility Issue</a>
+    </p>
+    <p>
+      Los Angeles Mission College &bull;
+      13356 Eldridge Avenue, Sylmar, CA 91342 &bull;
+      (818) 364-7600
+    </p>
+  </footer>
+</body>
+</html>

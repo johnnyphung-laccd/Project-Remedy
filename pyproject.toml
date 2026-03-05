@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lamc-adrp"
+version = "0.1.0"
+description = "LAMC ADA Document Remediation Pipeline"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "LAMC Dev Team" },
+]
+
+dependencies = [
+    "crawl4ai>=0.3.0",
+    "aiohttp>=3.9.0",
+    "aiosqlite>=0.20.0",
+    "python-docx>=1.1.0",
+    "python-pptx>=0.6.23",
+    "openpyxl>=3.1.0",
+    "beautifulsoup4>=4.12.0",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.27.0",
+    "playwright>=1.40.0",
+    "rich>=13.7.0",
+    "click>=8.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+]
+
+[project.scripts]
+lamc-adrp = "lamc_adrp.cli:cli"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lamc_adrp"]
+
+[tool.hatch.build.targets.editable]
+packages = ["src/lamc_adrp"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
