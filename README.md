@@ -92,19 +92,19 @@ cp .env.example .env
 
 ```bash
 # Run the full pipeline
-lamc-adrp run
+remedy run
 
 # Or run stages individually
-lamc-adrp crawl       # Discover documents
-lamc-adrp process     # Extract + convert
-lamc-adrp validate    # Run WCAG validation
-lamc-adrp deploy      # Generate output structure
+remedy crawl       # Discover documents
+remedy process     # Extract + convert
+remedy validate    # Run WCAG validation
+remedy deploy      # Generate output structure
 
 # Check progress
-lamc-adrp status
+remedy status
 
 # Retry failed documents
-lamc-adrp retry-failed
+remedy retry-failed
 ```
 
 ### Configuration
@@ -112,8 +112,8 @@ lamc-adrp retry-failed
 Environment variables in `.env`:
 
 ```bash
-ZAI_API_KEY=your-api-key-here
-ZAI_BASE_URL=https://api.example.com/v1
+API_KEY=your-api-key-here
+API_BASE_URL=https://api.example.com/v1
 CRAWL_START_URL=https://www.example.edu/
 CRAWL_MAX_DEPTH=10
 MAX_CONCURRENT_API_CALLS=5
