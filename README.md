@@ -121,6 +121,40 @@ MAX_CONCURRENT_API_CALLS=5
 
 See `config.example.yaml` for additional options.
 
+## Example Outputs
+
+These are real documents converted by the pipeline — each started as an inaccessible PDF, DOCX, or XLSX and was automatically transformed into WCAG 2.1 AA compliant HTML.
+
+### High School Graduation Update Form (PDF)
+A fillable student form converted with labeled inputs, fieldsets, and a print button for physical submission.
+
+![High School Graduation Update Form](examples/screenshots/hs_graduation_form.png)
+
+### Commencement Program 2025 (PDF, 20 pages)
+A multi-page ceremonial program with proper heading hierarchy, graduate lists, and semantic structure.
+
+![Commencement Program 2025](examples/screenshots/commencement_program.png)
+
+### Biology ADT Worksheet (DOCX)
+A degree pathway worksheet with course tables, unit totals, and accessible data cells with proper scope attributes.
+
+![Biology ADT Worksheet](examples/screenshots/biology_adt_worksheet.png)
+
+### GPA Calculator (XLSX)
+A spreadsheet converted into an interactive HTML calculator with JavaScript-powered GPA computation.
+
+![GPA Calculator](examples/screenshots/gpa_calculator.png)
+
+### 2024 Annual Security Report (PDF, 45 pages)
+A lengthy Clery Act report with a navigable table of contents, crime statistics tables, and structured sections.
+
+![2024 Annual Security Report](examples/screenshots/security_report.png)
+
+### ASO Bylaws (DOCX)
+An organizational governance document with 18 articles, nested sections, and internal cross-reference links.
+
+![ASO Bylaws](examples/screenshots/aso_bylaws.png)
+
 ## Output Structure
 
 ```
