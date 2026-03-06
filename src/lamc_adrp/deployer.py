@@ -81,23 +81,33 @@ class OutputDeployer:
         # Deploy each job's HTML
         deployed_jobs: list[DocumentJob] = []
         for job in jobs:
-            if not job.generated_html:
+            rendered_pages = job.get_rendered_pages()
+            if not rendered_pages:
                 logger.warning("Job %s has no generated HTML; skipping", job.id)
                 continue
 
-            html_rel_path = self._url_to_html_path(job.url)
-            html_abs_path = root / html_rel_path
-            html_abs_path.parent.mkdir(parents=True, exist_ok=True)
+            canonical_path: Path | None = None
+            for page in rendered_pages:
+                html_rel_path = page.relative_path or self._url_to_html_path(job.url)
+                html_abs_path = root / html_rel_path
+                html_abs_path.parent.mkdir(parents=True, exist_ok=True)
 
-            # Inject CSS link into the HTML
-            html_content = self._inject_css_link(
-                job.generated_html, html_rel_path
-            )
-            html_abs_path.write_text(html_content, encoding="utf-8")
+                html_content = self._inject_css_link(page.html, html_rel_path)
+                html_abs_path.write_text(html_content, encoding="utf-8")
 
-            job.final_html_path = str(html_abs_path)
+                if page.kind == "canonical":
+                    canonical_path = html_abs_path
+
+                logger.debug(
+                    "Deployed: %s [%s] -> %s",
+                    job.url,
+                    page.page_key,
+                    html_rel_path,
+                )
+
+            if canonical_path is not None:
+                job.final_html_path = str(canonical_path)
             deployed_jobs.append(job)
-            logger.debug("Deployed: %s -> %s", job.url, html_rel_path)
 
         # Generate redirect manifest (JSON + CSV)
         manifest = self.generate_redirect_manifest(deployed_jobs)
@@ -403,15 +413,22 @@ class OutputDeployer:
             }.get(status, "")
 
             axe_count = pa11y_count = lh_count = 0
-            lh_score = "N/A"
+            lh_scores: list[float] = []
             for r in job.validation_results:
                 if r.tool == "axe":
-                    axe_count = len(r.violations)
+                    axe_count += len(r.violations)
                 elif r.tool == "pa11y":
-                    pa11y_count = len(r.violations)
+                    pa11y_count += len(r.violations)
                 elif r.tool == "lighthouse":
-                    lh_count = len(r.violations)
-                    lh_score = f"{r.score:.0f}" if r.score is not None else "N/A"
+                    lh_count += len(r.violations)
+                    if r.score is not None:
+                        lh_scores.append(r.score)
+
+            lh_score = (
+                f"{sum(lh_scores) / len(lh_scores):.0f}"
+                if lh_scores
+                else "N/A"
+            )
 
             cycles = job.remediation_count
 
@@ -610,8 +627,10 @@ body {
 /* --------------------------------------------------------------------------
    Layout
    -------------------------------------------------------------------------- */
+body > header,
 header[role="banner"],
 main,
+body > footer,
 footer[role="contentinfo"] {
   max-width: var(--max-width);
   margin-inline: auto;
@@ -625,33 +644,43 @@ main {
 /* --------------------------------------------------------------------------
    Header
    -------------------------------------------------------------------------- */
+body > header,
 header[role="banner"] {
   border-bottom: 3px solid var(--color-primary);
   padding-bottom: var(--space-md);
   margin-bottom: var(--space-lg);
 }
 
+body > header h1,
 header[role="banner"] h1 {
   color: var(--color-primary);
   margin: 0 0 var(--space-xs);
 }
 
+body > header p,
 header[role="banner"] p {
   color: var(--color-text-muted);
   margin: 0;
 }
 
+header nav[aria-label="Institution"] {
+  max-width: none;
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  border: 0;
+}
+
 /* --------------------------------------------------------------------------
    Navigation
    -------------------------------------------------------------------------- */
-nav {
+body > nav {
   max-width: var(--max-width);
   margin-inline: auto;
   padding: var(--space-sm) var(--space-md);
   border-bottom: 1px solid var(--color-bg-alt);
 }
 
-nav ul {
+body > nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -660,13 +689,13 @@ nav ul {
   gap: var(--space-md);
 }
 
-nav a {
+body > nav a {
   color: var(--color-primary);
   text-decoration: underline;
   font-weight: 600;
 }
 
-nav a:hover {
+body > nav a:hover {
   color: var(--color-accent-dark);
 }
 
@@ -946,6 +975,7 @@ button:hover,
 /* --------------------------------------------------------------------------
    Footer
    -------------------------------------------------------------------------- */
+body > footer,
 footer[role="contentinfo"] {
   border-top: 3px solid var(--color-primary);
   margin-top: var(--space-2xl);
@@ -954,14 +984,185 @@ footer[role="contentinfo"] {
   font-size: 0.875rem;
 }
 
+body > footer a,
 footer a {
   color: var(--color-primary);
 }
 
 /* --------------------------------------------------------------------------
+   Long Document Controls
+   -------------------------------------------------------------------------- */
+.no-print {
+  display: initial;
+}
+
+.document-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.document-controls__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-md);
+  border: 2px solid var(--color-primary);
+  border-radius: 4px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.document-controls__link:hover {
+  background: var(--color-bg-alt);
+}
+
+.document-section-nav {
+  margin: 0 0 var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--color-bg-alt);
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+}
+
+.document-section-nav h2 {
+  margin-top: 0;
+}
+
+.document-section-nav ol {
+  margin: 0;
+  padding-left: var(--space-lg);
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.document-section-nav li {
+  margin-bottom: 0;
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.section-pages {
+  display: inline-flex;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.section-subpage-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.document-section {
+  margin-bottom: var(--space-md);
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  background: var(--color-bg);
+  overflow: clip;
+}
+
+.document-section[open] {
+  box-shadow: 0 0 0 1px rgba(0, 69, 144, 0.15);
+}
+
+.document-section summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: 44px;
+  padding: var(--space-md);
+  cursor: pointer;
+  background: var(--color-bg-alt);
+  font-weight: 700;
+}
+
+.document-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.document-section summary::after {
+  content: "Expand";
+  font-size: 0.875rem;
+  color: var(--color-primary);
+}
+
+.document-section[open] summary::after {
+  content: "Collapse";
+}
+
+.document-section__title {
+  color: var(--color-primary);
+  font-size: 1.125rem;
+}
+
+.document-section__panel {
+  padding: var(--space-lg) var(--space-md);
+}
+
+.document-section__panel > section {
+  margin: 0;
+}
+
+.document-section__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--space-md);
+}
+
+.breadcrumb {
+  margin: 0 0 var(--space-lg);
+}
+
+.breadcrumb__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-muted);
+}
+
+.breadcrumb__list li + li::before {
+  content: "/";
+  margin-right: var(--space-xs);
+  color: var(--color-text-muted);
+}
+
+.companion-pagination {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0;
+  padding: var(--space-md);
+  background: var(--color-bg-alt);
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+}
+
+.companion-pagination > :nth-child(2) {
+  justify-self: center;
+  text-align: center;
+}
+
+.companion-pagination > :last-child {
+  justify-self: end;
+  text-align: right;
+}
+
+.companion-pagination [aria-disabled="true"] {
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
    Sections (alternating backgrounds)
    -------------------------------------------------------------------------- */
-section:nth-of-type(even) {
+main > section:nth-of-type(even) {
   background-color: var(--color-bg-alt);
   padding: var(--space-lg) var(--space-md);
   margin-inline: calc(-1 * var(--space-md));
@@ -1006,14 +1207,36 @@ section:nth-of-type(even) {
   }
 
   .skip-nav,
-  nav {
+  .no-print,
+  body > nav {
     display: none !important;
   }
 
+  body > header,
   header[role="banner"],
   main,
+  body > footer,
   footer[role="contentinfo"] {
     max-width: 100%;
+    padding: 0;
+  }
+
+  .document-section {
+    border: 0;
+    box-shadow: none;
+    margin-bottom: var(--space-lg);
+  }
+
+  .document-section summary {
+    background: transparent;
+    padding: 0 0 var(--space-sm);
+  }
+
+  .document-section summary::after {
+    content: "";
+  }
+
+  .document-section__panel {
     padding: 0;
   }
 
@@ -1093,13 +1316,24 @@ section:nth-of-type(even) {
     font-size: 0.875rem;
   }
 
-  nav ul {
+  body > nav ul {
     flex-direction: column;
     gap: var(--space-sm);
   }
 
   .summary-stats {
     grid-template-columns: 1fr;
+  }
+
+  .document-controls,
+  .companion-pagination {
+    grid-template-columns: 1fr;
+  }
+
+  .companion-pagination > :nth-child(2),
+  .companion-pagination > :last-child {
+    justify-self: start;
+    text-align: left;
   }
 }
 """

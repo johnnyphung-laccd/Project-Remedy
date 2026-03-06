@@ -20,7 +20,12 @@ from typing import Any
 
 from lamc_adrp.config import PipelineConfig
 from lamc_adrp.database import DatabaseManager
-from lamc_adrp.models import DocumentJob, JobStatus, ValidationResult
+from lamc_adrp.models import (
+    DocumentJob,
+    JobStatus,
+    RenderedPage,
+    ValidationResult,
+)
 from lamc_adrp.zai_client import ZAIClient
 
 logger = logging.getLogger(__name__)
@@ -47,6 +52,19 @@ class ValidationReport:
     all_violations: list[dict[str, Any]] = field(default_factory=list)
     passed: bool = False
     summary: str = ""
+
+
+@dataclass
+class PageValidationOutcome:
+    """Validation + remediation result for a single rendered page."""
+
+    page: RenderedPage
+    html: str
+    results: list[ValidationResult]
+    report: ValidationReport
+    passed: bool
+    remediation_count: int = 0
+    error_message: str = ""
 
 
 # ---------------------------------------------------------------------------
@@ -197,6 +215,69 @@ class AccessibilityValidator:
             all_violations=all_violations,
             passed=passed,
             summary=" | ".join(summary_parts),
+        )
+
+    async def validate_rendered_page(
+        self,
+        job: DocumentJob,
+        page: RenderedPage,
+        html_path: Path,
+    ) -> PageValidationOutcome:
+        """Validate and, if needed, auto-remediate a rendered page."""
+        html_path.parent.mkdir(parents=True, exist_ok=True)
+        html_path.write_text(page.html, encoding="utf-8")
+
+        current_html = page.html
+        current_report = await self.validate(html_path)
+        current_results = self._results_for_page(page, current_report)
+        await self._log_page_results(job.id, 0, page, current_results)
+
+        cycle = 0
+        while not current_report.passed and cycle < self._max_cycles:
+            cycle += 1
+            corrected = await self._remediate_html(current_html, current_report)
+            corrected = corrected.strip()
+            corrected = re.sub(r"^```(?:html)?\s*", "", corrected)
+            corrected = re.sub(r"\s*```$", "", corrected)
+            corrected = corrected.strip()
+
+            if not corrected or len(corrected) < 50:
+                logger.warning(
+                    "Remediation cycle %d returned empty/short HTML for %s; "
+                    "keeping previous version",
+                    cycle,
+                    page.page_key,
+                )
+                break
+
+            current_html = corrected
+            html_path.write_text(current_html, encoding="utf-8")
+            current_report = await self.validate(html_path)
+            current_results = self._results_for_page(page, current_report)
+            await self._log_page_results(job.id, cycle, page, current_results)
+
+            logger.info(
+                "Remediation cycle %d for %s: %s",
+                cycle,
+                page.page_key,
+                "PASS" if current_report.passed else "FAIL",
+            )
+
+        error_message = ""
+        if not current_report.passed:
+            error_message = (
+                f"{page.title} failed validation after {cycle} remediation cycle(s). "
+                f"{len(current_report.all_violations)} violation(s) remain."
+            )
+
+        return PageValidationOutcome(
+            page=page,
+            html=current_html,
+            results=current_results,
+            report=current_report,
+            passed=current_report.passed,
+            remediation_count=cycle,
+            error_message=error_message,
         )
 
     async def validate_with_axe(self, html_path: Path) -> ValidationResult:
@@ -479,34 +560,7 @@ class AccessibilityValidator:
                 cycle, self._max_cycles, job.id,
             )
 
-            # Format violations for GLM-5
-            violation_text = self._format_violations_for_llm(
-                current_report.all_violations
-            )
-
-            prompt = _REMEDIATION_PROMPT.format(
-                violations=violation_text,
-                html=current_html,
-            )
-
-            # Send to GLM-5 for correction
-            corrected = await self._zai.chat(
-                messages=[
-                    {
-                        "role": "system",
-                        "content": (
-                            "You are an expert web accessibility remediation "
-                            "specialist. Fix the WCAG violations in the HTML. "
-                            "Return only the corrected HTML."
-                        ),
-                    },
-                    {"role": "user", "content": prompt},
-                ],
-                model="glm-5",
-                thinking=True,
-                max_tokens=32768,
-                temperature=0.2,
-            )
+            corrected = await self._remediate_html(current_html, current_report)
 
             # Clean up the response — strip markdown fences if present
             corrected = corrected.strip()
@@ -549,6 +603,9 @@ class AccessibilityValidator:
                 await self._db.log_validation(
                     job_id=job.id,
                     cycle=cycle,
+                    page_key="canonical",
+                    page_title=job.link_text or "Document",
+                    page_path=job.final_html_path,
                     tool=tool_result.tool,
                     score=tool_result.score,
                     violations=tool_result.violations,
@@ -589,6 +646,80 @@ class AccessibilityValidator:
     # ------------------------------------------------------------------
     # Private helpers
     # ------------------------------------------------------------------
+
+    def _results_for_page(
+        self,
+        page: RenderedPage,
+        report: ValidationReport,
+    ) -> list[ValidationResult]:
+        """Copy a validation report into page-scoped result objects."""
+        return [
+            ValidationResult(
+                tool=result.tool,
+                score=result.score,
+                violations=result.violations,
+                passed=result.passed,
+                page_key=page.page_key,
+                page_title=page.title,
+                page_path=page.relative_path,
+            )
+            for result in (
+                report.axe_result,
+                report.pa11y_result,
+                report.lighthouse_result,
+            )
+        ]
+
+    async def _log_page_results(
+        self,
+        job_id: str,
+        cycle: int,
+        page: RenderedPage,
+        results: list[ValidationResult],
+    ) -> None:
+        """Persist page-scoped validation results to the audit log."""
+        for result in results:
+            await self._db.log_validation(
+                job_id=job_id,
+                cycle=cycle,
+                page_key=page.page_key,
+                page_title=page.title,
+                page_path=page.relative_path,
+                tool=result.tool,
+                score=result.score,
+                violations=result.violations,
+                passed=result.passed,
+            )
+
+    async def _remediate_html(
+        self,
+        html: str,
+        report: ValidationReport,
+    ) -> str:
+        """Ask GLM-5 to fix accessibility issues in a single HTML document."""
+        violation_text = self._format_violations_for_llm(report.all_violations)
+        prompt = _REMEDIATION_PROMPT.format(
+            violations=violation_text,
+            html=html,
+        )
+
+        return await self._zai.chat(
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are an expert web accessibility remediation "
+                        "specialist. Fix the WCAG violations in the HTML. "
+                        "Return only the corrected HTML."
+                    ),
+                },
+                {"role": "user", "content": prompt},
+            ],
+            model="glm-5",
+            thinking=True,
+            max_tokens=32768,
+            temperature=0.2,
+        )
 
     @staticmethod
     def _merge_violations(

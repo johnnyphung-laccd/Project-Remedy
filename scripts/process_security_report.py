@@ -1,55 +1,108 @@
 #!/usr/bin/env python3
-"""Process the LAMC 2024 Annual Security Report through the ADA remediation pipeline.
+"""Process the LAMC 2024 Annual Security Report through the ADA remediation pipeline."""
 
-Downloads the PDF, extracts pages 1-5 via OCR, then generates accessible HTML.
-"""
+from __future__ import annotations
 
+import argparse
 import asyncio
+import base64
 import hashlib
 import sys
 from pathlib import Path
 
-# Project imports
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-
-import base64
-import httpx
 import fitz  # PyMuPDF
+import httpx
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from lamc_adrp.config import load_config
+from lamc_adrp.converter import HTMLConverter
 from lamc_adrp.database import DatabaseManager
 from lamc_adrp.models import DocumentJob, FileType, JobStatus
 from lamc_adrp.zai_client import ZAIClient
-from lamc_adrp.converter import HTMLConverter
 
-# Constants
 DOC_URL = "https://www.lamission.edu/sites/lamc.edu/files/2024-09/2024-Annual-Security-Report.pdf"
 SOURCE_PAGE = "https://lamission.edu/campus-life/campus-safety/sheriffs-office/crime-stats"
 LINK_TEXT = "2024 Annual Security Report"
-PAGES_TO_PROCESS = 5
-OUTPUT_HTML = Path(__file__).resolve().parent.parent / "output" / "test_security_report.html"
-DOWNLOAD_DIR = Path(__file__).resolve().parent.parent / "output" / "downloads" / "pdf"
+DEFAULT_OUTPUT_HTML = REPO_ROOT / "examples" / "test_security_report.html"
+DOWNLOAD_DIR = REPO_ROOT / "output" / "downloads" / "pdf"
+REQUEST_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    ),
+    "Accept": (
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,"
+        "image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    ),
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Download the annual security report, extract OCR, and render the "
+            "full accessible HTML example."
+        ),
+    )
+    parser.add_argument(
+        "--page-limit",
+        type=int,
+        default=None,
+        help="Optional debug limit for OCR extraction. Defaults to the full document.",
+    )
+    parser.add_argument(
+        "--output-html",
+        type=Path,
+        default=DEFAULT_OUTPUT_HTML,
+        help="Canonical output HTML path. Section-only pages are written beside it.",
+    )
+    return parser.parse_args()
+
+
+def _write_rendered_pages(output_html: Path, job: DocumentJob) -> None:
+    output_html.parent.mkdir(parents=True, exist_ok=True)
+    companion_dir = output_html.with_suffix("")
+
+    for page in job.get_rendered_pages():
+        if page.kind == "canonical":
+            target = output_html
+        else:
+            slug = page.section_slug or page.page_key
+            target = companion_dir / f"{slug}.html"
+
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(page.html, encoding="utf-8")
 
 
 async def main() -> None:
-    # ── Step 1: Download the PDF ──────────────────────────────────────
+    args = _parse_args()
+
     print("=" * 70)
     print("STEP 1: Downloading PDF")
     print("=" * 70)
     print(f"  URL: {DOC_URL}")
 
-    async with httpx.AsyncClient(follow_redirects=True, verify=False, timeout=60.0) as http:
+    async with httpx.AsyncClient(
+        follow_redirects=True,
+        verify=False,
+        timeout=60.0,
+        headers=REQUEST_HEADERS,
+    ) as http:
+        await http.get(SOURCE_PAGE)
         resp = await http.get(DOC_URL)
         resp.raise_for_status()
         pdf_bytes = resp.content
 
-    print(f"  Downloaded: {len(pdf_bytes):,} bytes ({len(pdf_bytes)/1024/1024:.1f} MB)")
+    print(f"  Downloaded: {len(pdf_bytes):,} bytes ({len(pdf_bytes) / 1024 / 1024:.1f} MB)")
 
-    # ── Step 2: Save with SHA-256 prefix ──────────────────────────────
     print("\n" + "=" * 70)
     print("STEP 2: Saving PDF with SHA-256 prefix")
     print("=" * 70)
 
+    DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
     file_hash = hashlib.sha256(pdf_bytes).hexdigest()
     safe_name = "2024-Annual-Security-Report.pdf"
     saved_name = f"{file_hash[:16]}_{safe_name}"
@@ -59,25 +112,28 @@ async def main() -> None:
     print(f"  SHA-256: {file_hash}")
     print(f"  Saved to: {saved_path}")
 
-    # ── Step 3: Check page count, confirm we process pages 1-5 ────────
     print("\n" + "=" * 70)
     print("STEP 3: Inspecting PDF with PyMuPDF")
     print("=" * 70)
 
     doc = fitz.open(str(saved_path))
     total_pages = len(doc)
-    print(f"  Total pages: {total_pages}")
-    print(f"  Processing pages: 1-{PAGES_TO_PROCESS} (cover, TOC, intro sections)")
     doc.close()
 
-    # ── Step 4: OCR extraction via ZAIClient ──────────────────────────
+    pages_to_process = total_pages if args.page_limit is None else min(args.page_limit, total_pages)
+    print(f"  Total pages: {total_pages}")
+    if args.page_limit is None:
+        print("  Processing: full document")
+    else:
+        print(f"  Processing: first {pages_to_process} page(s) for debugging")
+
     print("\n" + "=" * 70)
-    print("STEP 4: OCR extraction via ZAIClient (pages 1-5)")
+    print("STEP 4: OCR extraction via ZAIClient")
     print("=" * 70)
 
     cfg = load_config(
-        env_path=Path(__file__).resolve().parent.parent / ".env",
-        yaml_path=Path(__file__).resolve().parent.parent / "config.yaml",
+        env_path=REPO_ROOT / ".env",
+        yaml_path=REPO_ROOT / "config.yaml",
     )
     zai = ZAIClient(cfg)
     await zai.start()
@@ -86,21 +142,20 @@ async def main() -> None:
         doc = fitz.open(str(saved_path))
         all_markdown: list[str] = []
 
-        for page_num in range(PAGES_TO_PROCESS):
+        for page_num in range(pages_to_process):
             page = doc[page_num]
             pix = page.get_pixmap(dpi=200)
             img_bytes = pix.tobytes("png")
             b64 = base64.b64encode(img_bytes).decode()
 
-            print(f"  Processing page {page_num + 1}/{PAGES_TO_PROCESS}...", end=" ", flush=True)
-
+            print(f"  Processing page {page_num + 1}/{pages_to_process}...", end=" ", flush=True)
             page_md = await zai._ocr_single_image(
                 image_b64=b64,
                 mime="image/png",
                 page_hint=f"Page {page_num + 1} of {total_pages}",
             )
-
             all_markdown.append(f"<!-- Page {page_num + 1} -->\n{page_md}")
+
             preview = page_md[:150].replace("\n", " ")
             print(f"OK ({len(page_md)} chars)")
             print(f"    Preview: {preview}...")
@@ -109,11 +164,10 @@ async def main() -> None:
 
         combined_markdown = "\n\n---\n\n".join(all_markdown)
         print(f"\n  Total extracted markdown: {len(combined_markdown):,} chars")
-        print(f"\n  --- MARKDOWN PREVIEW (first 500 chars) ---")
+        print("\n  --- MARKDOWN PREVIEW (first 500 chars) ---")
         print(combined_markdown[:500])
         print("  --- END PREVIEW ---")
 
-        # ── Step 5: Plan and generate accessible HTML ─────────────────
         print("\n" + "=" * 70)
         print("STEP 5: Planning and generating accessible HTML")
         print("=" * 70)
@@ -140,15 +194,13 @@ async def main() -> None:
 
             converter = HTMLConverter(cfg, zai, db)
 
-            # Stage 4: Planning
             print("  Running planning stage (GLM-5 with thinking)...")
             plan = await converter.plan(job)
             print(f"  Plan generated: {len(plan)} chars")
-            print(f"\n  --- PLAN PREVIEW (first 400 chars) ---")
+            print("\n  --- PLAN PREVIEW (first 400 chars) ---")
             print(plan[:400])
             print("  --- END PLAN PREVIEW ---\n")
 
-            # Stage 5: HTML Generation
             print("  Running HTML generation stage (GLM-5 with thinking)...")
             html = await converter.generate(job)
             print(f"  HTML generated: {len(html):,} chars")
@@ -159,22 +211,22 @@ async def main() -> None:
     finally:
         await zai.close()
 
-    # ── Step 6: Save output HTML ──────────────────────────────────────
     print("\n" + "=" * 70)
     print("STEP 6: Saving output HTML")
     print("=" * 70)
 
-    OUTPUT_HTML.write_text(html, encoding="utf-8")
-    print(f"  Saved to: {OUTPUT_HTML}")
-    print(f"  File size: {OUTPUT_HTML.stat().st_size:,} bytes")
+    _write_rendered_pages(args.output_html, job)
+    section_count = sum(1 for page in job.get_rendered_pages() if page.kind == "section")
+    print(f"  Canonical page: {args.output_html}")
+    if section_count:
+        print(f"  Section-only pages: {section_count} in {args.output_html.with_suffix('')}")
 
-    # Token usage summary
     print("\n" + "=" * 70)
     print("DONE - Token Usage Summary")
     print("=" * 70)
     print(f"  Input tokens:  {zai.total_input_tokens:,}")
     print(f"  Output tokens: {zai.total_output_tokens:,}")
-    print(f"  Output file:   {OUTPUT_HTML}")
+    print(f"  Output file:   {args.output_html}")
 
 
 if __name__ == "__main__":

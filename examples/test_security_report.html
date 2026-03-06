@@ -3,461 +3,633 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>2024 Annual Security Report — Los Angeles Mission College</title>
-  <link rel="stylesheet" href="/assets/css/lamc-accessible.css">
+  <title>2024 Annual Security Report - Los Angeles Mission College</title>
   <style>
-    /* Inline fallback styles for accessibility if external CSS fails to load */
-    body {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #1A1A2E;
-      background: #FFFFFF;
-      margin: 0;
-      padding: 0;
-    }
-    .skip-link {
-      position: absolute;
-      top: -100%;
-      left: 0;
-      background: #004590;
-      color: #FFFFFF;
-      padding: 0.75rem 1.5rem;
-      z-index: 10000;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .skip-link:focus {
-      top: 0;
-    }
-    header {
-      background: #004590;
-      color: #FFFFFF;
-      padding: 1rem 2rem;
-    }
-    header a { color: #FFFFFF; text-decoration: underline; }
-    main {
-      max-width: 72ch;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-    }
-    footer {
-      background: #F5F7FA;
-      border-top: 3px solid #004590;
-      padding: 1.5rem 2rem;
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #5A6670;
-    }
-    footer a { color: #004590; }
-    a { color: #004590; text-decoration: underline; }
-    a:focus {
-      outline: 3px solid #FF611A;
-      outline-offset: 2px;
-    }
-    h1 { color: #004590; }
-    table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; }
-    th, td { border: 1px solid #718089; padding: 0.5rem 0.75rem; text-align: left; }
-    th { background: #004590; color: #FFFFFF; }
-    img { max-width: 100%; height: auto; }
-  </style>
+body { font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif; font-size: 1rem; line-height: 1.6; color: #1A1A2E; background: #FFFFFF; margin: 0; }
+.skip-nav { position: absolute; top: -100%; left: 1rem; z-index: 1000; padding: 0.75rem 1.25rem; background: #004590; color: #fff; text-decoration: none; font-weight: 700; }
+.skip-nav:focus { top: 0; }
+header, main, footer { max-width: 72rem; margin: 0 auto; padding: 1.5rem; }
+header { border-bottom: 3px solid #004590; }
+header p { margin: 0.5rem 0 0; color: #4b5b68; }
+main { padding-bottom: 3rem; }
+a { color: #004590; text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #FF611A; outline-offset: 2px; }
+button { min-height: 44px; min-width: 44px; padding: 0.75rem 1rem; border: 2px solid #004590; background: #004590; color: white; border-radius: 4px; font: inherit; font-weight: 700; cursor: pointer; }
+.document-controls { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0; }
+.document-controls__link { display: inline-flex; align-items: center; min-height: 44px; padding: 0.75rem 1rem; border: 2px solid #004590; border-radius: 4px; text-decoration: none; font-weight: 700; }
+.document-section-nav { margin: 0 0 2rem; padding: 1.25rem; background: #F5F7FA; border: 1px solid #d1d5db; border-radius: 6px; }
+.document-section-nav h2 { margin-top: 0; }
+.document-section-nav ol { margin: 0; padding-left: 1.5rem; display: grid; gap: 0.75rem; }
+.document-section-nav li { display: grid; gap: 0.25rem; }
+.document-section { margin-bottom: 1rem; border: 1px solid #d1d5db; border-radius: 6px; overflow: hidden; }
+.document-section summary { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding: 1rem; background: #F5F7FA; cursor: pointer; min-height: 44px; }
+.document-section summary::-webkit-details-marker { display: none; }
+.document-section summary::after { content: "Expand"; color: #004590; font-size: 0.875rem; }
+.document-section[open] summary::after { content: "Collapse"; }
+.document-section__title { font-weight: 700; color: #004590; }
+.document-section__panel { padding: 1rem; }
+.document-section__actions { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.section-pages { color: #5A6670; font-size: 0.875rem; }
+.section-subpage-link { font-size: 0.875rem; font-weight: 600; }
+.report-page { padding-top: 1rem; border-top: 1px solid #e5e7eb; margin-top: 1rem; }
+.report-page:first-of-type { border-top: 0; margin-top: 0; padding-top: 0; }
+.report-page h3 { color: #004590; margin-bottom: 0.5rem; }
+.page-image img { max-width: 100%; height: auto; border: 1px solid #d1d5db; }
+.page-image figcaption { color: #5A6670; font-size: 0.875rem; }
+.breadcrumb__list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.375rem; padding: 0; margin: 1rem 0 1.5rem; color: #5A6670; }
+.breadcrumb__list li + li::before { content: "/"; margin-right: 0.375rem; }
+.companion-pagination { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; align-items: center; margin: 1.5rem 0; padding: 1rem; background: #F5F7FA; border: 1px solid #d1d5db; border-radius: 6px; }
+.companion-pagination > :nth-child(2) { text-align: center; }
+.companion-pagination > :last-child { text-align: right; }
+footer { border-top: 3px solid #004590; color: #5A6670; font-size: 0.9rem; }
+.no-print { display: initial; }
+@media print { .no-print { display: none !important; } .document-section { border: 0; } .document-section summary::after { content: ""; } }
+@media (max-width: 48rem) { .companion-pagination { grid-template-columns: 1fr; } .companion-pagination > :nth-child(2), .companion-pagination > :last-child { text-align: left; } }
+</style>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
-  <header role="banner">
-    <nav aria-label="Institution">
-      <strong>Los Angeles Mission College</strong>
-      &nbsp;|&nbsp;
-      <span>Los Angeles Community College District</span>
-    </nav>
+  <a href="#main-content" class="skip-nav">Skip to main content</a>
+  <header>
+    <nav aria-label="Institution"><strong>Los Angeles Mission College</strong> | <span>Los Angeles Community College District</span></nav>
     <p>2024 Annual Security Report</p>
   </header>
-
-  <main id="main-content" role="main">
+  <main id="main-content">
+<div class="document-controls no-print"><button type="button" onclick="window.print()">Print This Page</button><button type="button" data-action="expand-all">Expand all sections</button><button type="button" data-action="collapse-all">Collapse all sections</button></div>
 <h1>2024 Annual Security Report</h1>
-
-<div class="no-print" style="margin: 1.5rem 0;">
- <button type="button" onclick="window.print()" style="padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer;">Print This Page</button>
-</div>
-
-<section id="presidents-message">
- <h2>President's Message</h2>
- 
- <figure>
-  <img src="president-portrait.jpg" alt="Portrait of Dr. Arminda Ornelas, Interim President, with long brown hair, wearing a white blazer and a patterned blouse, smiling">
-  <figcaption>Dr. Arminda Ornelas, Ph.D., Interim President</figcaption>
- </figure>
- 
- <p>Los Angeles Mission College is committed to providing a safe environment for students, staff, and visitors on its campus. The College is working diligently to provide trainings and information to students, faculty, and staff and what to do in emergency situations. Our Everbridge Alert System allows us to notify students, faculty, and staff by phone calls and text messages in case of an emergency situation.</p>
- 
- <p>The Sheriff's Office is responsible for various aspects of the campus including parking enforcement, building access, public safety, and providing safety escort services to and from buildings and parking lots. Security Officers patrol 24 hours a day, seven days a week to respond to incidents. The Sheriff's Office can be reached at <a href="tel:818-364-7843">818-364-7843</a>.</p>
- 
- <p>Thank you for your continued support and feedback on how to keep our campus safe.</p>
- 
- <p><strong>Dr. Arminda Ornelas, Ph.D.</strong><br>
- <em>Interim President</em></p>
-</section>
-
-<nav aria-label="Table of Contents">
- <h2>Table of Contents</h2>
- 
- <ol style="list-style-type: upper-roman; padding-left: 2rem; line-height: 1.8;">
-  <li><a href="#preparation">Preparation of Crime Statistics</a></li>
-  <li><a href="#crime-stats">Crime Statistics</a></li>
-  <li><a href="#timely-warning">Timely Warning Policy</a></li>
-  <li><a href="#report-crime">How to Report Crime</a></li>
-  <li><a href="#security-access">Security and Access to Campus Facilities</a></li>
-  <li><a href="#campus-law-enforcement">Campus Law Enforcement</a></li>
-  <li><a href="#security-programs">Programs Regarding Security Procedures and Practices</a></li>
-  <li><a href="#prevention-programs">Programs Regarding Prevention of Crimes</a></li>
-  <li><a href="#monitoring">Monitoring of Criminal Activities Off-Campus</a></li>
-  <li><a href="#alcohol-drugs">Policy Regarding Possession, Use, and Sale of Alcoholic Beverages and Illicit Drugs</a></li>
-  <li><a href="#victim-disclosures">Disclosures to the Alleged Victim of a Crime of Violence or a Non-Forcible Sex Offense</a></li>
-  <li><a href="#dating-violence">Dating Violence, Domestic Violence, Sexual Assault and Stalking</a></li>
-  <li><a href="#sex-offenders">Information Regarding Sex Offenders</a></li>
-  <li><a href="#emergency-response">Emergency Response and Evacuation Procedures</a>
-   <ul style="list-style-type: none; padding-left: 1.5rem; margin-top: 0.25rem;">
-    <li><a href="#emergency-notification">Emergency Notification Procedures</a></li>
-    <li><a href="#testing">Testing of Procedures</a></li>
-   </ul>
-  </li>
-  <li><a href="#appendix-a">Appendix A: California Definitions of Dating Violence, Domestic Violence, Sexual Assault, and Stalking</a></li>
-  <li><a href="#ca-sexual-assault">California Definition of Sexual Assault</a></li>
-  <li><a href="#ca-stalking">California Definition of Stalking (Penal Code section 646.9)</a></li>
-  <li><a href="#campus-map">Campus Map</a></li>
-  <li><a href="#evacuation-map">Campus Evacuation Map</a></li>
-  <li><a href="#college-admin">College Administration</a></li>
-  <li><a href="#laccd-admin">LACCD Administration</a></li>
- </ol>
-</nav>
-
-<section id="preparation">
- <h2>I. Preparation of Crime Statistics</h2>
- 
- <p>The following crime statistics for Los Angeles Mission College have been compiled by the Los Angeles County Sheriff's Department, in conjunction with local law enforcement agencies surrounding the campus.</p>
- 
- <p>Campus crime, arrest and referral statistics include those reported to the Los Angeles County Sheriff's Department, campus security authorities, and local law enforcement agencies. The attached "Clery Act Definitions—Locations and Crime Categories" page includes definitions of "on campus," "non-campus" and "public property," and the crime categories required for disclosure under the Clery Act.</p>
- 
- <p>Los Angeles Mission College has certain mandatory crime reporting obligations under state law. The Child Abuse Neglect and Reporting Act ("CANRA," Penal Code section 11164 <span lang="la">et seq.</span>) requires employees to report known or suspected instances of child abuse or neglect to law enforcement. Penal Code section 11160 requires prompt, mandatory reporting to law enforcement by health care practitioners (such as employees or contractors in the Student Health Center) when they provide medical services to a person they know or reasonably suspect is suffering from wounds inflicted by a firearm or are the result of assaultive or abusive conduct. Crime analysts from the Los Angeles Sheriff's Department ensure the statistics are placed in the appropriate geographic and crime categories pursuant to the Clery Act.</p>
-</section>
-
-<section id="crime-stats">
- <h2>II. Crime Statistics</h2>
- 
- <header style="text-align: center; margin-bottom: 1.5rem;">
-  <p><strong>LOS ANGELES COUNTY SHERIFF'S DEPARTMENT</strong></p>
-  <p><strong>COMMUNITY COLLEGE BUREAU</strong></p>
-  <p><strong>2021 TO 2023 CLERY ACT CRIME STATISTICS</strong></p>
-  <p><strong>LOS ANGELES MISSION COLLEGE</strong></p>
-  <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem;">
-   <img src="sheriff-badge.png" alt="" role="presentation">
-   <img src="ccs-shield.png" alt="" role="presentation">
-  </div>
- </header>
- 
- <div class="table-wrapper" style="overflow-x: auto;">
-  <table>
-   <caption>Clery Act Crime Statistics for Los Angeles Mission College, 2021-2023</caption>
-   <thead>
-    <tr>
-     <th rowspan="2" scope="col">Offense</th>
-     <th colspan="3" scope="colgroup">On Campus</th>
-     <th colspan="3" scope="colgroup">Non-Campus</th>
-     <th colspan="3" scope="colgroup">Public Property</th>
-    </tr>
-    <tr>
-     <th scope="col">2021</th>
-     <th scope="col">2022</th>
-     <th scope="col">2023</th>
-     <th scope="col">2021</th>
-     <th scope="col">2022</th>
-     <th scope="col">2023</th>
-     <th scope="col">2021</th>
-     <th scope="col">2022</th>
-     <th scope="col">2023</th>
-    </tr>
-   </thead>
-   <tbody>
-    <tr>
-     <th scope="row">Murder / Non-Negligent Manslaughter</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Negligent Manslaughter</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row" style="font-weight: 700;">Sexual Assault (Sex Offenses)</th>
-     <td>0</td><td>1</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row" style="padding-left: 1.5rem; font-weight: normal; font-style: italic;">Rape</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row" style="padding-left: 1.5rem; font-weight: normal; font-style: italic;">Fondling</th>
-     <td>0</td><td>1</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row" style="padding-left: 1.5rem; font-weight: normal; font-style: italic;">Incest</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row" style="padding-left: 1.5rem; font-weight: normal; font-style: italic;">Statutory Rape</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Robbery</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Aggravated Assault</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Burglary</th>
-     <td>2</td><td>4</td><td>2</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Motor Vehicle Theft</th>
-     <td>2</td><td>1</td><td>3</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Arson</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Domestic Violence</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Dating Violence</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Stalking</th>
-     <td>0</td><td>0</td><td>1</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Weapons: Carrying, Possessing, Etc. — Arrests</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Weapons: Carrying, Possessing, Etc. — Disciplinary Referrals</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Drug Abuse Violations — Arrests</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Drug Abuse Violations — Disciplinary Referrals</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Liquor Law Violations — Arrests</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-    <tr>
-     <th scope="row">Liquor Law Violations — Disciplinary Referrals</th>
-     <td>0</td><td>0</td><td>0</td>
-     <td>N/A</td><td>N/A</td><td>N/A</td>
-     <td>0</td><td>0</td><td>0</td>
-    </tr>
-   </tbody>
-   <tfoot>
-    <tr>
-     <td colspan="10" style="padding: 1rem; font-size: 0.9rem;">
-      <p><strong>Date:</strong> 9/17/2024</p>
-      <p><strong>Data Sources:</strong> LASD LARCIS, LASD Arrest Query Tool, LAPD Discovery Unit, and Campus Security Authorities.</p>
-      <p><strong>Note:</strong> There are no Residential Facilities or Non-Campus locations associated with Los Angeles Mission College. Statistics presented on this report were gathered in accordance with the Clery Act. They may vary from LASD, CCS YIR, UCR, and other reports.</p>
-      <p><strong>Note:</strong> For 2021-2023, information obtained from LAPD's Discovery Unit was insufficient for determining if crimes occurred within the Clery geography. As a result, LAPD statistics are excluded from the above table.</p>
-     </td>
-    </tr>
-   </tfoot>
-  </table>
- </div>
- 
- <section id="hate-crimes">
-  <h3>Hate Crimes</h3>
-  <ul>
-   <li><strong>2021:</strong> There were no reported hate crimes.</li>
-   <li><strong>2022:</strong> There were no reported hate crimes.</li>
-   <li><strong>2023:</strong> There were no reported hate crimes.</li>
-  </ul>
- </section>
-</section>
-
-<section id="timely-warning">
- <h2>III. Timely Warning Policy</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="report-crime">
- <h2>IV. How to Report Crime</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="security-access">
- <h2>V. Security and Access to Campus Facilities</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="campus-law-enforcement">
- <h2>VI. Campus Law Enforcement</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="security-programs">
- <h2>VII. Programs Regarding Security Procedures and Practices</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="prevention-programs">
- <h2>VIII. Programs Regarding Prevention of Crimes</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="monitoring">
- <h2>IX. Monitoring of Criminal Activities Off-Campus</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="alcohol-drugs">
- <h2>X. Policy Regarding Possession, Use, and Sale of Alcoholic Beverages and Illicit Drugs</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="victim-disclosures">
- <h2>XI. Disclosures to the Alleged Victim of a Crime of Violence or a Non-Forcible Sex Offense</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="dating-violence">
- <h2>XII. Dating Violence, Domestic Violence, Sexual Assault and Stalking</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="sex-offenders">
- <h2>XIII. Information Regarding Sex Offenders</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="emergency-response">
- <h2>XIV. Emergency Response and Evacuation Procedures</h2>
- 
- <section id="emergency-notification">
-  <h3>Emergency Notification Procedures</h3>
-  <p><em>Content continues in full document.</em></p>
- </section>
- 
- <section id="testing">
-  <h3>Testing of Procedures</h3>
-  <p><em>Content continues in full document.</em></p>
- </section>
-</section>
-
-<section id="appendix-a">
- <h2>XV. Appendix A: California Definitions of Dating Violence, Domestic Violence, Sexual Assault, and Stalking</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="ca-sexual-assault">
- <h2>XVI. California Definition of Sexual Assault</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="ca-stalking">
- <h2>XVII. California Definition of Stalking (Penal Code section 646.9)</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="campus-map">
- <h2>XVIII. Campus Map</h2>
- <p><em>Map continues in full document.</em></p>
-</section>
-
-<section id="evacuation-map">
- <h2>XIX. Campus Evacuation Map</h2>
- <p><em>Map continues in full document.</em></p>
-</section>
-
-<section id="college-admin">
- <h2>XX. College Administration</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<section id="laccd-admin">
- <h2>XXI. LACCD Administration</h2>
- <p><em>Content continues in full document.</em></p>
-</section>
-
-<div class="no-print" style="margin-top: 2rem; padding: 1rem; background-color: #f5f5f5; border-radius: 4px;">
- <p><strong>Note:</strong> This is an accessible HTML conversion of the Los Angeles Mission College 2024 Annual Security Report. For the complete document including all sections, maps, and appendices, please refer to the <a href="https://www.lamission.edu/sites/lamc.edu/files/2024-09/2024-Annual-Security-Report.pdf" target="_blank" rel="noopener noreferrer" aria-label="Original PDF document (opens in new window)">original PDF document (opens in new window)</a>.</p>
-</div>
+<p>This example now includes the full source document. The canonical page keeps every section together, and the companion pages provide smaller ADA-compliant reading views for long-document navigation.</p>
+<article class="report-page" aria-labelledby="page-1-heading">
+<h3 id="page-1-heading">Source Page 1</h3>
+<figure class="page-image"><img src="test_security_report_assets/page-001.png" alt="Rendered page 1 from the 2024 Annual Security Report."><figcaption>Rendered PDF page 1 preserved as an image because the source page is primarily visual or table-based.</figcaption></figure>
+<p>LOS ANGELES MISSION COLLEGE</p>
+<p>ANNUAL SECURITY REPORT</p>
+<p>2024</p>
+</article>
+<article class="report-page" aria-labelledby="page-2-heading">
+<h3 id="page-2-heading">Source Page 2</h3>
+<p>President&#x27;s Message</p>
+<p>Los Angeles Mission College is committed to providing a safe environment for students, staff, and visitors on its campus. The College is working diligently to provide trainings and information to students, faculty, and staff and what to do in emergency situations. Our Everbridge Alert System allows us to notify students, faculty, and staff by phone calls and text messages in case of an emergency situation.</p>
+<p>The Sheriff&#x27;s Office is responsible for various aspects of the campus including parking enforcement, building access, public safety, and providing safety escort services to and from buildings and parking lots. Security Officers patrol 24 hours a day, seven days a week to respond to incidents. The Sheriff&#x27;s Office can be reached at 818-364-7843.</p>
+<p>Thank you for your continued support and feedback on how to keep our campus safe.</p>
+<p>Dr. Arminda Ornelas, Ph.D. Interim, President</p>
+</article>
+<article class="report-page" aria-labelledby="page-3-heading">
+<h3 id="page-3-heading">Source Page 3</h3>
+<p>Table of Contents I. PREPARATION of CRIME STATISTICS............................. 4 II. CRIME STATISTICS........................................... 5 III. TIMELY WARNING POLICY..................................... 8 IV. HOW TO REPORT CRIME........................................ 9 V. SECURITY AND ACCESS TO CAMPUS FACILITIES.................... 9 VI. CAMPUS LAW ENFORCEMENT.................................... 10 VII. PROGRAMS REGARDING SECURITY PROCEDURES AND PRACTICES..... 11 VIII. PROGRAMS REGARDING PREVENTION OF CRIMES................. 11 IX. MONITORING OF CRIMINAL ACTIVITIES OFF-CAMPUS.............. 12 X. POLICY REGARDING POSSESSION, USE, AND SALE OF ALCOHOLIC BEVERAGES AND ILLICIT DRUGS................................... 12 XI. DISCLOSURES TO THE ALLEGED VICTIM OF A CRIME OF VIOLENCE OR A NON-FORCIBLE SEX OFFENSE.................................... 13 XII. DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT AND STALKING...................................................... 14 XIII. INFORMATION REGARDING SEX OFFENDERS..................... 22 XIV. EMERGENCY RESPONSE AND EVACUATION PROCEDURES............. 22 Emergency Notification Procedures .................................. 22 Testing of Procedures......................................... 23 XV. APPENDIX A. CALIFORNIA DEFINITIONS OF DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT, AND STALKING............... 25 XVI. CALIFORNIA DEFINITION OF SEXUAL ASSAULT ................ 30 XVII. CALIFORNIA DEFINITION OF STALKING (Penal Code section 646.9)........................................................ 41 XVIII. Campus Map............................................. 43 XVIX. Campus Evacuation Map................................... 44 XX. College Administration.................................... 45 XXI. LACCD Administration..................................... 45</p>
+</article>
+<nav class="document-section-nav no-print" aria-labelledby="document-section-nav-heading"><h2 id="document-section-nav-heading">Document sections</h2><ol><li><a href="#i-preparation-of-crime-statistics">I. PREPARATION of CRIME STATISTICS</a><span class="section-pages">Source page 4</span><a class="section-subpage-link" href="test_security_report/i-preparation-of-crime-statistics.html">Section-only page</a></li><li><a href="#ii-crime-statistics">II. CRIME STATISTICS</a><span class="section-pages">Source pages 5-7</span><a class="section-subpage-link" href="test_security_report/ii-crime-statistics.html">Section-only page</a></li><li><a href="#iii-timely-warning-policy">III. TIMELY WARNING POLICY</a><span class="section-pages">Source page 8</span><a class="section-subpage-link" href="test_security_report/iii-timely-warning-policy.html">Section-only page</a></li><li><a href="#iv-how-to-report-crime">IV. HOW TO REPORT CRIME / V. SECURITY AND ACCESS TO CAMPUS FACILITIES</a><span class="section-pages">Source page 9</span><a class="section-subpage-link" href="test_security_report/iv-how-to-report-crime.html">Section-only page</a></li><li><a href="#vi-campus-law-enforcement">VI. CAMPUS LAW ENFORCEMENT</a><span class="section-pages">Source page 10</span><a class="section-subpage-link" href="test_security_report/vi-campus-law-enforcement.html">Section-only page</a></li><li><a href="#vii-programs-regarding-security-procedures-and-practices">VII. PROGRAMS REGARDING SECURITY PROCEDURES AND PRACTICES / VIII. PROGRAMS REGARDING PREVENTION OF CRIMES</a><span class="section-pages">Source page 11</span><a class="section-subpage-link" href="test_security_report/vii-programs-regarding-security-procedures-and-practices.html">Section-only page</a></li><li><a href="#ix-monitoring-of-criminal-activities-off-campus">IX. MONITORING OF CRIMINAL ACTIVITIES OFF-CAMPUS / X. POLICY REGARDING POSSESSION, USE, AND SALE OF ALCOHOLIC BEVERAGES AND ILLICIT DRUGS</a><span class="section-pages">Source page 12</span><a class="section-subpage-link" href="test_security_report/ix-monitoring-of-criminal-activities-off-campus.html">Section-only page</a></li><li><a href="#xi-disclosures-to-the-alleged-victim-of-a-crime-of-violence-or-a-non-forcible-sex-offense">XI. DISCLOSURES TO THE ALLEGED VICTIM OF A CRIME OF VIOLENCE OR A NON-FORCIBLE SEX OFFENSE</a><span class="section-pages">Source page 13</span><a class="section-subpage-link" href="test_security_report/xi-disclosures-to-the-alleged-victim-of-a-crime-of-violence-or-a-non-forcible-sex-offense.html">Section-only page</a></li><li><a href="#xii-dating-violence-domestic-violence-sexual-assault-and-stalking">XII. DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT AND STALKING</a><span class="section-pages">Source pages 14-21</span><a class="section-subpage-link" href="test_security_report/xii-dating-violence-domestic-violence-sexual-assault-and-stalking.html">Section-only page</a></li><li><a href="#xiii-information-regarding-sex-offenders">XIII. INFORMATION REGARDING SEX OFFENDERS</a><span class="section-pages">Source page 22</span><a class="section-subpage-link" href="test_security_report/xiii-information-regarding-sex-offenders.html">Section-only page</a></li><li><a href="#xiv-emergency-response-and-evacuation-procedures-22-emergency-notification-procedures-22-testing-of-procedures">XIV. EMERGENCY RESPONSE AND EVACUATION PROCEDURES............. 22 Emergency Notification Procedures .................................. 22 Testing of Procedures</a><span class="section-pages">Source pages 23-24</span><a class="section-subpage-link" href="test_security_report/xiv-emergency-response-and-evacuation-procedures-22-emergency-notification-procedures-22-testing-of-procedures.html">Section-only page</a></li><li><a href="#xv-appendix-a-california-definitions-of-dating-violence-domestic-violence-sexual-assault-and-stalking">XV. APPENDIX A. CALIFORNIA DEFINITIONS OF DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT, AND STALKING</a><span class="section-pages">Source pages 25-29</span><a class="section-subpage-link" href="test_security_report/xv-appendix-a-california-definitions-of-dating-violence-domestic-violence-sexual-assault-and-stalking.html">Section-only page</a></li><li><a href="#xvi-california-definition-of-sexual-assault">XVI. CALIFORNIA DEFINITION OF SEXUAL ASSAULT</a><span class="section-pages">Source pages 30-40</span><a class="section-subpage-link" href="test_security_report/xvi-california-definition-of-sexual-assault.html">Section-only page</a></li><li><a href="#xvii-california-definition-of-stalking-penal-code-section-646-9">XVII. CALIFORNIA DEFINITION OF STALKING (Penal Code section 646.9)</a><span class="section-pages">Source pages 41-42</span><a class="section-subpage-link" href="test_security_report/xvii-california-definition-of-stalking-penal-code-section-646-9.html">Section-only page</a></li><li><a href="#xviii-campus-map">XVIII. Campus Map</a><span class="section-pages">Source page 43</span><a class="section-subpage-link" href="test_security_report/xviii-campus-map.html">Section-only page</a></li><li><a href="#xvix-campus-evacuation-map">XVIX. Campus Evacuation Map</a><span class="section-pages">Source page 44</span><a class="section-subpage-link" href="test_security_report/xvix-campus-evacuation-map.html">Section-only page</a></li><li><a href="#xx-college-administration">XX. College Administration / XXI. LACCD Administration</a><span class="section-pages">Source page 45</span><a class="section-subpage-link" href="test_security_report/xx-college-administration.html">Section-only page</a></li></ol></nav>
+<details class="document-section" id="i-preparation-of-crime-statistics-details" open><summary><span class="document-section__title">I. PREPARATION of CRIME STATISTICS</span><span class="section-pages">Source page 4</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="I. PREPARATION of CRIME STATISTICS section actions"><a href="test_security_report/i-preparation-of-crime-statistics.html">Open section-only page</a></nav><section id="i-preparation-of-crime-statistics" aria-labelledby="i-preparation-of-crime-statistics-heading"><h2 id="i-preparation-of-crime-statistics-heading">I. PREPARATION of CRIME STATISTICS</h2><p class="section-pages">Source page 4</p><article class="report-page" aria-labelledby="page-4-heading">
+<h3 id="page-4-heading">Source Page 4</h3>
+<p>I. PREPARATION of CRIME STATISTICS</p>
+<p>The following crime statistics for Los Angeles Mission College have been compiled by the Los Angeles County Sheriff&#x27;s Department, in conjunction with local law enforcement agencies surrounding the campus.</p>
+<p>Campus crime, arrest and referral statistics include those reported to the Los Angeles County Sheriff&#x27;s Department, campus security authorities, and local law enforcement agencies. The attached “Clery Act Definitions-Locations and Crime Categories” page includes definitions of “on campus,” “non-campus” and “public property,” and the crime categories required for disclosure under the Clery Act.</p>
+<p>Los Angeles Mission College has certain mandatory crime reporting obligations under state law. The Child Abuse Neglect and Reporting Act (“CANRA,” Penal Code section 11164 et seq.) requires employees to report known or suspected instances of child abuse or neglect to law enforcement. Penal Code section 11160 requires prompt, mandatory reporting to law enforcement by health care practitioners (such as employees or contractors in the Student Health Center) when they provide medical services to a person they know or reasonably suspect is suffering from wounds inflicted by a firearm or are the result of assaultive or abusive conduct. Crime analysts from the Los Angeles Sheriff&#x27;s Department ensure the statistics are placed in the appropriate geographic and crime categories pursuant to the Clery Act.</p>
+</article></section></div></details>
+<details class="document-section" id="ii-crime-statistics-details"><summary><span class="document-section__title">II. CRIME STATISTICS</span><span class="section-pages">Source pages 5-7</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="II. CRIME STATISTICS section actions"><a href="test_security_report/ii-crime-statistics.html">Open section-only page</a></nav><section id="ii-crime-statistics" aria-labelledby="ii-crime-statistics-heading"><h2 id="ii-crime-statistics-heading">II. CRIME STATISTICS</h2><p class="section-pages">Source pages 5-7</p><article class="report-page" aria-labelledby="page-5-heading">
+<h3 id="page-5-heading">Source Page 5</h3>
+<figure class="page-image"><img src="test_security_report_assets/page-005.png" alt="Rendered page 5 from the 2024 Annual Security Report."><figcaption>Rendered PDF page 5 preserved as an image because the source page is primarily visual or table-based.</figcaption></figure>
+<p>II. CRIME STATISTICS</p>
+</article><article class="report-page" aria-labelledby="page-6-heading">
+<h3 id="page-6-heading">Source Page 6</h3>
+<figure class="page-image"><img src="test_security_report_assets/page-006.png" alt="Rendered page 6 from the 2024 Annual Security Report."><figcaption>Rendered PDF page 6 preserved as an image because the source page is primarily visual or table-based.</figcaption></figure>
+</article><article class="report-page" aria-labelledby="page-7-heading">
+<h3 id="page-7-heading">Source Page 7</h3>
+<figure class="page-image"><img src="test_security_report_assets/page-007.png" alt="Rendered page 7 from the 2024 Annual Security Report."><figcaption>Rendered PDF page 7 preserved as an image because the source page is primarily visual or table-based.</figcaption></figure>
+</article></section></div></details>
+<details class="document-section" id="iii-timely-warning-policy-details"><summary><span class="document-section__title">III. TIMELY WARNING POLICY</span><span class="section-pages">Source page 8</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="III. TIMELY WARNING POLICY section actions"><a href="test_security_report/iii-timely-warning-policy.html">Open section-only page</a></nav><section id="iii-timely-warning-policy" aria-labelledby="iii-timely-warning-policy-heading"><h2 id="iii-timely-warning-policy-heading">III. TIMELY WARNING POLICY</h2><p class="section-pages">Source page 8</p><article class="report-page" aria-labelledby="page-8-heading">
+<h3 id="page-8-heading">Source Page 8</h3>
+<p>III. TIMELY WARNING POLICY</p>
+<p>When a crime is reported to the campus Sheriff&#x27;s personnel or the campus administration that, has occurred within the Clery geography, and in the judgment of the campus administration or Sheriff&#x27;s Security personnel poses a serious or ongoing threat, a campus-wide “timely warning” will be issued.</p>
+<p>The warning will be issued through Los Angeles Mission College&#x27;s Everbridge Communication System via e-mail, voice mail, text message system, etc. to students, faculty and staff. The Vice President of Administrative Services will be responsible for disseminating the message to students, faculty and staff. In addition, campus Sheriff personnel will print and post the timely warning message on the public bulletin boards located throughout the campus.</p>
+<p>Anyone with information warranting a timely warning should contact the Sheriff&#x27;s Department by phone to 818-364-7843 or in person at the Sheriff&#x27;s Office at the Campus Sheriff bungalow.</p>
+<p>Los Angeles Mission College will publish warnings to the campus community about the following crimes: Criminal homicide - murder and non-negligent manslaughter; Criminal homicide - negligent manslaughter; Sex offenses - forcible and non-forcible sex offenses; Domestic violence, dating violence and stalking; Robbery; Aggravated assault; Burglary; Motor vehicle theft; Arson; Arrests for liquor law violations, drug law violations, and illegal weapons possession; Persons who were not arrested for liquor law violations, drug law violations, and illegal weapons possession, but who were referred for campus disciplinary action for same; Crimes that manifest evidence that the victim was intentionally selected because of the victim&#x27;s actual or perceived race, gender, religion, sexual orientation, ethnicity, or disability and involve larceny-theft, simple assault, intimidation; destruction/damage/vandalism of property, or any other crime involving bodily injury; Those reported to campus Sheriffs&#x27; personnel; and Those that are considered to represent a continuing threat to other students and employees.</p>
+<p>In the event that a situation arises, either on or off campus, that, in the judgment of the campus Sheriff&#x27;s personnel, constitutes an ongoing or continuing threat, a campus wide “timely warning” will be issued. The warning will be issued through the college&#x27;s website. The information shall be disseminated by the administrative Vice President or his designee in a manner that aids the prevention of similar crimes.</p>
+<p>Depending on the particular circumstances of the crime, especially in all situations that could pose an immediate threat to the community and individuals, the campus Sheriff&#x27;s personnel may post notices. Anyone with information warranting a timely warning should report the circumstances to the campus Sheriff&#x27;s, by phone 818-364-7843 or in person at the Campus Sheriff Office bungalow</p>
+<p>The District shall not be required to provide a timely warning with respect to crimes reported to a pastoral or professional counselor.</p>
+</article></section></div></details>
+<details class="document-section" id="iv-how-to-report-crime-details"><summary><span class="document-section__title">IV. HOW TO REPORT CRIME / V. SECURITY AND ACCESS TO CAMPUS FACILITIES</span><span class="section-pages">Source page 9</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="IV. HOW TO REPORT CRIME / V. SECURITY AND ACCESS TO CAMPUS FACILITIES section actions"><a href="test_security_report/iv-how-to-report-crime.html">Open section-only page</a></nav><section id="iv-how-to-report-crime" aria-labelledby="iv-how-to-report-crime-heading"><h2 id="iv-how-to-report-crime-heading">IV. HOW TO REPORT CRIME / V. SECURITY AND ACCESS TO CAMPUS FACILITIES</h2><p class="section-pages">Source page 9</p><article class="report-page" aria-labelledby="page-9-heading">
+<h3 id="page-9-heading">Source Page 9</h3>
+<p>If there is an immediate threat to the health or safety of students or employees occurring on campus, the District shall follow its emergency notification procedures.</p>
+<p>IV. HOW TO REPORT CRIME</p>
+<p>To report a crime, please contact the campus Sheriff&#x27;s station at 818-364-7843 or use the blue emergency telephones located throughout the campus. To use the emergency phones simply press the button on the front of the phone box to be connected to the Campus Sheriff&#x27;s Office.</p>
+<p>You may also report crime to the following campus officials who are designated as campus security authorities:</p>
+<p>Position Name Phone Location President Dr. Armida Ornelas (818) 364-7795 SSAB 321E Vice President, Academic Affairs Dr. Laura Cantu (818) 364-7623 SSAB305D Dean of Institutional Effectiveness Dr. Sarah Master (818) 364-7788 SSAB 305B Dean of Academic Affairs Fabiola Mora (818) 364-7644 LRC 232 Dean of Academic Affairs Dr. Farisa Morales (818) 364-7848 CMS 039 Dean of Academic Affairs Marla Uliana (818) 364-7729 Instructional Building Dean of Academic Affairs Tara Ward-Thompson (818) 364-7804 Instructional Building Dean of Student Services Carlos Gonzalez (818) 364-7778 SSAB, 205J Dean of Student Services Dr. Austin Kemie (818) 364-7842 SSAB, 102B Dean of Student Services Ludi Villegas-Vidal (818) 364-7643 SSAB, 202A</p>
+<p>The District does not allow victims or witnesses to report crimes on a voluntary, confidential basis for inclusion in the annual disclosure of crime statistics.</p>
+<p>Police reports are considered public records under state law, and reports of crime cannot be held in complete confidence. However, victims of sexual violence may request to law enforcement that their names not become a matter of public record. (Penal Code section 293.) V. SECURITY AND ACCESS TO CAMPUS FACILITIES</p>
+<p>No visitor on campus shall attend a college activity limited to college personnel without prior approval of the college president or his/her authorized representative. Any visitor on campus may attend a college event which is authorized as open to the public. (LACCD Board Rule 91202.) All visitors must adhere to the Code of Conduct, LACCD Board Rules, Chapter IX, Article VIII (“Conduct on Campus”), available at: http://www.laccd.edu/Board/Documents/BoardRules/Ch.IX-ArticleVIII.pdf</p>
+<p>College premises shall not be used later than 11:00 p.m., except upon special permission of the college. (LACCD Board Rule 7200.32.)</p>
+<p>During business hours, the Los Angeles Mission College publicly accessible areas will be open to prospective students, students, parents, employees, authorized contractors, guests and invitees. During non-business hours access to all Los Angeles Mission College facilities is by standard keys or electronic card key, if issued, or by admittance via campus Sheriff&#x27;s personnel. In the case of periods of extended closure, access will be limited to only those with prior written approval for access to all facilities.</p>
+<p>Los Angeles Mission College does not have any campus residences.</p>
+</article></section></div></details>
+<details class="document-section" id="vi-campus-law-enforcement-details"><summary><span class="document-section__title">VI. CAMPUS LAW ENFORCEMENT</span><span class="section-pages">Source page 10</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="VI. CAMPUS LAW ENFORCEMENT section actions"><a href="test_security_report/vi-campus-law-enforcement.html">Open section-only page</a></nav><section id="vi-campus-law-enforcement" aria-labelledby="vi-campus-law-enforcement-heading"><h2 id="vi-campus-law-enforcement-heading">VI. CAMPUS LAW ENFORCEMENT</h2><p class="section-pages">Source page 10</p><article class="report-page" aria-labelledby="page-10-heading">
+<h3 id="page-10-heading">Source Page 10</h3>
+<p>Los Angeles Mission College addresses security considerations in maintaining campus facilities in the following ways:</p>
+<p>Los Angeles Mission College employs the Los Angeles County Sheriff&#x27;s Department on a full-time basis, to provide law enforcement support and emergency response to the campus. The campus maintains its premises and security by continues patrol by the Campus Sheriff. All facilities are secured through locking mechanisms which are either hard key enabled or card key enabled. The campus has established a policy which identifies those individuals who are authorized to be issued hard keys and also established the access allowed by key card entry. Access identification is authorized on a “needed access” basis as submitted by a Department Chair, Dean or Vice Presidents and approved by the Vice President of Administrative Services or College President. All facilities are secured during non-business hours and access after business hours is authorized on an approved basis or through the Campus Sheriff. Los Angeles Mission College security is assisted with a video camera system which records activity in the vicinity of the cameras. The camera system is managed by the Campus Sheriff.</p>
+<p>VI. CAMPUS LAW ENFORCEMENT</p>
+<p>Authority of the Los Angeles County Sheriff&#x27;s Department</p>
+<p>Los Angeles Mission College, through the Los Angeles Community College District, contracts with the Los Angeles County Sheriff&#x27;s Department to provide security services at Los Angeles Mission College. The Sheriff&#x27;s Department has authority to apprehend and arrest individuals involved in illegal activity on campus and areas immediately adjacent to the campus. The Sheriff&#x27;s Deputies are peace officers as defined in Penal Code section 830.1. The Sheriff&#x27;s Security Officers are public officers as defined in Penal Code section 831.4, and have received training pursuant to Penal Code section 832.</p>
+<p>Crimes occurring on campus are investigated by the Sheriff&#x27;s Department. The prosecution of criminal offenses, both felonies and misdemeanors, occurs at the Los Angeles Superior Court (for violations of state law) or the United States District Court, Central District of California (for violations of federal law). Sheriff&#x27;s Department personnel work as appropriate with local, state and federal law enforcement agencies, and have access to national crime databases.</p>
+<p>The Sheriff&#x27;s Department maintains a daily crime log of criminal incidents and alleged criminal incidents which are reported to the Sheriff&#x27;s Department.</p>
+<p>Accurate and Prompt Reporting of Crimes to Law Enforcement</p>
+<p>To ensure the safety of everyone on campus, Los Angeles Mission College encourages the accurate and prompt reporting of crimes to Campus Sheriff&#x27;s personnel at 818-364-7843 at the Sheriff&#x27;s Office bungalow.</p>
+<p>Professional Counselors</p>
+<p>A professional counselor whose official responsibilities include mental health counseling to members of the Los Angeles Mission College community and who is functioning within the scope of his/her license or certification is exempt from disclosing reported offenses to law enforcement, unless there is a legal obligation to disclose. Personal information from counseling records will not be revealed unless disclosure is required by law. (LACCD Board Rule 8302.10.) However, counselors may encourage victims to make a report to law enforcement.</p>
+</article></section></div></details>
+<details class="document-section" id="vii-programs-regarding-security-procedures-and-practices-details"><summary><span class="document-section__title">VII. PROGRAMS REGARDING SECURITY PROCEDURES AND PRACTICES / VIII. PROGRAMS REGARDING PREVENTION OF CRIMES</span><span class="section-pages">Source page 11</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="VII. PROGRAMS REGARDING SECURITY PROCEDURES AND PRACTICES / VIII. PROGRAMS REGARDING PREVENTION OF CRIMES section actions"><a href="test_security_report/vii-programs-regarding-security-procedures-and-practices.html">Open section-only page</a></nav><section id="vii-programs-regarding-security-procedures-and-practices" aria-labelledby="vii-programs-regarding-security-procedures-and-practices-heading"><h2 id="vii-programs-regarding-security-procedures-and-practices-heading">VII. PROGRAMS REGARDING SECURITY PROCEDURES AND PRACTICES / VIII. PROGRAMS REGARDING PREVENTION OF CRIMES</h2><p class="section-pages">Source page 11</p><article class="report-page" aria-labelledby="page-11-heading">
+<h3 id="page-11-heading">Source Page 11</h3>
+<p>VII. PROGRAMS REGARDING SECURITY PROCEDURES AND PRACTICES</p>
+<p>Los Angeles Mission College maintains a 24/7 security and safety presence on the campus which is supported by enhanced security features such as cameras and controlled access systems managed by the Campus Sheriff. The Campus Sheriff proactively patrols the campus and engages individuals involved in suspicious or criminal activity. The Campus Sheriff assists campus residents and visitors with safety information and directions to locations and events. In addition to patrol and prevention the Campus Sheriff also educates the campus on personal crime prevention and safety. In addition to the Campus Sheriff the campus relies on the Los Angeles Police Department, Mission Division for additional response and support as needed. Emergency services for fire and first aid response are generally provided by the Los Angeles City Fire Department.</p>
+<p>VIII. PROGRAMS REGARDING PREVENTION OF CRIMES</p>
+<p>The Campus Sheriff maintains a webpage on the campus web site providing safety and security information as well as information about crimes, crime reporting and general personal safety. The Campus Sheriff has a list of safety tips for students and parents that will help prevent problems on campus. Those safety tips are:</p>
+<p>Los Angeles Mission College has a “panic phone” system located in and around campus. Know where these are. Have a safety buddy, someone you can call for a ride or for help, and create a code word or phrase that means “Come help me out of this” or “I&#x27;m in trouble.” If you are on campus at night and feel uncomfortable walking to your car or the bus station, please call the Campus Sheriff Office at (818) 364-7843 and ask for the escort service to give you a ride to your campus destination. If you are walking to your vehicle alone (day or night) make sure you have your keys ready when you get to the car. These will prevent a long delay in getting into the car and locking the doors for safety. Always be aware of your surroundings and any suspicious activity in your area. If you are concerned call the Campus Sheriff at (818) 364-7843 or use an Emergency Call Box. Before going to a party, tell a friend where you&#x27;re going and when you&#x27;ll be back. Let them know if your plans change. Take turns being a designated driver or sober companion. You could save someone&#x27;s life. If a party gets out of hand, leave! Never, ever leave your drink alone or with someone you don&#x27;t know. Date rape drugs are easy to use. And men are just as vulnerable as women. Don&#x27;t take drinks or anything else from strangers, even food. Don&#x27;t ride with drunk or drugged drivers. Don&#x27;t offer rides to people you don&#x27;t know. Trust your instincts!</p>
+<p>And here&#x27;s what parents can do: Ask the college administrators about campus alcohol policies. Talk to your kids about the legal penalties for underage drinking. Discuss the possible consequences of drinking, including date rape, violence and school interference. Know your child&#x27;s roommate and living arrangements. Call your son or daughter frequently.</p>
+</article></section></div></details>
+<details class="document-section" id="ix-monitoring-of-criminal-activities-off-campus-details"><summary><span class="document-section__title">IX. MONITORING OF CRIMINAL ACTIVITIES OFF-CAMPUS / X. POLICY REGARDING POSSESSION, USE, AND SALE OF ALCOHOLIC BEVERAGES AND ILLICIT DRUGS</span><span class="section-pages">Source page 12</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="IX. MONITORING OF CRIMINAL ACTIVITIES OFF-CAMPUS / X. POLICY REGARDING POSSESSION, USE, AND SALE OF ALCOHOLIC BEVERAGES AND ILLICIT DRUGS section actions"><a href="test_security_report/ix-monitoring-of-criminal-activities-off-campus.html">Open section-only page</a></nav><section id="ix-monitoring-of-criminal-activities-off-campus" aria-labelledby="ix-monitoring-of-criminal-activities-off-campus-heading"><h2 id="ix-monitoring-of-criminal-activities-off-campus-heading">IX. MONITORING OF CRIMINAL ACTIVITIES OFF-CAMPUS / X. POLICY REGARDING POSSESSION, USE, AND SALE OF ALCOHOLIC BEVERAGES AND ILLICIT DRUGS</h2><p class="section-pages">Source page 12</p><article class="report-page" aria-labelledby="page-12-heading">
+<h3 id="page-12-heading">Source Page 12</h3>
+<p>The Campus Sheriff provides free safety escort service during operating hours to transport students to their cars or bus stops on the campus periphery. Anyone may report a crime or other suspicious activity anonymously at Los Angeles County Sheriff Station Tip Hotline by calling (323) 778-5678.</p>
+<p>IX. MONITORING OF CRIMINAL ACTIVITIES OFF-CAMPUS</p>
+<p>Los Angeles Mission College does not have recognized off-campus locations of student organizations, such as off-campus housing facilities, and does not engage in monitoring of student criminal activity off- campus. However, students engaging in criminal activities off-campus, in conjunction with college- sponsored activities, may be subject to disciplinary action by Los Angeles Mission College. X. POLICY REGARDING POSSESSION, USE, AND SALE OF ALCOHOLIC BEVERAGES AND ILLICIT DRUGS</p>
+<p>The LACCD is committed to drug-free and alcohol-free campuses. Students and employees are prohibited from unlawfully possessing, using or distributing illicit drugs and alcohol on District premises, in District vehicles, or as part of any activity of the District or Los Angeles Mission Colleges of the District.</p>
+<p>LACCD Board Rule 9803.19 prohibits the following: “Alcohol and Drugs. Any possession of controlled substances which would constitute a violation of Health and Safety Code section 11350 or Business and Professions Code section 4230, any use of controlled substances the possession of which are prohibited by the same, or any possession or use of alcoholic beverages while on any property owned or used by the District or colleges of the District or while participating in any District or college-sponsored function or field trip. &quot;Controlled substances,&quot; as used in this section, include but are not limited to the following drugs and narcotics: (a) opiates, opium and opium derivatives; (b) mescaline; (c) hallucinogenic substances; (d) peyote; (e) marijuana; (f) stimulants and depressants; (g) cocaine.”</p>
+<p>In addition to Board Rule 9803.19, the LACCD also enforces state laws relating to underage drinking, pursuant to Board Rule 9803.27 (“Performance of an Illegal Act”).</p>
+<p>Penalties</p>
+<p>Federal and state laws regarding alcohol and illicit drugs allow for fines and/or imprisonment. Other legal problems include the loss of one&#x27;s driver&#x27;s license and limitations of career choices. A summary of federal penalties for drug related offenses is available at: https://www.justice.gov/criminal/ndds</p>
+<p>The federal Controlled Substances Act is available at: http://www.deadiversion.usdoj.gov/21cfr/21usc/index.html</p>
+<p>In addition to criminal prosecution, violators are also subject to disciplinary action by Los Angeles Mission College. Student discipline actions may include the following: warning, reprimand, disciplinary probation, suspension, and/or expulsion. Employee discipline actions may include the following: warning, letter of reprimand, notice of unsatisfactory service, suspension, demotion, and/or dismissal.</p>
+<p>Health Risks</p>
+<p>Health risks associated with the abuse of controlled substances include malnutrition, damage to various organs, hangovers, blackouts, general fatigue, impaired learning, dependency, disability and death. Both drugs and alcohol may be damaging to the development of an unborn fetus. Personal problems include diminished self-esteem, depression, alienation from reality, and suicide. Social problems include alienation from and abuse of family members, chronic conflict with authority, and loss of friends, academic</p>
+</article></section></div></details>
+<details class="document-section" id="xi-disclosures-to-the-alleged-victim-of-a-crime-of-violence-or-a-non-forcible-sex-offense-details"><summary><span class="document-section__title">XI. DISCLOSURES TO THE ALLEGED VICTIM OF A CRIME OF VIOLENCE OR A NON-FORCIBLE SEX OFFENSE</span><span class="section-pages">Source page 13</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XI. DISCLOSURES TO THE ALLEGED VICTIM OF A CRIME OF VIOLENCE OR A NON-FORCIBLE SEX OFFENSE section actions"><a href="test_security_report/xi-disclosures-to-the-alleged-victim-of-a-crime-of-violence-or-a-non-forcible-sex-offense.html">Open section-only page</a></nav><section id="xi-disclosures-to-the-alleged-victim-of-a-crime-of-violence-or-a-non-forcible-sex-offense" aria-labelledby="xi-disclosures-to-the-alleged-victim-of-a-crime-of-violence-or-a-non-forcible-sex-offense-heading"><h2 id="xi-disclosures-to-the-alleged-victim-of-a-crime-of-violence-or-a-non-forcible-sex-offense-heading">XI. DISCLOSURES TO THE ALLEGED VICTIM OF A CRIME OF VIOLENCE OR A NON-FORCIBLE SEX OFFENSE</h2><p class="section-pages">Source page 13</p><article class="report-page" aria-labelledby="page-13-heading">
+<h3 id="page-13-heading">Source Page 13</h3>
+<p>standing, and/or co- and extra-curricular opportunities. A description of various drugs and their effects is available at:</p>
+<p>http://www.justice.gov/dea/druginfo/factsheets.shtml</p>
+<p>Drug and Alcohol Prevention Programs</p>
+<p>Los Angeles Mission College uses referral services for Drug and Alcohol prevention and treatment programs. Please refer to the Los Angeles Mission College Student Health webpage on the Los Angeles Mission College website.</p>
+<p>Resources for Counseling, Treatment and Rehabilitation</p>
+<p>The following counseling, treatment, and rehabilitation resources are available for the treatment of alcohol and drug dependence and abuse.</p>
+<p>Los Angeles Community College District Employee Assistance Program (EAP) http://www.laccd.edu/Departments/HumanResources/Total-Wellness-Program/Pages/HR-ARFLbenefits.aspx (800) 327-0449</p>
+<p>Los Angeles County Public Health, Substance Abuse Prevention and Control http://publichealth.lacounty.gov/sapc/ (800) 564-6600</p>
+<p>Alcoholics Anonymous www.aa.org (800) 923-8722</p>
+<p>Cocaine Anonymous https://ca.org/ (888) 714-8341</p>
+<p>Marijuana Anonymous https://www.marijuana-anonymous.org/ (800) 766-6779</p>
+<p>Narcotics Anonymous https://www.na.org/ (800) 863-2962</p>
+<p>Families Anonymous www.familiesanonymous.org (800) 736-9805</p>
+<p>XI. DISCLOSURES TO THE ALLEGED VICTIM OF A CRIME OF VIOLENCE OR A NON-FORCIBLE SEX OFFENSE</p>
+<p>Los Angeles Mission College will, upon written request, disclose to the alleged victim of a crime of violence, or a non-forcible sex offense, the report of the results of any disciplinary proceeding conducted by Los Angeles Mission College against a student who is the alleged perpetrator of such crime or offense.</p>
+</article></section></div></details>
+<details class="document-section" id="xii-dating-violence-domestic-violence-sexual-assault-and-stalking-details"><summary><span class="document-section__title">XII. DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT AND STALKING</span><span class="section-pages">Source pages 14-21</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XII. DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT AND STALKING section actions"><a href="test_security_report/xii-dating-violence-domestic-violence-sexual-assault-and-stalking.html">Open section-only page</a></nav><section id="xii-dating-violence-domestic-violence-sexual-assault-and-stalking" aria-labelledby="xii-dating-violence-domestic-violence-sexual-assault-and-stalking-heading"><h2 id="xii-dating-violence-domestic-violence-sexual-assault-and-stalking-heading">XII. DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT AND STALKING</h2><p class="section-pages">Source pages 14-21</p><article class="report-page" aria-labelledby="page-14-heading">
+<h3 id="page-14-heading">Source Page 14</h3>
+<p>If the alleged victim is deceased as a result of such crime or offense, the next of kin of such victim shall be treated as the alleged victim for purposes of the request.</p>
+<p>As defined by Section 16 of Title 18 of the United States Code, a “crime of violence” is “(a) an offense that has an element the use, attempted use, or threatened use of physical force against the person or property of another, or (b) any other offense that is a felony and that, by its nature, involves a substantial risk that physical force against the person or property of another may be used in the course of committing the offense.”</p>
+<p>XII. DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT AND STALKING</p>
+<p>Allegations of dating violence, domestic violence, and stalking are handled pursuant to the LACCD Board Rules, Chapter XV (“Prohibited Discrimination, Unlawful Harassment, and Sexual Misconduct (Title IX”) and LACCD Administrative Regulation C-14 (“Procedures for Prohibited Discrimination, Unlawful Harassment, and Sexual Misconduct Complaints”), available at:</p>
+<p>http://www.laccd.edu/Board/Documents/BoardRules/Chapter%20XV.docx http://www.laccd.edu/About/Documents/AdministrativeRegulations/C-14.docx</p>
+<p>Educational Programs and Campaigns to Promote the Awareness of Dating Violence, Domestic Violence, Sexual Assault and Stalking</p>
+<p>Los Angeles Mission College provides the following primary prevention and awareness programs to promote the awareness of dating violence, domestic violence, sexual assault and stalking for all incoming students and new employees:</p>
+<p>The District prohibits dating violence, domestic violence, sexual assault, and stalking. These terms are defined by the Clery Act as follows:</p>
+<p>Dating violence: Violence committed by a person who is or has been in a social relationship of a romantic or intimate nature with the victim. (i) The existence of such a relationship shall be determined based on the reporting party&#x27;s statement and with consideration of the length of the relationship, the type of relationship, and the frequency of interaction between the persons involved in the relationship. (ii) For purposes of this definition-(A) Dating violence includes, but is not limited to, sexual or physical abuse or the threat of such abuse. (B) Dating violence does not include acts covered under the definition of domestic violence. (34 C.F.R. § 668.46.)</p>
+<p>Domestic violence: (i) A felony or misdemeanor crime of violence committed-(A) By a current or former spouse or intimate partner of the victim; (B) By a person with whom the victim shares a child in common; (C) By a person who is cohabitating with, or has cohabitated with, the victim as a spouse or intimate partner; (D) By a person similarly situated to a spouse of the victim under the domestic or family laws of the jurisdiction in which the crime of violence occurred; or (E) By any other person against an adult or youth victim who is protected from that person&#x27;s acts under the domestic or family violence laws of the jurisdiction in which the crime of violence occurred. (34 C.F.R. § 668.46.)</p>
+<p>Sexual assault: An offense that meets the definition of rape, fondling, incest, or statutory rape as used in the FBI&#x27;s Uniform Crime Reporting (“UCR”) program (see below).</p>
+<p>o Rape: The penetration, no matter how slight, of the vagina or anus with any body part or object, or oral penetration by a sex organ of another person, without the consent of the victim.</p>
+</article><article class="report-page" aria-labelledby="page-15-heading">
+<h3 id="page-15-heading">Source Page 15</h3>
+<p>o Sex Offenses: Any sexual act directed against another person, without the consent of the victim, including instances where the victim is incapable of giving consent.</p>
+<p>▪ A. Fondling --The touching of the private body parts of another person for the purpose of sexual gratification, without the consent of the victim, including instances where the victim is incapable of giving consent because of his/her age or because of his/her temporary or permanent mental incapacity. ▪ B. Incest --Sexual intercourse between persons who are related to each other within the degrees wherein marriage is prohibited by law. ▪ C. Statutory Rape --Sexual intercourse with a person who is under the statutory age of consent. (34 C.F.R. § 668.46, Appendix A.)</p>
+<p>Stalking: (i) Engaging in a course of conduct directed at a specific person that cause a reasonable person to-(A) Fear for the person&#x27;s safety or the safety of others; or (B) Suffer substantial emotional distress. (ii) For the purposes of this definition-(A) Course of conduct means two or more acts, including, but not limited to, acts in which the stalker directly, indirectly, or through third parties, by any action, method, device, or means, follows, monitors, observes, surveils, threatens, or communicates to or about a person, or interferes with a person&#x27;s property. (B) Reasonable person means a reasonable person under similar circumstances and with similar identities to the victim. (C) Substantial emotional distress means significant mental suffering or anguish that may, but does not necessarily, require medical or other professional treatment or counseling. (34 C.F.R. § 668.46.)</p>
+<p>Violations of the LACCD&#x27;s Prohibited Discrimination, Unlawful Harassment, and Sexual Misconduct Policy may also be criminal offenses under California law. The definitions of dating violence, domestic violence, sexual assault, and stalking under the California Penal Code are included in Appendix A at the end of this report.</p>
+<p>The LACCD&#x27;s Prohibited Discrimination, Unlawful Harassment, and Sexual Misconduct Policy uses the following definitions:</p>
+<p>“Dating Violence” is included in Intimate Partner Violence, below. (C-14, Section II.I.)</p>
+<p>“Domestic Violence” is included in Intimate Partner Violence, below. (C-14, Section II.M.)</p>
+<p>The term “Intimate Partner” refers to a person with whom one has or had a close personal relationship that may be characterized by some or all of the following: the partners&#x27; emotional connectedness, regular contact, ongoing physical contact and sexual behavior, identity as a couple, and familiarity with and knowledge about each other&#x27;s lives. Intimate Partner relationships include current or former:</p>
+<p>spouses (married spouses, common-law spouses, civil union spouses, domestic partners) boyfriends/girlfriends dating partners ongoing sexual partners</p>
+<p>Intimate Partners may or may not cohabit. Intimate Partners can be opposite or same sex. If the Alleged Victim and the Respondent have a child in common and a previous relationship but no current relationship, then by definition they fit into the category of former Intimate Partners. (C-14, Section II.R.)</p>
+<p>“Intimate Partner Violence” refers to behavior involving physical force or intimidation of such force, intended to hurt, damage, or kill an Intimate Partner, as defined above; this frequently arises in the form of Sexual Misconduct. (C-14, Section II.S.)</p>
+</article><article class="report-page" aria-labelledby="page-16-heading">
+<h3 id="page-16-heading">Source Page 16</h3>
+<p>“Sexual Misconduct” refers to non-consensual sexual activity, where clear, knowing, and voluntary Consent, as defined herein, both prior to and during the sexual activity is absent. Sexual misconduct includes “sexual harassment” as that term is defined herein.</p>
+<p>1. Sexual Misconduct offenses include but are not limited to Non-Consensual Sexual Intercourse, defined as</p>
+<p>a. Any sexual penetration or intercourse (anal, oral, or vaginal) b. However slight c. With any object d. By a person upon another person e. That is without Consent and/or by force f. Sexual penetration includes vaginal, oral or anal penetration by a penis, tongue, finger or object, or oral copulation by mouth or genital contact, or genital to mouth contact. g. Non-Consensual Sexual Intercourse includes but is not limited to rape, forced sodomy, forced copulation, or rape by foreign object.</p>
+<p>2. Sexual Misconduct offenses also include Non-Consensual Sexual Contact, defined as</p>
+<p>a. Any intentional sexual touching b. However slight c. With any object d. By another person upon another person e. That is without Consent and/or by force. f. Sexual touching includes any bodily contact with the breasts, groin, genitals, mouth or other bodily orifice of another individual, or any other bodily contract in a sexual manner. g. Non-Consensual Sexual Intercourse includes but is not limited to sexual battery or threat of sexual assault.</p>
+<p>3. In addition to those acts specified above, Sexual Misconduct also specifically includes Sexual Harassment, Stalking, Dating Violence, Domestic Violence, and Intimate Partner Violence. (C-14, Section II.DD.)</p>
+<p>“Sexual Violence” refers to a forceful physical sexual act that is committed or attempted by another person without freely given Consent. (C-14, Section II.GG.)</p>
+<p>“Consent” when used regarding Sexual Misconduct matters refers to a mutual honest, direct agreement. Consent is never implied and cannot be assumed, even in the context of a relationship.</p>
+<p>1. Consent must be: a. Informed (knowing) b. Voluntary (freely given) c. Active, (not passive) d. By clear words or actions, with regard to agreed-upon (sexual) activity, and e. Must indicate permission to engage in mutually agreed upon (sexual) activity. f. It must also be continuous throughout the sexual interaction.</p>
+<p>2. Consent cannot be the result of: a. Force, b. Physical Violence,</p>
+</article><article class="report-page" aria-labelledby="page-17-heading">
+<h3 id="page-17-heading">Source Page 17</h3>
+<p>c. Threats, d. Intimidation, e. Coercion, including consideration of frequency, intensity, isolation and duration, or f. Incapacity as a result of drugs, alcohol, sleep, mental or cognitive impairment, injury, or other condition, which was or should have been known to the accused. Intoxication of the assailant shall not diminish the assailant&#x27;s responsibility for sexual assault or sexual misconduct.</p>
+<p>3. The absence of “No” does not mean ‘Yes”. (C-14, Section II.H.)</p>
+<p>“Stalking” refers to a course of conduct (two or more acts), directed at a specific person, on the basis of actual or perceived membership in a protected class that is unwelcome, and would cause a reasonable person to fear for his or her safety or the safety of others, or to suffer substantial emotional distress. Stalking is defined as the repeated following, watching, and harassing of another person. Stalking may include legal, appropriate behavior such as sending someone flowers or waiting outside someone&#x27;s workplace for her/him to appear. However, when these acts are coupled with an intent to instill fear or injury, they may be part of a pattern of stalking behavior. (C-14, Section II.HH.)</p>
+<p>Some safe and positive options for bystander intervention include the following:</p>
+<p>1. Distraction - Create a distraction to change the situation/focus. You might consider making a joke or saying a funny comment to take the attention away from the individual. This will give people who are feeling uncomfortable, the opportunity to leave.</p>
+<p>2. Direct - You can be direct and call out the harmful behavior or ask a targeted individual if they are ok or need help. This approach will hopefully stop the behavior and allow the impacted individual to leave. 3. Delegate - Ask others for help. This can involve asking friends to assist or calling law enforcement personnel. Refer people to on- or off-campus resources for support in health, counseling, or with legal assistance.</p>
+<p>Los Angeles Mission College provides the following information regarding risk reduction:</p>
+<p>A common theme of awareness and crime prevention programs is to</p>
+<p>encourage students and employees to be aware of their responsibility for their</p>
+<p>own security and the security of others.</p>
+<p>Los Angeles Mission College provides the following ongoing prevention and awareness campaigns for all current students and employees: Periodically during the academic year, the Campus Sheriff presents crime prevention</p>
+<p>awareness sessions on sexual assault (rape and acquaintance rape), Rohypnol</p>
+<p>abuse, theft and vandalism, as well as education sessions on personal safety.</p>
+<p>Additionally, this information is available on the college website under the Campus</p>
+<p>Sheriff webpage.</p>
+</article><article class="report-page" aria-labelledby="page-18-heading">
+<h3 id="page-18-heading">Source Page 18</h3>
+<p>Procedures Victims Should Follow in Cases of Alleged Dating Violence, Domestic Violence, Sexual Assault or Stalking</p>
+<p>LACCD strongly encourages the timely reporting of crimes of alleged dating violence, domestic violence, sexual assault or stalking, so that evidence may be collected and preserved. It is important to preserve evidence that may assist in proving the alleged criminal offense occurred or may be helpful in obtaining a protection order.</p>
+<p>If you are a victim of dating violence, domestic violence, sexual assault, or stalking, you should contact the LACCD Title IX Coordinator, Natalie Mason Kinsey at (213) 891-2315 and/or the LACCD deputy title IX coordinators, Cody Hunt at (213)891-2054 or Kyra Nielson at (213) 891- 2393.</p>
+<p>The Title IX Coordinator will inform the victim of his/her options to report the matter to either campus law enforcement or the local police department; be assisted by campus authorities in notifying law enforcement if the victim chooses; and decline to notify such authorities. (See C-14, Section X.) The Sheriff&#x27;s Department on campus may be contacted at: 818-364-7843.</p>
+<p>The Title IX Coordinator will also inform the victim of legal and disciplinary options, including criminal prosecutions, civil action, and relevant District disciplinary processes. (C-14, Section X.A.)</p>
+<p>A victim is entitled to pursue independently civil remedies, including but not limited to injunctions, restraining orders, or other orders. (C-14, Section XV.) Information regarding domestic violence retraining orders is also available at: http://www.courts.ca.gov/selfhelp-domesticviolence.htm</p>
+<p>The District may also seek a temporary restraining order on behalf of an employee, if the employee has suffered unlawful violence or a credible threat of violence from any individual that can reasonably be construed to be carried out at the workplace. (Code of Civil Procedure section 527.8.)</p>
+<p>Confidentiality of Victims and Other Necessary Parties</p>
+<p>All persons involved in investigations of complaints shall have a duty to maintain the confidentiality of matters discussed, except as may be required or permitted by law, including the rules and regulations of the District. (C-14, Section VI.) The Title IX Coordinator will inform law enforcement of an incident for Clery Act reporting purposes, without providing any personally identifying information (e.g., name) of the victim. (C-14, Section IV.B.)</p>
+<p>Los Angeles Mission College will maintain as confidential any accommodation or protective measures provided to the victim, to the extent that maintaining such confidentiality would not impair the ability of the institution to provide the accommodations or protective measures.</p>
+<p>Counseling, Health, Mental Health, Victim Advocacy, Legal Assistance, Visa and Immigration Assistance, Student Financial Aid and Other Services Available for Victims</p>
+<p>Los Angeles Mission College will provide written notification to students and employees about existing counseling, health, mental health, victim advocacy, legal assistance, visa and immigration assistance, student financial aid, and other services available to victims, both within Los Angeles Mission College and in the community.</p>
+</article><article class="report-page" aria-labelledby="page-19-heading">
+<h3 id="page-19-heading">Source Page 19</h3>
+<p>Requesting Changes to Academic, Transportation, and Working Situations or Protective Measures</p>
+<p>Los Angeles Mission College will provide a victim written notification to victims about options for, available assistance in, and how to request changes to academic, living, transportation, and working situations or protective measures.</p>
+<p>Los Angeles Mission College will comply with a victim&#x27;s request for an academic situation change following an alleged offense, if such changes are reasonably available, and regardless of whether the victim chooses to report the crime to campus law enforcement. For example, Los Angeles Mission College may, consistent with Board policy, provide the option of taking a “withdrawal” or an “incomplete” grade.</p>
+<p>The College President or his/her designee shall refer an Alleged Victim to the Title IX Coordinator if he/she experiences academic difficulties as a result of the sexual assault. The Title IX Coordinator, in cooperation with the Vice President of Academic Affairs and/or Student Services may provide temporary sanctions to alleviate the immediate impact of the sexual assault. The President shall also refer a non-student Reporting Individual to the Title IX Coordinator for assistance with workplace or immediate difficulties that may arise. (C-14, Section IX.A.)</p>
+<p>Temporary sanctions shall be implemented by the Title IX Coordinator, as required to separate the Alleged Victim and Respondent. Such temporary sanctions may include moving one party to another section of the same class or to a different online location, providing the Alleged Victim with an escort across campus, or permitting the Alleged Victim to take exams in a different location from the Respondent and/or alleged offender and any similar action(s) intended to separate the parties and reduce the stress on them arising from the incident and allegations. (C- 14, Section X.D.)</p>
+<p>Procedures for Disciplinary Action for Cases of Alleged Dating Violence, Domestic Violence, Sexual Assault or Stalking</p>
+<p>Complaints regarding dating violence, domestic violence, sexual assault or stalking at Los Angeles Mission College should be directed to the Title IX Coordinator; such complaints are investigated by the District&#x27;s Office for Diversity, Equity and Inclusion.</p>
+<p>A Compliance Officer shall complete an investigation and make a written report to the College President in 60 days. (C-14, Section XI.A.) The College President shall send a summary of the Compliance Officer&#x27;s report to the parties, and the Alleged Victim and Respondent have a right to make an oral statement to the College President within 15 days of receipt of the summary of the report. (C-14, Section XI.B.)</p>
+<p>The College President shall send a Written Decision to the parties. The Alleged Victim or Respondent may appeal within 15 days of the date of the Written Decision. The District&#x27;s Board of Trustees may review the matter and act within 45 days; if 45 days have elapsed without action by the Board of Trustees, the Written Decision is considered the final District decision. In cases not involving employment, there is also a right to file a written appeal to the State Chancellor within 30 days after the final District decision is issued by the Board of Trustees, or the 45-day period has elapsed. (C-14, Section XII.B.)</p>
+<p>If discipline is to be taken, the College President or his/her designee shall initiate the applicable disciplinary process within ten (10) business days of issuing the Written Decision, or, for good cause, as soon thereafter as is practical. (C-14, Section XIII.B.)</p>
+</article><article class="report-page" aria-labelledby="page-20-heading">
+<h3 id="page-20-heading">Source Page 20</h3>
+<p>Disciplinary Action for Students</p>
+<p>Complaints involving dating violence, domestic violence, sexual assault, and stalking perpetrated by a student may be filed with the Title IX Coordinator. After the investigation by the Office for Diversity, Equity and Inclusion, and subsequent Written Decision by the College President, Los Angeles Mission College may initiate student discipline consistent with the procedures for campus disciplinary actions in LACCD Board Rules, Chapter IX, Article XI (“Student Discipline”), available in its entirety at:</p>
+<p>http://www.laccd.edu/Board/Documents/BoardRules/Ch.IX-ArticleXI.pdf</p>
+<p>The Chief Student Services Officer or designee initiates student discipline appropriate to the misconduct, by sending a Notice of Charges and proposed disciplinary action. (Board Rule 91101.12.) Pending the conclusion of the disciplinary process, the Chief Student Services Officer or designee may also immediately suspend a student from all District locations in emergency situations to protect lives or property and/or to ensure the maintenance of order. (Board Rule 91101.11.)</p>
+<p>For proposed suspensions less than 10 days, the accused may a request a hearing before the Chief Student Services Officer or designee. The hearing before the Chief Student Services Officer or designee is scheduled within ten (10) days of the request. The Chief Student Services Officer or designee provides written notice of his/her decision within five (5) days of the hearing, and that decision is final. (Board Rule 91101.13.)</p>
+<p>For proposed suspensions greater than 10 days or expulsions, the accused may request a hearing before a disciplinary hearing committee. The hearing before the committee is scheduled within ten (10) days of the request. The hearing committee issues its recommendation to the College President within five (5) days of the hearing. (Board Rule 91101.14.)</p>
+<p>Within ten (10) days after receipt of the committee&#x27;s recommendation, the College President issues his/her decision. If the College President&#x27;s decision is to suspend a student, the decision is final. (Board Rule 91101.15.) If the College President&#x27;s decision is to recommend expulsion to the District&#x27;s Board of Trustees, the accused may submit an appeal of the College President&#x27;s recommendation within five (5) days. (Board Rules 91101.15, 91101.16.) The College President&#x27;s recommendation (and the appeal, if any) shall be immediately transmitted to the Chancellor. If the Chancellor does not accept the President&#x27;s recommendation for expulsion, the matter is returned to the college for further action. If the Chancellor accepts the President&#x27;s recommendation for expulsion, the expulsion matter is scheduled for consideration for the Board of Trustees at any regularly scheduled meeting held within 30 days of the Chancellor&#x27;s receipt of the recommendation. The Board of Trustees may confirm, modify, remand, or reject the Chancellor&#x27;s recommendation, but the Board&#x27;s action is final. (Board Rule 91101.17.)</p>
+<p>Disciplinary Action for Employees</p>
+<p>If the alleged perpetrator is a District employee, disciplinary action shall be pursued in accordance with state law, the LACCD Board Rules, the LACCD Personnel Commission, and/or any applicable collective bargaining agreement or memoranda of understanding. (C-14, Section XIII.C.)</p>
+<p>Standard of Evidence Used</p>
+<p>The LACCD uses a “preponderance of evidence” standard. (C-14, Section XII.B.)</p>
+</article><article class="report-page" aria-labelledby="page-21-heading">
+<h3 id="page-21-heading">Source Page 21</h3>
+<p>Possible Sanctions Following a Disciplinary Proceeding for an Allegation of Dating Violence, Domestic Violence, Sexual Assault or Stalking</p>
+<p>Possible sanctions following a student disciplinary hearing include warnings, probation, suspension or expulsion from all of the District&#x27;s colleges. (C-14, Section XIII.D.)</p>
+<p>Disciplinary action against employees shall include verbal warnings, letters of reprimand, notices of unsatisfactory service, suspensions, demotions, or dismissals. (C-14, Section XIII.C.)</p>
+<p>Range of Protective Measures That May Be Offered to Victims Following an Allegation of Dating Violence, Domestic Violence, Sexual Assault or Stalking</p>
+<p>Temporary sanctions shall be implemented by the Title IX Coordinator, as required to separate the Alleged Victim and Respondent. Such temporary sanctions may include moving one party to another section of the same class or to a different online location, providing the Alleged Victim with an escort across campus, or permitting the Alleged Victim to take exams in a different location from the Respondent and/or alleged offender and any similar action(s) intended to separate the parties and reduce the stress on them arising from the incident and allegations. (C-14, Section X.D.)</p>
+<p>A Prompt, Fair, and Impartial Process</p>
+<p>Proceedings arising from an allegation of dating violence, domestic violence, sexual assault or stalking will include a prompt, fair, and impartial process from the initial investigation to the final result.</p>
+<p>Proceedings will be conducted by officials who, at a minimum, receive annual training on the issues related to dating violence, domestic violence, sexual assault, and stalking and how to conduct an investigation and hearing process that protects the safety of victims and promotes accountability. The Title IX Coordinator is responsible for organizing training opportunities for administrators and other employees regarding Title IX sexual misconduct issues. (C-14, Sections IV.A, IV.B.)</p>
+<p>The accused and accuser may have others present during a campus disciplinary hearing.</p>
+<p>In cases of domestic violence, dating violence, sexual assault and/or stalking, all parties (Respondent and Alleged Victim) must receive the same notifications, mailed at the same time, regarding all steps of the disciplinary process. They must all be given equivalent rights to be heard and access to an Advocate. All parties must be notified that disciplinary action is being taken, with specific details sufficient to ameliorate concerns of the person who was the object of the violations, subject to legal and District limitations related to the privacy of the parties. (C-14, Section XIII.B.) (An “Advocate” is someone trained by a Title IX coordinator, and an Advocate&#x27;s assistance can include providing moral support as well as information regarding procedural issues, throughout the pendency of an investigation, through the last internal appeal. (C-14, Section II.A.)</p>
+<p>When a student or employee reports to Los Angeles Mission College that he/she has been a victim of dating violence, domestic violence, sexual assault or stalking, whether the offense occurred on or off campus, Los Angeles Mission College will provide the student or employee a written explanation of the student&#x27;s or employee&#x27;s rights and options.</p>
+</article></section></div></details>
+<details class="document-section" id="xiii-information-regarding-sex-offenders-details"><summary><span class="document-section__title">XIII. INFORMATION REGARDING SEX OFFENDERS</span><span class="section-pages">Source page 22</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XIII. INFORMATION REGARDING SEX OFFENDERS section actions"><a href="test_security_report/xiii-information-regarding-sex-offenders.html">Open section-only page</a></nav><section id="xiii-information-regarding-sex-offenders" aria-labelledby="xiii-information-regarding-sex-offenders-heading"><h2 id="xiii-information-regarding-sex-offenders-heading">XIII. INFORMATION REGARDING SEX OFFENDERS</h2><p class="section-pages">Source page 22</p><article class="report-page" aria-labelledby="page-22-heading">
+<h3 id="page-22-heading">Source Page 22</h3>
+<p>XIII. INFORMATION REGARDING SEX OFFENDERS</p>
+<p>Registered sex offenders must register with campus law enforcement within five working days of commencing enrollment or employment at Los Angeles Mission College. (Penal Code section 290.)</p>
+<p>Information regarding registered sex offenders may be obtained at the California Department of Justice, Office of Attorney General&#x27;s “Megan&#x27;s Law” website, at: http://www.meganslaw.ca.gov/</p>
+<p>If you are doing a search on the Megan&#x27;s Law site for sex offenders residing in the local area, Los Angeles Mission College&#x27;s zip code is 91342. XIV. EMERGENCY RESPONSE AND EVACUATION PROCEDURES</p>
+<p>Upon receiving report of an emergency event occurring on college property, the campus Sheriff will investigate to confirm an emergency exists. Los Angeles Mission College will issue a timely warning or emergency alert to the campus community upon confirmation of a significant emergency or dangerous situation presenting an immediate and ongoing threat to the health and safety of students and employees on the campus.</p>
+<p>To report an emergency, please contact the Campus Sheriff&#x27;s Office at 818-364-7843 or use one of the blue emergency phones throughout the campus.</p>
+<p>Emergency Notification Procedures</p>
+<p>The LACCD SAFETY ALERT system is the most comprehensive emergency communication tool available 24 hours a day and is hosted via an external web- based mass notification server. The primary goal of the LACCD SAFETY ALERT emergency notification system is to disseminate time sensitive developments to students and employees of the Los Angeles Community College District assigned to the affected college campus during an emergency incident.</p>
+<p>During an emergency incident, initiation of an emergency notification can begin through the college presidents, Vice Presidents, Public Relations Manager, Director of Facilities, and Sheriff Team Leader (i.e. system operators) who may utilize LACCD SAFETY ALERT to send a pre- scripted message or unscripted message describing the incident and/ or action steps students and employees should take to ensure personal safety. Pre-scripted messaging content was developed by the District Safety and Security Services Team.</p>
+<p>The message will be sent to District employees and students via: Employee email Student email Text message Mobile application (Everbridge App) Nixle Personal email Cell phone call</p>
+</article></section></div></details>
+<details class="document-section" id="xiv-emergency-response-and-evacuation-procedures-22-emergency-notification-procedures-22-testing-of-procedures-details"><summary><span class="document-section__title">XIV. EMERGENCY RESPONSE AND EVACUATION PROCEDURES............. 22 Emergency Notification Procedures .................................. 22 Testing of Procedures</span><span class="section-pages">Source pages 23-24</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XIV. EMERGENCY RESPONSE AND EVACUATION PROCEDURES............. 22 Emergency Notification Procedures .................................. 22 Testing of Procedures section actions"><a href="test_security_report/xiv-emergency-response-and-evacuation-procedures-22-emergency-notification-procedures-22-testing-of-procedures.html">Open section-only page</a></nav><section id="xiv-emergency-response-and-evacuation-procedures-22-emergency-notification-procedures-22-testing-of-procedures" aria-labelledby="xiv-emergency-response-and-evacuation-procedures-22-emergency-notification-procedures-22-testing-of-procedures-heading"><h2 id="xiv-emergency-response-and-evacuation-procedures-22-emergency-notification-procedures-22-testing-of-procedures-heading">XIV. EMERGENCY RESPONSE AND EVACUATION PROCEDURES............. 22 Emergency Notification Procedures .................................. 22 Testing of Procedures</h2><p class="section-pages">Source pages 23-24</p><article class="report-page" aria-labelledby="page-23-heading">
+<h3 id="page-23-heading">Source Page 23</h3>
+<p>Faculty, staff, and actively enrolled students are automatically opted into the LACCD Alert emergency notification system through LACCD email and personal contact information voluntarily disclosed to the college (or District) via Student Information System (SIS) and SAP (employee portal).</p>
+<p>Personnel working on campus who are not an LACCD employee or student (Example: contractors, construction personnel, CDC emergency contacts, high school personnel on an LACCD campus) may enroll a mobile device into the LACCD Alert emergency notification system.</p>
+<p>How to subscribe: From a mobile device, text 888777 and enter the appropriate campus keyword. Opting out: Your mobile device will automatically opt-out of the LACCD Alert system after a three (3) month period. You will receive an automatic text reminder to renew.</p>
+<p>CAMPUS MOBILE KEYWORDS: LACC: CUBS; ELAC: HUSKIES; LAHC: SEAHAWKS; LASC: COUGARS; LAMC: EAGLES1; LAPC: BRAHMAS; LATTC: BEAVERS; LAVC: MONARCHS; WLAC: WILDCAT</p>
+<p>Los Angeles Mission College will, without delay, and considering the safety of the community, determine the content of the notification and initiate the notification system, unless issuing a notification will, in the professional judgment of the responsible authorities, compromise efforts to assist a victim or to contain, respond, or otherwise mitigate the emergency.</p>
+<p>The entire campus community will be notified when a potential threat will likely impact a large segment of Los Angeles Mission College. Campus Sheriff&#x27;s personnel and the administrative Vice President will reassess the situation to determine whether additional notifications or updates need to be made.</p>
+<p>Communications checklist:</p>
+<p>o Everbridge - An email alert will be sent to all users. Phone calls and text messages are also sent, but delivery requires signup on an individual basis. An email reminding students, faculty, and staff to opt-in to the phone/text delivery will be sent at the beginning of each semester. o Website Message - An emergency message will be displayed at the top every page of the college website, for the duration of the emergency. Testing of Procedures</p>
+<p>District Safety and Security Services provides each LACCD Alert system operator with a monthly log-in exercise for proficiency maintenance. A quarterly districtwide test is administered to ensure the system is working as designed and to ensure the campus community is familiar with how emergency alerts may be received.</p>
+<p>Los Angeles Mission College conducts unannounced tests of its emergency response and evacuation procedures which are self-monitored and evaluated with the Sheriff&#x27;s Department.</p>
+<p>Los Angeles Mission College publicizes its emergency response and evacuation procedures, in conjunction with at least one test per calendar year. Emergency response and evacuation procedures are publicized by:</p>
+<p>1. Posting emergency procedures in each classroom, 2. Providing emergency information in the College Catalog, 3. Providing other emergency notifications through Everbridge.</p>
+</article><article class="report-page" aria-labelledby="page-24-heading">
+<h3 id="page-24-heading">Source Page 24</h3>
+<p>Los Angeles Mission College will document each test by recording a description of the test, the date the test was held, the time the test started and ended, and whether the test was announced or unannounced. Copies of test documentation are available from Administrative Services.</p>
+</article></section></div></details>
+<details class="document-section" id="xv-appendix-a-california-definitions-of-dating-violence-domestic-violence-sexual-assault-and-stalking-details"><summary><span class="document-section__title">XV. APPENDIX A. CALIFORNIA DEFINITIONS OF DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT, AND STALKING</span><span class="section-pages">Source pages 25-29</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XV. APPENDIX A. CALIFORNIA DEFINITIONS OF DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT, AND STALKING section actions"><a href="test_security_report/xv-appendix-a-california-definitions-of-dating-violence-domestic-violence-sexual-assault-and-stalking.html">Open section-only page</a></nav><section id="xv-appendix-a-california-definitions-of-dating-violence-domestic-violence-sexual-assault-and-stalking" aria-labelledby="xv-appendix-a-california-definitions-of-dating-violence-domestic-violence-sexual-assault-and-stalking-heading"><h2 id="xv-appendix-a-california-definitions-of-dating-violence-domestic-violence-sexual-assault-and-stalking-heading">XV. APPENDIX A. CALIFORNIA DEFINITIONS OF DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT, AND STALKING</h2><p class="section-pages">Source pages 25-29</p><article class="report-page" aria-labelledby="page-25-heading">
+<h3 id="page-25-heading">Source Page 25</h3>
+<p>XV. APPENDIX A. CALIFORNIA DEFINITIONS OF DATING VIOLENCE, DOMESTIC VIOLENCE, SEXUAL ASSAULT, AND STALKING</p>
+<p>CALIFORNIA DEFINITION OF DATING VIOLENCE AND DOMESTIC VIOLENCE (Penal Code section 243(e) (1); Penal Code section 273.5)</p>
+<p>§ 243. Punishment for battery generally; Punishment for battery against specified officers or others</p>
+<p>(a) A battery is punishable by a fine not exceeding two thousand dollars ($2,000), or by imprisonment in a county jail not exceeding six months, or by both that fine and imprisonment.</p>
+<p>(b) When a battery is committed against the person of a peace officer, custodial officer, firefighter, emergency medical technician, lifeguard, security officer, custody assistant, process server, traffic officer, code enforcement officer, animal control officer, or search and rescue member engaged in the performance of his or her duties, whether on or off duty, including when the peace officer is in a police uniform and is concurrently performing the duties required of him or her as a peace officer while also employed in a private capacity as a part-time or casual private security guard or patrolman, or a nonsworn employee of a probation department engaged in the performance of his or her duties, whether on or off duty, or a physician or nurse engaged in rendering emergency medical care outside a hospital, clinic, or other health care facility, and the person committing the offense knows or reasonably should know that the victim is a peace officer, custodial officer, firefighter, emergency medical technician, lifeguard, security officer, custody assistant, process server, traffic officer, code enforcement officer, animal control officer, or search and rescue member engaged in the performance of his or her duties, nonsworn employee of a probation department, or a physician or nurse engaged in rendering emergency medical care, the battery is punishable by a fine not exceeding two thousand dollars ($2,000), or by imprisonment in a county jail not exceeding one year, or by both that fine and imprisonment.</p>
+<p>(c)</p>
+<p>(1) When a battery is committed against a custodial officer, firefighter, emergency medical technician, lifeguard, process server, traffic officer, or animal control officer engaged in the performance of his or her duties, whether on or off duty, or a nonsworn employee of a probation department engaged in the performance of his or her duties, whether on or off duty, or a physician or nurse engaged in rendering emergency medical care outside a hospital, clinic, or other health care facility, and the person committing the offense knows or reasonably should know that the victim is a nonsworn employee of a probation department, custodial officer, firefighter, emergency medical technician, lifeguard, process server, traffic officer, or animal control officer engaged in the performance of his or her duties, or a physician or nurse engaged in rendering emergency medical care, and an injury is inflicted on that victim, the battery is punishable by a fine of not more than two thousand dollars ($2,000), by imprisonment in a county jail not exceeding one year, or by both that fine and imprisonment, or by imprisonment pursuant to subdivision (h) of Section 1170 for 16 months, or two or three years.</p>
+<p>(2) When the battery specified in paragraph (1) is committed against a peace officer engaged in the performance of his or her duties, whether on or off duty, including when the peace officer is in a police uniform and is concurrently performing the duties required of him or her as a peace officer while also employed in a private capacity as a part-time or casual private security guard or patrolman and the person committing the offense knows or reasonably should know that the victim is a peace officer engaged in the performance of his or her duties, the battery is punishable by a fine of not more than ten thousand dollars ($10,000), or by imprisonment in a county jail not exceeding one year or pursuant to subdivision (h) of Section 1170 for 16 months, or two or three years, or by both that fine and imprisonment.</p>
+</article><article class="report-page" aria-labelledby="page-26-heading">
+<h3 id="page-26-heading">Source Page 26</h3>
+<p>(d) When a battery is committed against any person and serious bodily injury is inflicted on the person, the battery is punishable by imprisonment in a county jail not exceeding one year or imprisonment pursuant to subdivision (h) of Section 1170 for two, three, or four years.</p>
+<p>(e)</p>
+<p>(1) When a battery is committed against a spouse, a person with whom the defendant is cohabiting, a person who is the parent of the defendant&#x27;s child, former spouse, fiancé or fiancée, or a person with whom the defendant currently has, or has previously had, a dating or engagement relationship, the battery is punishable by a fine not exceeding two thousand dollars ($2,000), or by imprisonment in a county jail for a period of not more than one year, or by both that fine and imprisonment. If probation is granted, or the execution or imposition of the sentence is suspended, it shall be a condition thereof that the defendant participate in, for no less than one year, and successfully complete, a batterer&#x27;s treatment program, as described in Section 1203.097, or if none is available, another appropriate counseling program designated by the court. However, this provision shall not be construed as requiring a city, a county, or a city and county to provide a new program or higher level of service as contemplated by Section 6 of Article XIII B of the California Constitution.</p>
+<p>(2) Upon conviction of a violation of this subdivision, if probation is granted, the conditions of probation may include, in lieu of a fine, one or both of the following requirements:</p>
+<p>(A) That the defendant make payments to a battered women&#x27;s shelter, up to a maximum of five thousand dollars ($5,000).</p>
+<p>(B) That the defendant reimburses the victim for reasonable costs of counseling and other reasonable expenses that the court finds are the direct result of the defendant&#x27;s offense.</p>
+<p>For any order to pay a fine, make payments to a battered women&#x27;s shelter, or pay restitution as a condition of probation under this subdivision, the court shall make a determination of the defendant&#x27;s ability to pay. In no event shall any order to make payments to a battered women&#x27;s shelter be made if it would impair the ability of the defendant to pay direct restitution to the victim or court-ordered child support. If the injury to a married person is caused in whole or in part by the criminal acts of his or her spouse in violation of this section, the community property shall not be used to discharge the liability of the offending spouse for restitution to the injured spouse, required by Section 1203.04, as operative on or before August 2, 1995, or Section 1202.4, or to a shelter for costs with regard to the injured spouse and dependents, required by this section, until all separate property of the offending spouse is exhausted.</p>
+<p>(3) Upon conviction of a violation of this subdivision, if probation is granted or the execution or imposition of the sentence is suspended and the person has been previously convicted of a violation of this subdivision or Section 273.5, the person shall be imprisoned for not less than 48 hours in addition to the conditions in paragraph (1). However, the court, upon a showing of good cause, may elect not to impose the mandatory minimum imprisonment as required by this subdivision and may, under these circumstances, grant probation or order the suspension of the execution or imposition of the sentence.</p>
+<p>(4) The Legislature finds and declares that these specified crimes merit special consideration when imposing a sentence so as to display society&#x27;s condemnation for these crimes of violence upon victims with whom a close relationship has been formed.</p>
+<p>(5) If a peace officer makes an arrest for a violation of paragraph (1) of subdivision (e) of this section, the peace officer is not required to inform the victim of his or her right to make a citizen&#x27;s arrest pursuant to subdivision (b) of Section 836.</p>
+</article><article class="report-page" aria-labelledby="page-27-heading">
+<h3 id="page-27-heading">Source Page 27</h3>
+<p>(f) As used in this section:</p>
+<p>(1) &quot;Peace officer&quot; means any person defined in Chapter 4.5 (commencing with Section 830) of Title 3 of Part 2.</p>
+<p>(2) &quot;Emergency medical technician&quot; means a person who is either an EMT-I, EMT-II, or EMT-P (paramedic), and possesses a valid certificate or license in accordance with the standards of Division 2.5 (commencing with Section 1797) of the Health and Safety Code.</p>
+<p>(3) &quot;Nurse&quot; means a person who meets the standards of Division 2.5 (commencing with Section 1797) of the Health and Safety Code.</p>
+<p>(4) &quot;Serious bodily injury&quot; means a serious impairment of physical condition, including, but not limited to, the following: loss of consciousness; concussion; bone fracture; protracted loss or impairment of function of any bodily member or organ; a wound requiring extensive suturing; and serious disfigurement.</p>
+<p>(5) &quot;Injury&quot; means any physical injury which requires professional medical treatment.</p>
+<p>(6) &quot;Custodial officer&quot; means any person who has the responsibilities and duties described in Section 831 and who is employed by a law enforcement agency of any city or county or who performs those duties as a volunteer.</p>
+<p>(7) &quot;Lifeguard&quot; means a person defined in paragraph (5) of subdivision (d) of Section 241.</p>
+<p>(8) &quot;Traffic officer&quot; means any person employed by a city, county, or city and county to monitor and enforce state laws and local ordinances relating to parking and the operation of vehicles.</p>
+<p>(9) &quot;Animal control officer&quot; means any person employed by a city, county, or city and county for purposes of enforcing animal control laws or regulations.</p>
+<p>(10) &quot;Dating relationship&quot; means frequent, intimate associations primarily characterized by the expectation of affectional or sexual involvement independent of financial considerations.</p>
+<p>(11)</p>
+<p>(A) &quot;Code enforcement officer&quot; means any person who is not described in Chapter 4.5 (commencing with Section 830) of Title 3 of Part 2 and who is employed by any governmental subdivision, public or quasi-public corporation, public agency, public service corporation, any town, city, county, or municipal corporation, whether incorporated or chartered, who has enforcement authority for health, safety, and welfare requirements, and whose duties include enforcement of any statute, rules, regulations, or standards, and who is authorized to issue citations, or file formal complaints.</p>
+<p>(B) &quot;Code enforcement officer&quot; also includes any person who is employed by the Department of Housing and Community Development who has enforcement authority for health, safety, and welfare requirements pursuant to the Employee Housing Act (Part 1 (commencing with Section 17000) of Division 13 of the Health and Safety Code); the State Housing Law (Part 1.5 (commencing with Section 17910) of Division 13 of the Health and Safety Code); the Manufactured Housing Act of 1980 (Part 2 (commencing with Section 18000) of Division 13 of the Health and Safety Code); the Mobile home Parks Act (Part 2.1 (commencing with Section 18200) of Division 13 of the Health and Safety Code); and the Special Occupancy Parks Act (Part 2.3 (commencing with Section 18860) of Division 13 of the Health and Safety Code).</p>
+</article><article class="report-page" aria-labelledby="page-28-heading">
+<h3 id="page-28-heading">Source Page 28</h3>
+<p>(12) &quot;Custody assistant&quot; means any person who has the responsibilities and duties described in Section 831.7 and who is employed by a law enforcement agency of any city, county, or city and county.</p>
+<p>(13) &quot;Search and rescue member&quot; means any person who is part of an organized search and rescue team managed by a government agency.</p>
+<p>(14) &quot;Security officer&quot; means any person who has the responsibilities and duties described in Section 831.4 and who is employed by a law enforcement agency of any city, county, or city and county.</p>
+<p>(g) It is the intent of the Legislature by amendments to this section at the 1981-82 and 1983-84 Regular Sessions to abrogate the holdings in cases such as People v. Corey, 21 Cal. 3d 738, and, Cervantez v. J.C. Penney Co., 24 Cal. 3d 579, and to reinstate prior judicial interpretations of this section as they relate to criminal sanctions for battery on peace officers who are employed, on a part-time or casual basis, while wearing a police uniform as private security guards or patrolmen and to allow the exercise of peace officer powers concurrently with that employment.</p>
+<p>§ 273.5. Infliction of injury on present or former spouse, present or former cohabitant, present or former fiancé/fiancée, present or former dating partner, or parent of child; Punishment; Conditions of probation; Issuance of restraining order</p>
+<p>(a) Any person who willfully inflicts corporal injury resulting in a traumatic condition upon a victim described in subdivision (b) is guilty of a felony, and upon conviction thereof shall be punished by imprisonment in the state prison for two, three, or four years, or in a county jail for not more than one year, or by a fine of up to six thousand dollars ($6,000), or by both that fine and imprisonment.</p>
+<p>(b) Subdivision (a) shall apply if the victim is or was one or more of the following:</p>
+<p>(1) The offender&#x27;s spouse or former spouse.</p>
+<p>(2) The offender&#x27;s cohabitant or former cohabitant.</p>
+<p>(3) The offender&#x27;s fiancé or fiancée, or someone with whom the offender has, or previously had, an engagement or dating relationship, as defined in paragraph (10) of subdivision (f) of Section 243.</p>
+<p>(4) The mother or father of the offender&#x27;s child.</p>
+<p>(c) Holding oneself out to be the spouse of the person with whom one is cohabiting is not necessary to constitute cohabitation as the term is used in this section.</p>
+<p>(d) As used in this section, &quot;traumatic condition&quot; means a condition of the body, such as a wound, or external or internal injury, including, but not limited to, injury as a result of strangulation or suffocation, whether of a minor or serious nature, caused by a physical force. For purposes of this section, &quot;strangulation&quot; and &quot;suffocation&quot; include impeding the normal breathing or circulation of the blood of a person by applying pressure on the throat or neck.</p>
+<p>(e) For the purpose of this section, a person shall be considered the father or mother of another person&#x27;s child if the alleged male parent is presumed the natural father under Sections 7611 and 7612 of the Family Code.</p>
+</article><article class="report-page" aria-labelledby="page-29-heading">
+<h3 id="page-29-heading">Source Page 29</h3>
+<p>(f)</p>
+<p>(1) Any person convicted of violating this section for acts occurring within seven years of a previous conviction under subdivision (a), or subdivision (d) of Section 243, or Section 243.4, 244, 244.5, or 245, shall be punished by imprisonment in a county jail for not more than one year, or by imprisonment in the state prison for two, four, or five years, or by both imprisonment and a fine of up to ten thousand dollars ($10,000).</p>
+<p>(2) Any person convicted of a violation of this section for acts occurring within seven years of a previous conviction under subdivision (e) of Section 243 shall be punished by imprisonment in the state prison for two, three, or four years, or in a county jail for not more than one year, or by a fine of up to ten thousand dollars ($10,000), or by both that imprisonment and fine.</p>
+<p>(g) If probation is granted to any person convicted under subdivision (a), the court shall impose probation consistent with the provisions of Section 1203.097.</p>
+<p>(h) If probation is granted, or the execution or imposition of a sentence is suspended, for any defendant convicted under subdivision (a) who has been convicted of any prior offense specified in subdivision (f), the court shall impose one of the following conditions of probation:</p>
+<p>(1) If the defendant has suffered one prior conviction within the previous seven years for a violation of any offense specified in subdivision (f), it shall be a condition of probation, in addition to the provisions contained in Section 1203.097, that he or she be imprisoned in a county jail for not less than 15 days.</p>
+<p>(2) If the defendant has suffered two or more prior convictions within the previous seven years for a violation of any offense specified in subdivision (f), it shall be a condition of probation, in addition to the provisions contained in Section 1203.097, that he or she be imprisoned in a county jail for not less than 60 days.</p>
+<p>(3) The court, upon a showing of good cause, may find that the mandatory imprisonment required by this subdivision shall not be imposed and shall state on the record its reasons for finding good cause.</p>
+<p>(i) If probation is granted upon conviction of a violation of subdivision (a), the conditions of probation may include, consistent with the terms of probation imposed pursuant to Section 1203.097, in lieu of a fine, one or both of the following requirements:</p>
+<p>(1) That the defendant make payments to a battered women&#x27;s shelter, up to a maximum of five thousand dollars ($5,000), pursuant to Section 1203.097.</p>
+<p>(2)</p>
+<p>(A) That the defendant reimburses the victim for reasonable costs of counseling and other reasonable expenses that the court finds are the direct result of the defendant&#x27;s offense.</p>
+<p>(B) For any order to pay a fine, make payments to a battered women&#x27;s shelter, or pay restitution as a condition of probation under this subdivision, the court shall make a determination of the defendant&#x27;s ability to pay. An order to make payments to a battered women&#x27;s shelter shall not be made if it would impair the ability of the defendant to pay direct restitution to the victim or court- ordered child support. If the injury to a person who is married or in a registered domestic partnership is caused in whole or in part by the criminal acts of his or her spouse or domestic partner in violation of this section, the community property may not be used to discharge the liability of the offending spouse or domestic partner for restitution to the injured spouse or domestic partner, required by Section 1203.04, as operative on or before August 2, 1995, or Section 1202.4, or to a shelter for costs with regard to the injured spouse or domestic partner and</p>
+</article></section></div></details>
+<details class="document-section" id="xvi-california-definition-of-sexual-assault-details"><summary><span class="document-section__title">XVI. CALIFORNIA DEFINITION OF SEXUAL ASSAULT</span><span class="section-pages">Source pages 30-40</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XVI. CALIFORNIA DEFINITION OF SEXUAL ASSAULT section actions"><a href="test_security_report/xvi-california-definition-of-sexual-assault.html">Open section-only page</a></nav><section id="xvi-california-definition-of-sexual-assault" aria-labelledby="xvi-california-definition-of-sexual-assault-heading"><h2 id="xvi-california-definition-of-sexual-assault-heading">XVI. CALIFORNIA DEFINITION OF SEXUAL ASSAULT</h2><p class="section-pages">Source pages 30-40</p><article class="report-page" aria-labelledby="page-30-heading">
+<h3 id="page-30-heading">Source Page 30</h3>
+<p>dependents, required by this section, until all separate property of the offending spouse or domestic partner is exhausted.</p>
+<p>(j) Upon conviction under subdivision (a), the sentencing court shall also consider issuing an order restraining the defendant from any contact with the victim, which may be valid for up to 10 years, as determined by the court. It is the intent of the Legislature that the length of any restraining order be based upon the seriousness of the facts before the court, the probability of future violations, and the safety of the victim and his or her immediate family. This protective order may be issued by the court whether the defendant is sentenced to state prison or county jail, or if imposition of sentence is suspended and the defendant is placed on probation.</p>
+<p>(k) If a peace officer makes an arrest for a violation of this section, the peace officer is not required to inform the victim of his or her right to make a citizen&#x27;s arrest pursuant to subdivision (b) of Section 836.</p>
+<p>XVI. CALIFORNIA DEFINITION OF SEXUAL ASSAULT</p>
+<p>The California criminal statutes regarding sexual battery (Penal Code section 243.4), rape (Penal Code section 261), statutory rape (Penal Code section 261.5) and incest (Penal Code section 285) are included below. In addition, “consent” is defined and discussed in Penal Code sections 261.6 and 261.7, below.</p>
+<p>For reference, Chapter 1 (“Rape, Abduction, Carnal Abuse of Children, and Seduction”) of Title 9 (“Of Crimes against the Person Involving Sexual Assault, and Crimes against Public Decency and Good Morals”) of the Penal Code (i.e., Penal Code sections 261 through 269) is included in its entirety below.</p>
+<p>§ 243.4. Sexual battery; Seriously disabled or medically incapacitated victims</p>
+<p>(a) Any person who touches an intimate part of another person while that person is unlawfully restrained by the accused or an accomplice, and if the touching is against the will of the person touched and is for the purpose of sexual arousal, sexual gratification, or sexual abuse, is guilty of sexual battery. A violation of this subdivision is punishable by imprisonment in a county jail for not more than one year, and by a fine not exceeding two thousand dollars ($2,000); or by imprisonment in the state prison for two, three, or four years, and by a fine not exceeding ten thousand dollars ($10,000).</p>
+<p>(b) Any person who touches an intimate part of another person who is institutionalized for medical treatment and who is seriously disabled or medically incapacitated, if the touching is against the will of the person touched, and if the touching is for the purpose of sexual arousal, sexual gratification, or sexual abuse, is guilty of sexual battery. A violation of this subdivision is punishable by imprisonment in a county jail for not more than one year, and by a fine not exceeding two thousand dollars ($2,000); or by imprisonment in the state prison for two, three, or four years, and by a fine not exceeding ten thousand dollars ($10,000).</p>
+<p>(c) Any person who touches an intimate part of another person for the purpose of sexual arousal, sexual gratification, or sexual abuse, and the victim is at the time unconscious of the nature of the act because the perpetrator fraudulently represented that the touching served a professional purpose, is guilty of sexual battery. A violation of this subdivision is punishable by imprisonment in a county jail for not more than one year, and by a fine not exceeding two thousand dollars ($2,000); or by imprisonment in the state prison for two, three, or four years, and by a fine not exceeding ten thousand dollars ($10,000).</p>
+<p>(d) Any person who, for the purpose of sexual arousal, sexual gratification, or sexual abuse, causes another, against that person&#x27;s will while that person is unlawfully restrained either by the accused or an accomplice, or is institutionalized for medical treatment and is seriously disabled or</p>
+</article><article class="report-page" aria-labelledby="page-31-heading">
+<h3 id="page-31-heading">Source Page 31</h3>
+<p>medically incapacitated, to masturbate or touch an intimate part of either of those persons or a third person, is guilty of sexual battery. A violation of this subdivision is punishable by imprisonment in a county jail for not more than one year, and by a fine not exceeding two thousand dollars ($2,000); or by imprisonment in the state prison for two, three, or four years, and by a fine not exceeding ten thousand dollars ($10,000).</p>
+<p>(e)</p>
+<p>(1) Any person who touches an intimate part of another person, if the touching is against the will of the person touched, and is for the specific purpose of sexual arousal, sexual gratification, or sexual abuse, is guilty of misdemeanor sexual battery, punishable by a fine not exceeding two thousand dollars ($2,000), or by imprisonment in a county jail not exceeding six months, or by both that fine and imprisonment. However, if the defendant was an employer and the victim was an employee of the defendant, the misdemeanor sexual battery shall be punishable by a fine not exceeding three thousand dollars ($3,000), by imprisonment in a county jail not exceeding six months, or by both that fine and imprisonment. Notwithstanding any other provision of law, any amount of a fine above two thousand dollars ($2,000) which is collected from a defendant for a violation of this subdivision shall be transmitted to the State Treasury and, upon appropriation by the Legislature, distributed to the Department of Fair Employment and Housing for the purpose of enforcement of the California Fair Employment and Housing Act (Part 2.8 (commencing with Section 12900) of Division 3 of Title 2 of the Government Code), including, but not limited to, laws that proscribe sexual harassment in places of employment. However, in no event shall an amount over two thousand dollars ($2,000) be transmitted to the State Treasury until all fines, including any restitution fines that may have been imposed upon the defendant, have been paid in full.</p>
+<p>(2) As used in this subdivision, &quot;touches&quot; means physical contact with another person, whether accomplished directly, through the clothing of the person committing the offense, or through the clothing of the victim.</p>
+<p>(f) As used in subdivisions (a), (b), (c), and (d), &quot;touches&quot; means physical contact with the skin of another person whether accomplished directly or through the clothing of the person committing the offense.</p>
+<p>(g) As used in this section, the following terms have the following meanings:</p>
+<p>(1) &quot;Intimate part&quot; means the sexual organ, anus, groin, or buttocks of any person, and the breast of a female.</p>
+<p>(2) &quot;Sexual battery&quot; does not include the crimes defined in Section 261 or 289.</p>
+<p>(3) &quot;Seriously disabled&quot; means a person with severe physical or sensory disabilities.</p>
+<p>(4) &quot;Medically incapacitated&quot; means a person who is incapacitated as a result of prescribed sedatives, anesthesia, or other medication.</p>
+<p>(5) &quot;Institutionalized&quot; means a person who is located voluntarily or involuntarily in a hospital, medical treatment facility, nursing home, acute care facility, or mental hospital.</p>
+<p>(6) &quot;Minor&quot; means a person under 18 years of age.</p>
+<p>(h) This section shall not be construed to limit or prevent prosecution under any other law which also proscribes a course of conduct that also is proscribed by this section.</p>
+<p>(i) In the case of a felony conviction for a violation of this section, the fact that the defendant was an employer and the victim was an employee of the defendant shall be a factor in aggravation in sentencing.</p>
+</article><article class="report-page" aria-labelledby="page-32-heading">
+<h3 id="page-32-heading">Source Page 32</h3>
+<p>(j) A person who commits a violation of subdivision (a), (b), (c), or (d) against a minor when the person has a prior felony conviction for a violation of this section shall be guilty of a felony, punishable by imprisonment in the state prison for two, three, or four years and a fine not exceeding ten thousand dollars ($10,000).</p>
+<p>§ 261. Rape; &quot;Duress&quot;; &quot;Menace&quot;</p>
+<p>(a) Rape is an act of sexual intercourse accomplished with a person not the spouse of the perpetrator, under any of the following circumstances:</p>
+<p>(1) Where a person is incapable, because of a mental disorder or developmental or physical disability, of giving legal consent, and this is known or reasonably should be known to the person committing the act. Notwithstanding the existence of a conservatorship pursuant to the provisions of the Lanterman-Petris-Short Act (Part 1 (commencing with Section 5000) of Division 5 of the Welfare and Institutions Code), the prosecuting attorney shall prove, as an element of the crime, that a mental disorder or developmental or physical disability rendered the alleged victim incapable of giving consent.</p>
+<p>(2) Where it is accomplished against a person&#x27;s will by means of force, violence, duress, menace, or fear of immediate and unlawful bodily injury on the person or another.</p>
+<p>(3) Where a person is prevented from resisting by any intoxicating or anesthetic substance, or any controlled substance, and this condition was known, or reasonably should have been known by the accused.</p>
+<p>(4) Where a person is at the time unconscious of the nature of the act, and this is known to the accused. As used in this paragraph, &quot;unconscious of the nature of the act&quot; means incapable of resisting because the victim meets any one of the following conditions:</p>
+<p>(A) Was unconscious or asleep.</p>
+<p>(B) Was not aware, knowing, perceiving, or cognizant that the act occurred.</p>
+<p>(C) Was not aware, knowing, perceiving, or cognizant of the essential characteristics of the act due to the perpetrator&#x27;s fraud in fact.</p>
+<p>(D) Was not aware, knowing, perceiving, or cognizant of the essential characteristics of the act due to the perpetrator&#x27;s fraudulent representation that the sexual penetration served a professional purpose when it served no professional purpose.</p>
+<p>(5) Where a person submits under the belief that the person committing the act is someone known to the victim other than the accused, and this belief is induced by any artifice, pretense, or concealment practiced by the accused, with intent to induce the belief.</p>
+<p>(6) Where the act is accomplished against the victim&#x27;s will by threatening to retaliate in the future against the victim or any other person, and there is a reasonable possibility that the perpetrator will execute the threat. As used in this paragraph, &quot;threatening to retaliate&quot; means a threat to kidnap or falsely imprison, or to inflict extreme pain, serious bodily injury, or death.</p>
+<p>(7) Where the act is accomplished against the victim&#x27;s will by threatening to use the authority of a public official to incarcerate, arrest, or deport the victim or another, and the victim has a reasonable belief that the perpetrator is a public official. As used in this paragraph, &quot;public official&quot; means a person employed by a governmental agency who has the authority, as part of that position, to incarcerate, arrest, or deport another. The perpetrator does not actually have to be a public official.</p>
+</article><article class="report-page" aria-labelledby="page-33-heading">
+<h3 id="page-33-heading">Source Page 33</h3>
+<p>(b) As used in this section, &quot;duress&quot; means a direct or implied threat of force, violence, danger, or retribution sufficient to coerce a reasonable person of ordinary susceptibilities to perform an act which otherwise would not have been performed, or acquiesce in an act to which one otherwise would not have submitted. The total circumstances, including the age of the victim, and his or her relationship to the defendant, are factors to consider in appraising the existence of duress.</p>
+<p>(c) As used in this section, &quot;menace&quot; means any threat, declaration, or act which shows an intention to inflict an injury upon another.</p>
+<p>§ 261.5. Unlawful sexual intercourse with a minor; Misdemeanor or felony violation; Civil penalties</p>
+<p>(a) Unlawful sexual intercourse is an act of sexual intercourse accomplished with a person who is not the spouse of the perpetrator, if the person is a minor. For the purposes of this section, a &quot;minor&quot; is a person under the age of 18 years and an &quot;adult&quot; is a person who is at least 18 years of age.</p>
+<p>(b) Any person who engages in an act of unlawful sexual intercourse with a minor who is not more than three years older or three years younger than the perpetrator, is guilty of a misdemeanor.</p>
+<p>(c) Any person who engages in an act of unlawful sexual intercourse with a minor who is more than three years younger than the perpetrator is guilty of either a misdemeanor or a felony, and shall be punished by imprisonment in a county jail not exceeding one year, or by imprisonment pursuant to subdivision (h) of Section 1170.</p>
+<p>(d) Any person 21 years of age or older who engages in an act of unlawful sexual intercourse with a minor who is under 16 years of age is guilty of either a misdemeanor or a felony, and shall be punished by imprisonment in a county jail not exceeding one year, or by imprisonment pursuant to subdivision (h) of Section 1170 for two, three, or four years.</p>
+<p>(e)</p>
+<p>(1) Notwithstanding any other provision of this section, an adult who engages in an act of sexual intercourse with a minor in violation of this section may be liable for civil penalties in the following amounts:</p>
+<p>(A) An adult who engages in an act of unlawful sexual intercourse with a minor less than two years younger than the adult is liable for a civil penalty not to exceed two thousand dollars ($2,000).</p>
+<p>(B) An adult who engages in an act of unlawful sexual intercourse with a minor at least two years younger than the adult is liable for a civil penalty not to exceed five thousand dollars ($5,000).</p>
+<p>(C) An adult who engages in an act of unlawful sexual intercourse with a minor at least three years younger than the adult is liable for a civil penalty not to exceed ten thousand dollars ($10,000).</p>
+<p>(D) An adult over the age of 21 years who engages in an act of unlawful sexual intercourse with a minor under 16 years of age is liable for a civil penalty not to exceed twenty-five thousand dollars ($25,000).</p>
+<p>(2) The district attorney may bring actions to recover civil penalties pursuant to this subdivision. From the amounts collected for each case, an amount equal to the costs of pursuing the action</p>
+</article><article class="report-page" aria-labelledby="page-34-heading">
+<h3 id="page-34-heading">Source Page 34</h3>
+<p>shall be deposited with the treasurer of the county in which the judgment was entered, and the remainder shall be deposited in the Underage Pregnancy Prevention Fund, which is hereby created in the State Treasury. Amounts deposited in the Underage Pregnancy Prevention Fund may be used only for the purpose of preventing underage pregnancy upon appropriation by the Legislature.</p>
+<p>(3) In addition to any punishment imposed under this section, the judge may assess a fine not to exceed seventy dollars ($70) against any person who violates this section with the proceeds of this fine to be used in accordance with Section 1463.23. The court shall, however, take into consideration the defendant&#x27;s ability to pay, and no defendant shall be denied probation because of his or her inability to pay the fine permitted under this subdivision.</p>
+<p>§ 261.6. &quot;Consent&quot;; Effect of current or previous relationship</p>
+<p>In prosecutions under Section 261, 262, 286, 288a, or 289, in which consent is at issue, &quot;consent&quot; shall be defined to mean positive cooperation in act or attitude pursuant to an exercise of free will. The person must act freely and voluntarily and have knowledge of the nature of the act or transaction involved.</p>
+<p>A current or previous dating or marital relationship shall not be sufficient to constitute consent where consent is at issue in a prosecution under Section 261, 262, 286, 288a, or 289.</p>
+<p>Nothing in this section shall affect the admissibility of evidence or the burden of proof on the issue of consent.</p>
+<p>§ 261.7. &quot;Consent&quot;; Communication to use condom or other birth control device</p>
+<p>In prosecutions under Section 261, 262, 286, 288a, or 289, in which consent is at issue, evidence that the victim suggested, requested, or otherwise communicated to the defendant that the defendant use a condom or other birth control device, without additional evidence of consent, is not sufficient to constitute consent.</p>
+<p>§ 261.9. Procuring sexual services of prostitute of specified age; Imposition and collection of fines</p>
+<p>(a) Any person convicted of seeking to procure or procuring the sexual services of a prostitute in violation of subdivision (b) of Section 647, if the prostitute is under 18 years of age, shall be ordered by the court, in addition to any other penalty or fine imposed, to pay an additional fine in an amount not to exceed twenty-five thousand dollars ($25,000).</p>
+<p>(b) Every fine imposed and collected pursuant to this section shall, upon appropriation by the Legislature, be available to fund programs and services for commercially sexually exploited minors in the counties where the underlying offenses are committed.</p>
+<p>§ 262. Spousal rape</p>
+<p>(a) Rape of a person who is the spouse of the perpetrator is an act of sexual intercourse accomplished under any of the following circumstances:</p>
+<p>(1) Where it is accomplished against a person&#x27;s will by means of force, violence, duress, menace, or fear of immediate and unlawful bodily injury on the person or another.</p>
+</article><article class="report-page" aria-labelledby="page-35-heading">
+<h3 id="page-35-heading">Source Page 35</h3>
+<p>(2) Where a person is prevented from resisting by any intoxicating or anesthetic substance, or any controlled substance, and this condition was known, or reasonably should have been known, by the accused. (3) Where a person is at the time unconscious of the nature of the act, and this is known to the accused. As used in this paragraph, &quot;unconscious of the nature of the act&quot; means incapable of resisting because the victim meets one of the following conditions:</p>
+<p>(A) Was unconscious or asleep.</p>
+<p>(B) Was not aware, knowing, perceiving, or cognizant that the act occurred.</p>
+<p>(C) Was not aware, knowing, perceiving, or cognizant of the essential characteristics of the act due to the perpetrator&#x27;s fraud in fact.</p>
+<p>(4) Where the act is accomplished against the victim&#x27;s will by threatening to retaliate in the future against the victim or any other person, and there is a reasonable possibility that the perpetrator will execute the threat. As used in this paragraph, &quot;threatening to retaliate&quot; means a threat to kidnap or falsely imprison, or to inflict extreme pain, serious bodily injury, or death.</p>
+<p>(5) Where the act is accomplished against the victim&#x27;s will by threatening to use the authority of a public official to incarcerate, arrest, or deport the victim or another, and the victim has a reasonable belief that the perpetrator is a public official. As used in this paragraph, &quot;public official&quot; means a person employed by a governmental agency who has the authority, as part of that position, to incarcerate, arrest, or deport another. The perpetrator does not actually have to be a public official.</p>
+<p>(b) As used in this section, &quot;duress&quot; means a direct or implied threat of force, violence, danger, or retribution sufficient to coerce a reasonable person of ordinary susceptibilities to perform an act which otherwise would not have been performed, or acquiesce in an act to which one otherwise would not have submitted. The total circumstances, including the age of the victim, and his or her relationship to the defendant, are factors to consider in apprising the existence of duress.</p>
+<p>(c) As used in this section, &quot;menace&quot; means any threat, declaration, or act that shows an intention to inflict an injury upon another.</p>
+<p>(d) If probation is granted upon conviction of a violation of this section, the conditions of probation may include, in lieu of a fine, one or both of the following requirements:</p>
+<p>(1) That the defendant make payments to a battered women&#x27;s shelter, up to a maximum of one thousand dollars ($1,000).</p>
+<p>(2) That the defendant reimburse the victim for reasonable costs of counseling and other reasonable expenses that the court finds are the direct result of the defendant&#x27;s offense.</p>
+<p>For any order to pay a fine, make payments to a battered women&#x27;s shelter, or pay restitution as a condition of probation under this subdivision, the court shall make a determination of the defendant&#x27;s ability to pay. In no event shall any order to make payments to a battered women&#x27;s shelter be made if it would impair the ability of the defendant to pay direct restitution to the victim or court-ordered child support. Where the injury to a married person is caused in whole or in part by the criminal acts of his or her spouse in violation of this section, the community property may not be used to discharge the liability of the offending spouse for restitution to the injured spouse, required by Section 1203.04, as operative on or before August 2, 1995, or Section 1202.4, or to a shelter for costs with regard to the injured spouse and dependents, required by this section, until all separate property of the offending spouse is exhausted.</p>
+</article><article class="report-page" aria-labelledby="page-36-heading">
+<h3 id="page-36-heading">Source Page 36</h3>
+<p>§ 263. Penetration</p>
+<p>The essential guilt of rape consists in the outrage to the person and feelings of the victim of the rape. Any sexual penetration, however slight, is sufficient to complete the crime. § 263.1. Legislative findings and declarations</p>
+<p>(a) The Legislature finds and declares that all forms of nonconsensual sexual assault may be considered rape for purposes of the gravity of the offense and the support of survivors.</p>
+<p>(b) This section is declarative of existing law.</p>
+<p>§ 264. Punishment for rape; AIDS education fine; Punishment for rape of child or other minor</p>
+<p>(a) Except as provided in subdivision (c), rape, as defined in Section 261 or 262, is punishable by imprisonment in the state prison for three, six, or eight years.</p>
+<p>(b) In addition to any punishment imposed under this section the judge may assess a fine not to exceed seventy dollars ($70) against any person who violates Section 261 or 262 with the proceeds of this fine to be used in accordance with Section 1463.23. The court shall, however, take into consideration the defendant&#x27;s ability to pay, and no defendant shall be denied probation because of his or her inability to pay the fine permitted under this subdivision.</p>
+<p>(c)</p>
+<p>(1) Any person who commits rape in violation of paragraph (2) of subdivision (a) of Section 261 upon a child who is under 14 years of age shall be punished by imprisonment in the state prison for 9, 11, or 13 years.</p>
+<p>(2) Any person who commits rape in violation of paragraph (2) of subdivision (a) of Section 261 upon a minor who is 14 years of age or older shall be punished by imprisonment in the state prison for 7, 9, or 11 years.</p>
+<p>(3) This subdivision does not preclude prosecution under Section 269, Section 288.7, or any other provision of law.</p>
+<p>§ 264.1. Punishment for aiding or abetting rape</p>
+<p>(a) The provisions of Section 264 notwithstanding, in any case in which the defendant, voluntarily acting in concert with another person, by force or violence and against the will of the victim, committed an act described in Section 261, 262, or 289, either personally or by aiding and abetting the other person, that fact shall be charged in the indictment or information and if found to be true by the jury, upon a jury trial, or if found to be true by the court, upon a court trial, or if admitted by the defendant, the defendant shall suffer confinement in the state prison for five, seven, or nine years.</p>
+<p>(b)</p>
+<p>(1) If the victim of an offense described in subdivision (a) is a child who is under 14 years of age, the defendant shall be punished by imprisonment in the state prison for 10, 12, or 14 years.</p>
+<p>(2) If the victim of an offense described in subdivision (a) is a minor who is 14 years of age or older, the defendant shall be punished by imprisonment in the state prison for 7, 9, or 11 years.</p>
+</article><article class="report-page" aria-labelledby="page-37-heading">
+<h3 id="page-37-heading">Source Page 37</h3>
+<p>(3) This subdivision does not preclude prosecution under Section 269, Section 288.7, or any other provision of law.</p>
+<p>§ 264.2. Provision of &quot;Victims of Domestic Violence Card&quot;; Notice to local rape victim counseling center; Right to sexual assault victim counselor and another support person</p>
+<p>(a) Whenever there is an alleged violation or violations of subdivision (e) of Section 243, or Section 261, 261.5, 262, 273.5, 286, 288a, or 289, the law enforcement officer assigned to the case shall immediately provide the victim of the crime with the &quot;Victims of Domestic Violence&quot; card, as specified in subparagraph (H) of paragraph (9) of subdivision (c) of Section 13701.</p>
+<p>(b)</p>
+<p>(1) The law enforcement officer, or his or her agency, shall immediately notify the local rape victim counseling center, whenever a victim of an alleged violation of Section 261, 261.5, 262, 286, 288a, or 289 is transported to a hospital for any medical evidentiary or physical examination. The hospital may notify the local rape victim counseling center, when the victim of the alleged violation of Section 261, 261.5, 262, 286, 288a, or 289 is presented to the hospital for the medical or evidentiary physical examination, upon approval of the victim. The victim has the right to have a sexual assault counselor, as defined in Section 1035.2 of the Evidence Code, and a support person of the victim&#x27;s choosing present at any medical evidentiary or physical examination.</p>
+<p>(2) Prior to the commencement of any initial medical evidentiary or physical examination arising out of a sexual assault, a victim shall be notified orally or in writing by the medical provider that the victim has the right to have present a sexual assault counselor and at least one other support person of the victim&#x27;s choosing.</p>
+<p>(3) The hospital may verify with the law enforcement officer, or his or her agency, whether the local rape victim counseling center has been notified, upon the approval of the victim.</p>
+<p>(4) A support person may be excluded from a medical evidentiary or physical examination if the law enforcement officer or medical provider determines that the presence of that individual would be detrimental to the purpose of the examination.</p>
+<p>§ 265. Abduction</p>
+<p>Every person who takes any woman unlawfully, against her will, and by force, menace or duress, compels her to marry him, or to marry any other person, or to be defiled, is punishable by imprisonment pursuant to subdivision (h) of Section 1170.</p>
+<p>§ 266. Procurement</p>
+<p>Every person who inveigles or entices any unmarried female, of previous chaste character, under the age of 18 years, into any house of ill fame, or of assignation, or elsewhere, for the purpose of prostitution, or to have illicit carnal connection with any man; and every person who aids or assists in such inveiglement or enticement; and every person who, by any false pretenses, false representation, or other fraudulent means, procures any female to have illicit carnal connection with any man, is punishable by imprisonment in the state prison, or by imprisonment in a county jail not exceeding one year, or by a fine not exceeding two thousand dollars ($2,000), or by both such fine and imprisonment.</p>
+<p>§ 266a. Procurement by force or fraud; Prostitution and human trafficking; Punishment</p>
+</article><article class="report-page" aria-labelledby="page-38-heading">
+<h3 id="page-38-heading">Source Page 38</h3>
+<p>Each person who, within this state, takes any person against his or her will and without his or her consent, or with his or her consent procured by fraudulent inducement or misrepresentation, for the purpose of prostitution, as defined in subdivision (b) of Section 647, is punishable by imprisonment in the state prison, and a fine not exceeding ten thousand dollars ($10,000).</p>
+<p>§ 266b. Compelling an illicit relationship Every person who takes any other person unlawfully, and against his or her will, and by force, menace, or duress, compels him or her to live with such person in an illicit relation, against his or her consent, or to so live with any other person, is punishable by imprisonment pursuant to subdivision (h) of Section 1170.</p>
+<p>§ 266c. Inducing consent to sexual act by fraud or fear</p>
+<p>Every person who induces any other person to engage in sexual intercourse, sexual penetration, oral copulation, or sodomy when his or her consent is procured by false or fraudulent representation or pretense that is made with the intent to create fear, and which does induce fear, and that would cause a reasonable person in like circumstances to act contrary to the person&#x27;s free will, and does cause the victim to so act, is punishable by imprisonment in a county jail for not more than one year or in the state prison for two, three, or four years.</p>
+<p>§ 266d. Causing cohabitation for profit</p>
+<p>Any person who receives any money or other valuable thing for or on account of placing in custody any other person for the purpose of causing the other person to cohabit with any person to whom the other person is not married, is guilty of a felony.</p>
+<p>§ 266e. Acquiring prostitute</p>
+<p>Every person who purchases, or pays any money or other valuable thing for, any person for the purpose of prostitution as defined in subdivision (b) of Section 647, or for the purpose of placing such person, for immoral purposes, in any house or place against his or her will, is guilty of a felony punishable by imprisonment in the state prison for 16 months, or two or three years.</p>
+<p>§ 266f. Selling prostitute</p>
+<p>Every person who sells any person or receives any money or other valuable thing for or on account of his or her placing in custody, for immoral purposes, any person, whether with or without his or her consent, is guilty of a felony punishable by imprisonment in the state prison for 16 months, or two or three years.</p>
+<p>§ 266g. Procurement of wife by husband</p>
+<p>Every man who, by force, intimidation, threats, persuasion, promises, or any other means, places or leaves, or procures any other person or persons to place or leave, his wife in a house of prostitution, or connives at or consents to, or permits, the placing or leaving of his wife in a house of prostitution, or allows or permits her to remain therein, is guilty of a felony and punishable by imprisonment pursuant to subdivision (h) of Section 1170 for two, three or four years; and in all prosecutions under this section a wife is a competent witness against her husband.</p>
+<p>§ 266h. Pimping</p>
+<p>(a) Except as provided in subdivision (b), any person who, knowing another person is a prostitute, lives or derives support or maintenance in whole or in part from the earnings or proceeds of the person&#x27;s prostitution, or from money loaned or advanced to or charged against that person by any</p>
+</article><article class="report-page" aria-labelledby="page-39-heading">
+<h3 id="page-39-heading">Source Page 39</h3>
+<p>keeper or manager or inmate of a house or other place where prostitution is practiced or allowed, or who solicits or receives compensation for soliciting for the person, is guilty of pimping, a felony, and shall be punishable by imprisonment in the state prison for three, four, or six years.</p>
+<p>(b) Any person who, knowing another person is a prostitute, lives or derives support or maintenance in whole or in part from the earnings or proceeds of the person&#x27;s prostitution, or from money loaned or advanced to or charged against that person by any keeper or manager or inmate of a house or other place where prostitution is practiced or allowed, or who solicits or receives compensation for soliciting for the person, when the prostitute is a minor, is guilty of pimping a minor, a felony, and shall be punishable as follows:</p>
+<p>(1) If the person engaged in prostitution is a minor 16 years of age or older, the offense is punishable by imprisonment in the state prison for three, four, or six years.</p>
+<p>(2) If the person engaged in prostitution is under 16 years of age, the offense is punishable by imprisonment in the state prison for three, six, or eight years.</p>
+<p>§ 266i. Pandering</p>
+<p>(a) Except as provided in subdivision (b), any person who does any of the following is guilty of pandering, a felony, and shall be punishable by imprisonment in the state prison for three, four, or six years:</p>
+<p>(1) Procures another person for the purpose of prostitution.</p>
+<p>(2) By promises, threats, violence, or by any device or scheme, causes, induces, persuades, or encourages another person to become a prostitute.</p>
+<p>(3) Procures for another person a place as an inmate in a house of prostitution or as an inmate of any place in which prostitution is encouraged or allowed within this state.</p>
+<p>(4) By promises, threats, violence, or by any device or scheme, causes, induces, persuades, or encourages an inmate of a house of prostitution, or any other place in which prostitution is encouraged or allowed, to remain therein as an inmate.</p>
+<p>(5) By fraud or artifice, or by duress of person or goods, or by abuse of any position of confidence or authority, procures another person for the purpose of prostitution, or to enter any place in which prostitution is encouraged or allowed within this state, or to come into this state or leave this state for the purpose of prostitution.</p>
+<p>(6) Receives or gives, or agrees to receive or give, any money or thing of value for procuring, or attempting to procure, another person for the purpose of prostitution, or to come into this state or leave this state for the purpose of prostitution.</p>
+<p>(b) Any person who does any of the acts described in subdivision (a) with another person who is a minor is guilty of pandering, a felony, and shall be punishable as follows:</p>
+<p>(1) If the other person is a minor 16 years of age or older, the offense is punishable by imprisonment in the state prison for three, four, or six years.</p>
+<p>(2) If the other person is under 16 years of age, the offense is punishable by imprisonment in the state prison for three, six, or eight years.</p>
+<p>§ 266j. Procurement of child</p>
+<p>Any person who intentionally gives, transports, provides, or makes available, or who offers to</p>
+</article><article class="report-page" aria-labelledby="page-40-heading">
+<h3 id="page-40-heading">Source Page 40</h3>
+<p>give, transport, provide, or make available to another person, a child under the age of 16 for the purpose of any lewd or lascivious act as defined in Section 288, or who causes, induces, or persuades a child under the age of 16 to engage in such an act with another person, is guilty of a felony and shall be imprisoned in the state prison for a term of three, six, or eight years, and by a fine not to exceed fifteen thousand dollars ($15,000).</p>
+<p>§ 266k. Additional fines; Use for child sexual abuse prevention and counseling and to serve minor victims of human trafficking</p>
+<p>(a) Upon the conviction of any person for a violation of Section 266h or 266i, the court may, in addition to any other penalty or fine imposed, order the defendant to pay an additional fine not to exceed five thousand dollars ($5,000). In setting the amount of the fine, the court shall consider any relevant factors including, but not limited to, the seriousness and gravity of the offense and the circumstances of its commission, whether the defendant derived any economic gain as the result of the crime, and the extent to which the victim suffered losses as a result of the crime. Every fine imposed and collected under this section shall be deposited in the Victim-Witness Assistance Fund to be available for appropriation to fund child sexual exploitation and child sexual abuse victim counseling centers and prevention programs under Section 13837.</p>
+<p>(b) Upon the conviction of any person for a violation of Section 266j or 267, the court may, in addition to any other penalty or fine imposed, order the defendant to pay an additional fine not to exceed twenty-five thousand dollars ($25,000).</p>
+<p>(c) Fifty percent of the fines collected pursuant to subdivision (b) and deposited in the Victim- Witness Assistance Fund pursuant to subdivision (a) shall be granted to community-based organizations that serve minor victims of human trafficking.</p>
+<p>(d) If the court orders a fine to be imposed pursuant to this section, the actual administrative cost of collecting that fine, not to exceed 2 percent of the total amount paid, may be paid into the general fund of the county treasury for the use and benefit of the county.</p>
+<p>§ 267. Abduction of minor for prostitution</p>
+<p>Every person who takes away any other person under the age of 18 years from the father, mother, guardian, or other person having the legal charge of the other person, without their consent, for the purpose of prostitution, is punishable by imprisonment in the state prison, and a fine not exceeding two thousand dollars ($2,000).</p>
+<p>§ 269. Aggravated sexual assault of child</p>
+<p>(a) Any person who commits any of the following acts upon a child who is under 14 years of age and seven or more years younger than the person is guilty of aggravated sexual assault of a child:</p>
+<p>(1) Rape, in violation of paragraph (2) or (6) of subdivision (a) of Section 261.</p>
+<p>(2) Rape or sexual penetration, in concert, in violation of Section 264.1.</p>
+<p>(3) Sodomy, in violation of paragraph (2) or (3) of subdivision (c), or subdivision (d), of Section 286.</p>
+<p>(4) Oral copulation, in violation of paragraph (2) or (3) of subdivision (c), or subdivision (d), of Section 288a.</p>
+<p>(5) Sexual penetration, in violation of subdivision (a) of Section 289.</p>
+</article></section></div></details>
+<details class="document-section" id="xvii-california-definition-of-stalking-penal-code-section-646-9-details"><summary><span class="document-section__title">XVII. CALIFORNIA DEFINITION OF STALKING (Penal Code section 646.9)</span><span class="section-pages">Source pages 41-42</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XVII. CALIFORNIA DEFINITION OF STALKING (Penal Code section 646.9) section actions"><a href="test_security_report/xvii-california-definition-of-stalking-penal-code-section-646-9.html">Open section-only page</a></nav><section id="xvii-california-definition-of-stalking-penal-code-section-646-9" aria-labelledby="xvii-california-definition-of-stalking-penal-code-section-646-9-heading"><h2 id="xvii-california-definition-of-stalking-penal-code-section-646-9-heading">XVII. CALIFORNIA DEFINITION OF STALKING (Penal Code section 646.9)</h2><p class="section-pages">Source pages 41-42</p><article class="report-page" aria-labelledby="page-41-heading">
+<h3 id="page-41-heading">Source Page 41</h3>
+<p>(b) Any person who violates this section is guilty of a felony and shall be punished by imprisonment in the state prison for 15 years to life.</p>
+<p>(c) The court shall impose a consecutive sentence for each offense that results in a conviction under this section if the crimes involve separate victims or involve the same victim on separate occasions as defined in subdivision (d) of Section 667.6.</p>
+<p>§ 285. Incest</p>
+<p>Persons being within the degrees of consanguinity within which marriages are declared by law to be incestuous and void, who intermarry with each other, or who being 14 years of age or older, commit fornication or adultery with each other, are punishable by imprisonment in the state prison. XVII. CALIFORNIA DEFINITION OF STALKING (Penal Code section 646.9)</p>
+<p>§ 646.9. Stalking</p>
+<p>(a) Any person who willfully, maliciously, and repeatedly follows or willfully and maliciously harasses another person and who makes a credible threat with the intent to place that person in reasonable fear for his or her safety, or the safety of his or her immediate family is guilty of the crime of stalking, punishable by imprisonment in a county jail for not more than one year, or by a fine of not more than one thousand dollars ($1,000), or by both that fine and imprisonment, or by imprisonment in the state prison.</p>
+<p>(b) Any person who violates subdivision (a) when there is a temporary restraining order, injunction, or any other court order in effect prohibiting the behavior described in subdivision (a) against the same party, shall be punished by imprisonment in the state prison for two, three, or four years.</p>
+<p>(c)</p>
+<p>(1) Every person who, after having been convicted of a felony under Section 273.5, 273.6, or 422, commits a violation of subdivision (a) shall be punished by imprisonment in a county jail for not more than one year, or by a fine of not more than one thousand dollars ($1,000), or by both that fine and imprisonment, or by imprisonment in the state prison for two, three, or five years.</p>
+<p>(2) Every person who, after having been convicted of a felony under subdivision (a), commits a violation of this section shall be punished by imprisonment in the state prison for two, three, or five years.</p>
+<p>(d) In addition to the penalties provided in this section, the sentencing court may order a person convicted of a felony under this section to register as a sex offender pursuant to Section 290.006.</p>
+<p>(e) For the purposes of this section, &quot;harasses&quot; means engages in a knowing and willful course of conduct directed at a specific person that seriously alarms, annoys, torments, or terrorizes the person, and that serves no legitimate purpose.</p>
+<p>(f) For the purposes of this section, &quot;course of conduct&quot; means two or more acts occurring over a period of time, however short, evidencing a continuity of purpose. Constitutionally protected</p>
+</article><article class="report-page" aria-labelledby="page-42-heading">
+<h3 id="page-42-heading">Source Page 42</h3>
+<p>activity is not included within the meaning of &quot;course of conduct.&quot;</p>
+<p>(g) For the purposes of this section, &quot;credible threat&quot; means a verbal or written threat, including that performed through the use of an electronic communication device, or a threat implied by a pattern of conduct or a combination of verbal, written, or electronically communicated statements and conduct, made with the intent to place the person that is the target of the threat in reasonable fear for his or her safety or the safety of his or her family, and made with the apparent ability to carry out the threat so as to cause the person who is the target of the threat to reasonably fear for his or her safety or the safety of his or her family. It is not necessary to prove that the defendant had the intent to actually carry out the threat. The present incarceration of a person making the threat shall not be a bar to prosecution under this section. Constitutionally protected activity is not included within the meaning of &quot;credible threat.&quot;</p>
+<p>(h) For purposes of this section, the term &quot;electronic communication device&quot; includes, but is not limited to, telephones, cellular phones, computers, video recorders, fax machines, or pagers. &quot;Electronic communication&quot; has the same meaning as the term defined in Subsection 12 of Section 2510 of Title 18 of the United States Code.</p>
+<p>(i) This section shall not apply to conduct that occurs during labor picketing.</p>
+<p>(j) If probation is granted, or the execution or imposition of a sentence is suspended, for any person convicted under this section, it shall be a condition of probation that the person participate in counseling, as designated by the court. However, the court, upon a showing of good cause, may find that the counseling requirement shall not be imposed.</p>
+<p>(k)</p>
+<p>(1) The sentencing court also shall consider issuing an order restraining the defendant from any contact with the victim that may be valid for up to 10 years, as determined by the court. It is the intent of the Legislature that the length of any restraining order be based upon the seriousness of the facts before the court, the probability of future violations, and the safety of the victim and his or her immediate family.</p>
+<p>(2) This protective order may be issued by the court whether the defendant is sentenced to state prison, county jail, or if imposition of sentence is suspended and the defendant is placed on probation.</p>
+<p>(l) For purposes of this section, &quot;immediate family&quot; means any spouse, parent, child, any person related by consanguinity or affinity within the second degree, or any other person who regularly resides in the household, or who, within the prior six months, regularly resided in the household.</p>
+<p>(m) The court shall consider whether the defendant would benefit from treatment pursuant to Section 2684. If it is determined to be appropriate, the court shall recommend that the Department of Corrections and Rehabilitation make a certification as provided in Section 2684. Upon the certification, the defendant shall be evaluated and transferred to the appropriate hospital for treatment pursuant to Section 2684.</p>
+</article></section></div></details>
+<details class="document-section" id="xviii-campus-map-details"><summary><span class="document-section__title">XVIII. Campus Map</span><span class="section-pages">Source page 43</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XVIII. Campus Map section actions"><a href="test_security_report/xviii-campus-map.html">Open section-only page</a></nav><section id="xviii-campus-map" aria-labelledby="xviii-campus-map-heading"><h2 id="xviii-campus-map-heading">XVIII. Campus Map</h2><p class="section-pages">Source page 43</p><article class="report-page" aria-labelledby="page-43-heading">
+<h3 id="page-43-heading">Source Page 43</h3>
+<figure class="page-image"><img src="test_security_report_assets/page-043.png" alt="Rendered page 43 from the 2024 Annual Security Report."><figcaption>Rendered PDF page 43 preserved as an image because the source page is primarily visual or table-based.</figcaption></figure>
+<p>XVIII. Campus Map</p>
+</article></section></div></details>
+<details class="document-section" id="xvix-campus-evacuation-map-details"><summary><span class="document-section__title">XVIX. Campus Evacuation Map</span><span class="section-pages">Source page 44</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XVIX. Campus Evacuation Map section actions"><a href="test_security_report/xvix-campus-evacuation-map.html">Open section-only page</a></nav><section id="xvix-campus-evacuation-map" aria-labelledby="xvix-campus-evacuation-map-heading"><h2 id="xvix-campus-evacuation-map-heading">XVIX. Campus Evacuation Map</h2><p class="section-pages">Source page 44</p><article class="report-page" aria-labelledby="page-44-heading">
+<h3 id="page-44-heading">Source Page 44</h3>
+<figure class="page-image"><img src="test_security_report_assets/page-044.png" alt="Rendered page 44 from the 2024 Annual Security Report."><figcaption>Rendered PDF page 44 preserved as an image because the source page is primarily visual or table-based.</figcaption></figure>
+<p>XVIX. Campus Evacuation Map</p>
+</article></section></div></details>
+<details class="document-section" id="xx-college-administration-details"><summary><span class="document-section__title">XX. College Administration / XXI. LACCD Administration</span><span class="section-pages">Source page 45</span></summary><div class="document-section__panel"><nav class="document-section__actions no-print" aria-label="XX. College Administration / XXI. LACCD Administration section actions"><a href="test_security_report/xx-college-administration.html">Open section-only page</a></nav><section id="xx-college-administration" aria-labelledby="xx-college-administration-heading"><h2 id="xx-college-administration-heading">XX. College Administration / XXI. LACCD Administration</h2><p class="section-pages">Source page 45</p><article class="report-page" aria-labelledby="page-45-heading">
+<h3 id="page-45-heading">Source Page 45</h3>
+<p>XX. College Administration</p>
+<p>Armida Ornelas, Ph.D., President</p>
+<p>Laura Cantu, Ph.D., Vice President of Academic Affairs</p>
+<p>Mike Lee, Acting Vice President of Administrative Services</p>
+<p>XXI. LACCD Administration</p>
+<p>Francisco C. Rodriguez, Ph.D., Chancellor Kathleen Burke, Ed.D., Interim Deputy Chancellor Nicole Albo-Lopez, Ed.D., Vice Chancellor, Educational Programs and Institutional Effectiveness Jeanette L. Gordon, Vice Chancellor/Chief Financial Officer James Lancaster, Ed.D., Vice Chancellor, Workforce and Economic Development Carmen V. Lidz, MS, Vice Chancellor/Chief Information Officer Anne Diga, J.D., Acting General Counsel Maribel S. Medina, J.D., General Counsel Rueben C. Smith, D.C.Sc., Vice Chancellor/Chief Facilities Executive Teyanna Williams, J.D., Vice Chancellor, Human Resource</p>
+</article></section></div></details>
   </main>
-
-  <footer role="contentinfo">
-    <p>
-      <strong>Accessibility Statement:</strong>
-      Los Angeles Mission College is committed to making its web content
-      accessible to all users. This page was generated from a document
-      originally published in PDF format and has been converted
-      to accessible HTML in compliance with WCAG 2.1 Level AA.
-    </p>
-    <p>
-      <a href="https://www.lamission.edu/sites/lamc.edu/files/2024-09/2024-Annual-Security-Report.pdf">Download the original document (PDF)</a>
-      <span aria-hidden="true"> | </span>
-      <a href="https://www.lamission.edu/accessibility">Accessibility Information</a>
-      <span aria-hidden="true"> | </span>
-      <a href="mailto:accessibility@lamission.edu">Report an Accessibility Issue</a>
-    </p>
-    <p>
-      Los Angeles Mission College &bull;
-      13356 Eldridge Avenue, Sylmar, CA 91342 &bull;
-      (818) 364-7600
-    </p>
+  <footer>
+    <p><strong>Accessibility Statement:</strong> This example HTML preserves the full source document content in a cleaner, navigable long-document layout.</p>
+    <p><a href="test_security_report.html">Canonical full document</a> | <a href="https://www.lamission.edu/sites/lamc.edu/files/2024-09/2024-Annual-Security-Report.pdf">Original PDF</a></p>
   </footer>
+  
+<script>
+(() => {
+  const details = Array.from(document.querySelectorAll('details.document-section'));
+  if (!details.length) return;
+  const expand = document.querySelector('[data-action="expand-all"]');
+  const collapse = document.querySelector('[data-action="collapse-all"]');
+  let printState = [];
+  const setAll = (open) => details.forEach((section) => { section.open = open; });
+  expand?.addEventListener('click', () => setAll(true));
+  collapse?.addEventListener('click', () => setAll(false));
+  window.addEventListener('beforeprint', () => { printState = details.map((section) => section.open); setAll(true); });
+  window.addEventListener('afterprint', () => { details.forEach((section, index) => { section.open = printState[index] ?? section.open; }); });
+})();
+</script>
+
 </body>
 </html>

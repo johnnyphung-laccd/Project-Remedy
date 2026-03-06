@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS document_jobs (
     ocr_markdown    TEXT NOT NULL DEFAULT '',
     html_plan       TEXT NOT NULL DEFAULT '',
     generated_html  TEXT NOT NULL DEFAULT '',
+    generated_pages_json TEXT NOT NULL DEFAULT '[]',
     final_html_path TEXT NOT NULL DEFAULT '',
     validation_results TEXT NOT NULL DEFAULT '[]',
     remediation_count  INTEGER NOT NULL DEFAULT 0,
@@ -65,6 +66,9 @@ CREATE TABLE IF NOT EXISTS validation_log (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     job_id      TEXT NOT NULL REFERENCES document_jobs(id),
     cycle       INTEGER NOT NULL DEFAULT 1,
+    page_key    TEXT NOT NULL DEFAULT '',
+    page_title  TEXT NOT NULL DEFAULT '',
+    page_path   TEXT NOT NULL DEFAULT '',
     tool        TEXT NOT NULL,
     score       REAL,
     violations  TEXT NOT NULL DEFAULT '[]',
@@ -93,6 +97,7 @@ class DatabaseManager:
         self._conn = await aiosqlite.connect(str(self._db_path))
         self._conn.row_factory = aiosqlite.Row
         await self._conn.executescript(_SCHEMA_SQL)
+        await self._ensure_schema_migrations()
         await self._conn.commit()
         logger.info("Database connected at %s", self._db_path)
 
@@ -230,6 +235,9 @@ class DatabaseManager:
         self,
         job_id: str,
         cycle: int,
+        page_key: str,
+        page_title: str,
+        page_path: str,
         tool: str,
         score: float | None,
         violations: list[dict[str, Any]],
@@ -239,11 +247,65 @@ class DatabaseManager:
         now = datetime.now(timezone.utc).isoformat()
         await self.conn.execute(
             "INSERT INTO validation_log "
-            "(job_id, cycle, tool, score, violations, passed, created_at) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (job_id, cycle, tool, score, json.dumps(violations), int(passed), now),
+            "("
+            "job_id, cycle, page_key, page_title, page_path, tool, score, "
+            "violations, passed, created_at"
+            ") "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                job_id,
+                cycle,
+                page_key,
+                page_title,
+                page_path,
+                tool,
+                score,
+                json.dumps(violations),
+                int(passed),
+                now,
+            ),
         )
         await self.conn.commit()
+
+    async def _ensure_schema_migrations(self) -> None:
+        """Add newly introduced columns when opening an existing database."""
+        await self._ensure_column(
+            "document_jobs",
+            "generated_pages_json",
+            "TEXT NOT NULL DEFAULT '[]'",
+        )
+        await self._ensure_column(
+            "validation_log",
+            "page_key",
+            "TEXT NOT NULL DEFAULT ''",
+        )
+        await self._ensure_column(
+            "validation_log",
+            "page_title",
+            "TEXT NOT NULL DEFAULT ''",
+        )
+        await self._ensure_column(
+            "validation_log",
+            "page_path",
+            "TEXT NOT NULL DEFAULT ''",
+        )
+
+    async def _ensure_column(
+        self,
+        table_name: str,
+        column_name: str,
+        definition: str,
+    ) -> None:
+        """Add a table column if it does not already exist."""
+        cursor = await self.conn.execute(f"PRAGMA table_info({table_name})")
+        rows = await cursor.fetchall()
+        columns = {row["name"] for row in rows}
+        if column_name in columns:
+            return
+
+        await self.conn.execute(
+            f"ALTER TABLE {table_name} ADD COLUMN {column_name} {definition}"
+        )
 
     # ------------------------------------------------------------------
     # Resume support

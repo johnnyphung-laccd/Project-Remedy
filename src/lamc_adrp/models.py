@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import enum
+import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any
@@ -47,6 +48,47 @@ class ValidationResult:
     score: float | None = None  # Lighthouse accessibility score (0-100)
     violations: list[dict[str, Any]] = field(default_factory=list)
     passed: bool = False
+    page_key: str = ""
+    page_title: str = ""
+    page_path: str = ""
+
+
+@dataclass
+class RenderedPage:
+    """A deployable HTML artifact derived from a document."""
+
+    page_key: str
+    kind: str
+    title: str
+    relative_path: str
+    html: str
+    source_page_range: str = ""
+    section_slug: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        """Serialize the rendered page for storage."""
+        return {
+            "page_key": self.page_key,
+            "kind": self.kind,
+            "title": self.title,
+            "relative_path": self.relative_path,
+            "html": self.html,
+            "source_page_range": self.source_page_range,
+            "section_slug": self.section_slug,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> RenderedPage:
+        """Deserialize a rendered page from persisted JSON."""
+        return cls(
+            page_key=data.get("page_key", ""),
+            kind=data.get("kind", "canonical"),
+            title=data.get("title", ""),
+            relative_path=data.get("relative_path", ""),
+            html=data.get("html", ""),
+            source_page_range=data.get("source_page_range", ""),
+            section_slug=data.get("section_slug", ""),
+        )
 
 
 @dataclass
@@ -66,6 +108,7 @@ class DocumentJob:
     ocr_markdown: str = ""
     html_plan: str = ""
     generated_html: str = ""
+    generated_pages_json: str = "[]"
     final_html_path: str = ""
     validation_results: list[ValidationResult] = field(default_factory=list)
     remediation_count: int = 0
@@ -89,6 +132,7 @@ class DocumentJob:
             "ocr_markdown": self.ocr_markdown,
             "html_plan": self.html_plan,
             "generated_html": self.generated_html,
+            "generated_pages_json": self.generated_pages_json,
             "final_html_path": self.final_html_path,
             "validation_results": _serialize_validation_results(
                 self.validation_results
@@ -114,6 +158,9 @@ class DocumentJob:
                 score=v.get("score"),
                 violations=v.get("violations", []),
                 passed=v.get("passed", False),
+                page_key=v.get("page_key", ""),
+                page_title=v.get("page_title", ""),
+                page_path=v.get("page_path", ""),
             )
             for v in validation_raw
         ]
@@ -135,6 +182,7 @@ class DocumentJob:
             ocr_markdown=data.get("ocr_markdown", ""),
             html_plan=data.get("html_plan", ""),
             generated_html=data.get("generated_html", ""),
+            generated_pages_json=data.get("generated_pages_json", "[]"),
             final_html_path=data.get("final_html_path", ""),
             validation_results=validation_results,
             remediation_count=data.get("remediation_count", 0),
@@ -142,6 +190,48 @@ class DocumentJob:
             created_at=_parse_datetime(data.get("created_at", "")),
             updated_at=_parse_datetime(data.get("updated_at", "")),
         )
+
+    def get_rendered_pages(self) -> list[RenderedPage]:
+        """Return persisted rendered pages, with a canonical fallback."""
+        try:
+            raw_pages = json.loads(self.generated_pages_json or "[]")
+        except json.JSONDecodeError:
+            raw_pages = []
+
+        pages = [
+            RenderedPage.from_dict(page)
+            for page in raw_pages
+            if isinstance(page, dict)
+        ]
+        if pages:
+            return pages
+
+        if self.generated_html:
+            return [
+                RenderedPage(
+                    page_key="canonical",
+                    kind="canonical",
+                    title=self.link_text.strip() or "Document",
+                    relative_path="",
+                    html=self.generated_html,
+                )
+            ]
+
+        return []
+
+    def set_rendered_pages(self, pages: list[RenderedPage]) -> None:
+        """Persist rendered pages to JSON and sync the canonical payload."""
+        self.generated_pages_json = json.dumps(
+            [page.to_dict() for page in pages],
+            ensure_ascii=False,
+        )
+
+        canonical = next(
+            (page for page in pages if page.kind == "canonical"),
+            None,
+        )
+        if canonical:
+            self.generated_html = canonical.html
 
 
 def _serialize_validation_results(results: list[ValidationResult]) -> str:
@@ -155,6 +245,9 @@ def _serialize_validation_results(results: list[ValidationResult]) -> str:
                 "score": r.score,
                 "violations": r.violations,
                 "passed": r.passed,
+                "page_key": r.page_key,
+                "page_title": r.page_title,
+                "page_path": r.page_path,
             }
             for r in results
         ]

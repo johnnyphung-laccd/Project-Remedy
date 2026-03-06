@@ -31,7 +31,7 @@ from lamc_adrp.database import DatabaseManager
 from lamc_adrp.deployer import OutputDeployer
 from lamc_adrp.downloader import DocumentDownloader
 from lamc_adrp.extractor import ContentExtractor
-from lamc_adrp.models import DocumentJob, JobStatus
+from lamc_adrp.models import DocumentJob, JobStatus, RenderedPage
 from lamc_adrp.validator import AccessibilityValidator
 from lamc_adrp.vision import VisionProcessor
 from lamc_adrp.zai_client import ZAIClient
@@ -386,50 +386,63 @@ class Pipeline:
 
     async def _validate_one(self, job: DocumentJob) -> DocumentJob:
         """Validate a single converted document with auto-remediation."""
-        # Write the generated HTML to a file for validation tools.
-        html_path = self._html_path_for_job(job)
-        html_path.parent.mkdir(parents=True, exist_ok=True)
-        html_path.write_text(job.generated_html, encoding="utf-8")
-        job.final_html_path = str(html_path)
-        await self._db.update_job(job)
-
-        # Update status.
         job.status = JobStatus.VALIDATING
         await self._db.update_job(job)
 
-        # Run triple-layer validation.
-        validation_report = await self._validator.validate(html_path)
+        rendered_pages = job.get_rendered_pages()
+        if not rendered_pages:
+            raise ValueError(f"Job {job.id} has no rendered pages to validate.")
 
-        # Log initial validation results.
-        for tool_result in [
-            validation_report.axe_result,
-            validation_report.pa11y_result,
-            validation_report.lighthouse_result,
-        ]:
-            await self._db.log_validation(
-                job_id=job.id,
-                cycle=0,
-                tool=tool_result.tool,
-                score=tool_result.score,
-                violations=tool_result.violations,
-                passed=tool_result.passed,
+        outcomes = []
+        updated_pages: list[RenderedPage] = []
+        all_results = []
+        max_cycles = 0
+
+        for page in rendered_pages:
+            html_path = self._rendered_page_staging_path(job, page)
+            outcome = await self._validator.validate_rendered_page(job, page, html_path)
+            outcomes.append(outcome)
+            all_results.extend(outcome.results)
+            max_cycles = max(max_cycles, outcome.remediation_count)
+            updated_pages.append(
+                RenderedPage(
+                    page_key=page.page_key,
+                    kind=page.kind,
+                    title=page.title,
+                    relative_path=page.relative_path,
+                    html=outcome.html,
+                    source_page_range=page.source_page_range,
+                    section_slug=page.section_slug,
+                )
             )
 
-        # Auto-remediate if there are violations.
-        if not validation_report.passed:
-            job = await self._validator.auto_remediate(job, validation_report)
-            # Re-write corrected HTML to disk.
-            if job.generated_html:
-                html_path.write_text(job.generated_html, encoding="utf-8")
+        job.set_rendered_pages(updated_pages)
+        job.validation_results = all_results
+        job.remediation_count = max_cycles
+
+        canonical_path = next(
+            (
+                self._rendered_page_staging_path(job, page)
+                for page in updated_pages
+                if page.kind == "canonical"
+            ),
+            None,
+        )
+        if canonical_path is not None:
+            job.final_html_path = str(canonical_path)
+
+        failed_pages = [outcome for outcome in outcomes if not outcome.passed]
+        if failed_pages:
+            job.status = JobStatus.FLAGGED
+            job.error_message = " | ".join(
+                outcome.error_message or f"{outcome.page.title} failed validation."
+                for outcome in failed_pages
+            )
         else:
-            # Already passing -- mark as validated.
-            job.validation_results = [
-                validation_report.axe_result,
-                validation_report.pa11y_result,
-                validation_report.lighthouse_result,
-            ]
             job.status = JobStatus.VALIDATED
-            await self._db.update_job(job)
+            job.error_message = ""
+
+        await self._db.update_job(job)
 
         return job
 
@@ -439,16 +452,39 @@ class Pipeline:
         Scans the generated HTML for image placeholder patterns and
         replaces them with vision-generated alt text or HTML.
         """
-        if not job.generated_html:
+        rendered_pages = job.get_rendered_pages()
+        if not rendered_pages:
             return
 
-        html = job.generated_html
+        updated = False
+        new_pages: list[RenderedPage] = []
+        for page in rendered_pages:
+            html = await self._process_html_with_vision(job, page.html)
+            updated = updated or html != page.html
+            new_pages.append(
+                RenderedPage(
+                    page_key=page.page_key,
+                    kind=page.kind,
+                    title=page.title,
+                    relative_path=page.relative_path,
+                    html=html,
+                    source_page_range=page.source_page_range,
+                    section_slug=page.section_slug,
+                )
+            )
+
+        if updated:
+            job.set_rendered_pages(new_pages)
+            await self._db.update_job(job)
+
+    async def _process_html_with_vision(self, job: DocumentJob, html: str) -> str:
+        """Apply vision-based replacements to a single HTML artifact."""
         download_dir = self._config.output.output_dir / "downloads"
 
         # Find image references that need vision processing.
         matches = list(_IMAGE_PLACEHOLDER_RE.finditer(html))
         if not matches:
-            return
+            return html
 
         logger.info(
             "Vision: processing %d image placeholder(s) for job %s",
@@ -503,9 +539,7 @@ class Pipeline:
                     exc,
                 )
 
-        if html != job.generated_html:
-            job.generated_html = html
-            await self._db.update_job(job)
+        return html
 
     # ------------------------------------------------------------------
     # Internal: concurrent stage runner
@@ -564,15 +598,23 @@ class Pipeline:
     # Internal: helpers
     # ------------------------------------------------------------------
 
-    def _html_path_for_job(self, job: DocumentJob) -> Path:
-        """Determine the HTML output path for a job."""
-        if job.final_html_path:
-            return Path(job.final_html_path)
+    def _rendered_page_staging_path(
+        self,
+        job: DocumentJob,
+        page: RenderedPage,
+    ) -> Path:
+        """Determine a local staging path for validating a rendered page."""
+        staging_root = self._config.output.output_dir / "html" / job.id[:12]
+        staging_root.mkdir(parents=True, exist_ok=True)
 
-        output_dir = self._config.output.output_dir / "html"
-        output_dir.mkdir(parents=True, exist_ok=True)
-        safe_id = job.id[:12]
-        return output_dir / f"{safe_id}.html"
+        if page.kind == "canonical":
+            return staging_root / "canonical.html"
+
+        safe_slug = page.section_slug or page.page_key
+        safe_slug = re.sub(r"[^\w-]+", "-", safe_slug).strip("-") or page.page_key
+        section_dir = staging_root / "sections"
+        section_dir.mkdir(parents=True, exist_ok=True)
+        return section_dir / f"{safe_slug}.html"
 
     def _compute_avg_lighthouse(self, jobs: list[DocumentJob]) -> float:
         """Compute average Lighthouse accessibility score across all jobs."""
